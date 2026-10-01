@@ -1,207 +1,97 @@
 # AGENTS
 
-## Propósito
+## Purpose
 
-Duas páginas de uma só peça, sem dependências e sem build, para decisões de compra de board game:
+Two self-contained pages, with no dependencies or build step, for board-game purchase decisions:
 
-- **`index.html`** — wishlist ranqueada: o que comprar em seguida, com peso, duração, sobreposição
-  com a coleção e veredito. A lista dos jogos fora da rodada fica no fim.
-- **`designers.html`** — catálogos por designer/artista em abas: o que ainda falta das pessoas cujo
-  trabalho já funciona na coleção.
+- **`index.html`** — a ranked wishlist with weight, playtime, overlap with the collection, and verdicts. Games outside the current shortlist appear at the end.
+- **`designers.html`** — tabbed designer and artist catalogues showing relevant games from creators whose work has performed well in the collection.
 
-Publicadas em GitHub Pages a partir de `main` na raiz: <https://aagrjr.github.io/boardgames-analysis/>.
-Um push na `main` republica; o build leva menos de um minuto. As duas páginas se linkam entre si e há
-autoteste exigindo que o link exista.
+GitHub Pages publishes the files from the root of `main`: <https://aagrjr.github.io/boardgames-analysis/>. A push to `main` republishes the site, usually in under a minute. The pages link to each other, and a self-test checks those links.
 
-As **páginas e o `README.md` são em inglês**; este arquivo fica em pt-BR.
+The pages, `README.md`, and this file are in English. Keep the public README brief and free of personal decision history.
 
-## Fonte de verdade dos dados pessoais
+## Source of truth for collection data
 
-O export da coleção do BGG (`collection.csv`, baixado pelo usuário) é a fonte de notas pessoais,
-partidas, `own`/`prevowned` e peso. **Sempre reconferir contra o export antes de afirmar qualquer
-coisa sobre a coleção** — várias correções nesta história vieram de afirmações feitas de memória.
+The user's BGG collection export (`collection.csv`) is the source for personal ratings, play counts, `own`/`prevowned`, and weight. **Check the export before making claims about the collection.** Earlier claims made from memory needed correction.
 
-Campos úteis: `rating`, `numplays`, `avgweight`, `average`, `usersrated`, `rank`, `own`,
-`prevowned`, `bggbestplayers`, `bggrecplayers`, `itemtype` (filtrar por `standalone`).
+Useful fields: `rating`, `numplays`, `avgweight`, `average`, `usersrated`, `rank`, `own`, `prevowned`, `bggbestplayers`, `bggrecplayers`, and `itemtype` (filter for `standalone`).
 
-Atenção a dois detalhes do export:
-- `own=0` **e** `prevowned=0` com partidas registradas significa **jogou na mesa de alguém e nunca
-  comprou** — é diferente de "comprou e vendeu". Essa distinção já foi confundida.
-- Há **linhas duplicadas** (o mesmo `objectid` aparece duas vezes, às vezes com notas diferentes).
-  Deduplicar por `objectid` antes de somar partidas.
-- **O export atrasa em relação às compras.** Um jogo comprado depois do último download aparece com
-  `own=0`. A compra fica registrada no `EXCLUIDOS` do `index.html` com motivo começando em `owned` ou
-  `already bought`; `designers.html` usa isso como fallback de posse. Foi o caso do Entropy, que
-  aparecia como "removido da wishlist" sendo que tinha acabado de ser comprado.
+- `own=0` and `prevowned=0` with recorded plays means the game was played but never bought. Do not confuse this with a game that was bought and sold.
+- The export contains duplicate rows for some `objectid` values, sometimes with different ratings. Deduplicate by `objectid` before adding play counts.
+- Purchases can be newer than the export. `EXCLUIDOS` in `index.html` records later purchases with reasons beginning `owned` or `already bought`; `designers.html` uses these as an ownership fallback. Entropy was one such case.
 
-## API do BGG
+## BGG data
 
-A `xmlapi2` responde **401 Unauthorized** sem sessão. O que funciona é a API interna do próprio site,
-chamada de dentro de uma aba já aberta em `boardgamegeek.com`:
+`xmlapi2` returns **401 Unauthorized** without a session. The site's internal API has been used from an already open `boardgamegeek.com` tab:
 
-- `/api/geekitems?objectid=<id>&objecttype=thing&subtype=boardgame` — designers, artistas, mecânicas,
-  jogadores e duração. Os créditos ficam em `item.links.boardgamedesigner` e `.boardgameartist`.
-- `/api/geekitem/linkeditems?ajax=1&linkdata_index=boardgamedesigner&objectid=<pessoa>&objecttype=person&pageid=<n>&showcount=50&sort=rank&subtype=boardgamedesigner`
-  — catálogo de uma pessoa. Máximo de 50 por página; paginar com `pageid`. Para artista, trocar os
-  dois `boardgamedesigner` por `boardgameartist`.
-- `/api/dynamicinfo?objectid=<id>&objecttype=thing` — **nota, número de votos e peso**
-  (`item.stats.average`, `.usersrated`, `.avgweight`), rank em `item.rankinfo` e, o mais importante,
-  **a enquete de melhor número de jogadores** em `item.polls.userplayers.best`. Isto corrige o que
-  estava escrito aqui antes: existe sim endpoint de enquete, e ele vale para qualquer jogo, não só
-  para os que estão no export.
-- Em 01/10/2026, `api.geekdo.com` responde a `curl` sem CORS e sem Cloudflare — dá para varrer
-  centenas de jogos num script. Quem passou a cair no Cloudflare foi a busca (`/geeksearch.php`),
-  que antes era o caminho de nota e votos. Ou seja: **não há busca por nome**. Para achar o id de
-  uma pessoa, puxar `links.boardgamedesigner` de um jogo dela cujo id já se conhece; para achar
-  jogos, usar `linkeditems` a partir da pessoa.
+- `/api/geekitems?objectid=<id>&objecttype=thing&subtype=boardgame` — designers, artists, mechanics, player counts, and playtime. Credits are in `item.links.boardgamedesigner` and `.boardgameartist`.
+- `/api/geekitem/linkeditems?ajax=1&linkdata_index=boardgamedesigner&objectid=<person>&objecttype=person&pageid=<n>&showcount=50&sort=rank&subtype=boardgamedesigner` — a person's catalogue. It returns at most 50 items per page; paginate with `pageid`. For artists, replace both instances of `boardgamedesigner` with `boardgameartist`.
+- `/api/dynamicinfo?objectid=<id>&objecttype=thing` — rating, rating count, and weight (`item.stats.average`, `.usersrated`, `.avgweight`), rank (`item.rankinfo`), and the best-player-count poll (`item.polls.userplayers.best`). The poll works for games outside the collection export too.
 
-Os créditos levantados em 30/09/2026 estão em `designers.html`; se precisar refazer, é esse caminho.
+As checked on 2026-10-01, `api.geekdo.com` responded to `curl`, while name search (`/geeksearch.php`) encountered Cloudflare. To find a person's ID, follow the designer link from a known game; to find games, use that person's `linkeditems`. Recheck current access before relying on this observation. Creator credits collected on 2026-09-30 are in `designers.html`.
 
 ## Ludopedia
 
-- As páginas `/jogo/<slug>` **não respondem mais a `curl`** (Cloudflare). Funcionam com `fetch` de
-  dentro de uma aba já aberta em `ludopedia.com.br`.
-- **Há rate limit: a partir de ~90 requisições o site devolve 429** com um corpo de 73 bytes. Um 429
-  parseado sem checar o status vira silenciosamente "não tem edição nacional", que é uma afirmação
-  falsa sobre o dado. **Sempre conferir `r.status`** e, se der 429, marcar como não verificado em vez
-  de concluir ausência. Não varrer o site inteiro de uma vez.
-- O sinal de edição nacional é explícito no HTML: dentro de `.ludo-fh-cred` das editoras existe
-  `<img class="ludo-fh-br" title="Editora nacional">` logo antes da primeira editora brasileira.
-  Sem essa imagem, o jogo só tem importado.
+- `/jogo/<slug>` pages did not respond to `curl` when checked; they were accessible through an open `ludopedia.com.br` browser tab.
+- The site rate-limited after roughly 90 requests, returning HTTP 429 with a short body. **Check response status before parsing.** Mark a Brazilian edition as unverified after a 429; do not interpret it as absent. Avoid large scans.
+- The HTML marks a Brazilian publisher with `<img class="ludo-fh-br" title="Editora nacional">` inside `.ludo-fh-cred`, immediately before the first Brazilian publisher.
 
-## Regras de catálogo (`designers.html`)
+## Catalogue rules (`designers.html`)
 
-- **Corte por catálogo**: os 20 melhores por rank do BGG **e nota 7,4 ou mais e pelo menos mil
-  avaliações**, mais qualquer jogo que você já teve ou jogou.
-- **Rank e nota não são a mesma coisa.** O rank do BGG é média bayesiana: jogo com nota alta e
-  poucos votos fica mal rankeado. Cortar por rank antes de cortar por nota deixou 19 jogos de
-  fora. Se mexer no corte, refazer a varredura pelo catálogo inteiro, não pelo top 20.
-- O piso de mil avaliações existe porque 7,76 com 41 votos não é medição. Vale para as abas
-  expandidas; jogo que o usuário teve ou jogou entra de qualquer jeito. Cathala tem 227 créditos e Dutrait 234 — listar tudo não ajuda a decidir nada.
-- **O corte de 7,4 vale para as dez abas**, decidido pelo usuário em 01/10/2026 depois de ver jogos
-  abaixo da linha na aba padrão. A única isenção é jogo que ele já teve ou jogou. O corte por rank e
-  o piso de mil avaliações continuam valendo só para as seis abas expandidas.
-- A exceção "já teve ou jogou" não é cortesia: são justamente as linhas onde o seu julgamento diverge
-  do BGG. T.I.M.E Stories tem 7,34 no BGG e 9,5 seu; Stained Glass of Sintra, 7,28 e 9,3. Essa
-  discordância é informação, não ruído.
-- Itens com `rank` 0 no `linkeditems` são expansões e promos; filtrar por `rank > 0` separa
-  standalone sem precisar de outra chamada.
-- **Quando duas edições do mesmo jogo colidem**, fica a que carrega o registro pessoal
-  (`own` > `sold` > `played` > nenhum) e, no empate, a com mais votos. Foi assim que 7 Wonders 2010
-  ganhou da Second Edition e Castles of Burgundy: Special Edition ganhou da base. Stockpile (os dois,
-  a pedido) e Kraftwagen (o mais novo, a pedido) continuam sendo exceções explícitas.
-- Toda linha precisa de medição do BGG e de um status real da coleção. Linha sem id do BGG,
-  sem peso ou com status inventado não entra — o autoteste barra.
+- For the six expanded catalogues, select the top 20 BGG-ranked games that also have a rating of at least 7.4 and at least 1,000 ratings, plus any game the user owned or played. Rank uses a Bayesian average; it is not the same as the raw rating. If the cutoff changes, scan the full creator catalogue, not only its top 20.
+- The 1,000-rating floor filters out unreliable tiny samples. Previously observed catalogue sizes were 227 Cathala credits and 234 Dutrait credits; an exhaustive display would be less useful for purchase decisions.
+- The 7.4 rating floor applies to all ten tabs. Games the user owned or played are the only exception. The rank and rating-count cutoffs apply only to the six expanded tabs. This preserves meaningful differences between personal and public ratings, such as T.I.M.E Stories and Azul: Stained Glass of Sintra.
+- `linkeditems` entries with `rank` 0 are usually expansions or promos. Filtering for `rank > 0` isolates standalone games without another request.
+- When two editions represent the same game, keep the one carrying the strongest personal record (`own` > `sold` > `played` > none); break ties by rating count. This retains 7 Wonders (2010) over its Second Edition and The Castles of Burgundy: Special Edition over the base game. Stockpile deliberately keeps both base and Epic Editions; Kraftwagen deliberately keeps the newer edition.
+- Every row needs BGG measurements and a real collection status. Do not add rows with invented IDs, missing weight, or guessed ownership. The self-test enforces this.
 
-## Constantes medidas na coleção — não reinventar
+## Collection benchmarks
 
-Tudo abaixo foi calculado do export, não estimado. São a base dos vereditos das duas páginas.
+These figures were calculated from the export and underpin the pages' verdicts. Recalculate before changing them.
 
-**Partidas médias por faixa de peso** (jogos com `own=1`, `standalone`):
+| Weight | Owned standalone games | Mean plays |
+|---|---:|---:|
+| < 2.0 | 44 | 7.66 |
+| 2.0–2.5 | 23 | 4.48 |
+| 2.5–3.0 | 12 | 4.42 |
+| 3.0–3.5 | 10 | 4.40 |
+| 3.5+ | 13 | 2.54 |
 
-| Peso | Jogos | Média |
-|---|---|---|
-| < 2,0 | 44 | 7,66 |
-| 2,0–2,5 | 23 | 4,48 |
-| 2,5–3,0 | 12 | 4,42 |
-| 3,0–3,5 | 10 | 4,40 |
-| 3,5+ | 13 | 2,54 |
+**The 3.35 weight line:** games from 3.00 to 3.35 have a median of four plays; above 3.35, the median is two, with five of fourteen at zero or one play. `designers.html` uses this line.
 
-**A linha dos 3,35.** Cortando os pesados em dois: de 3,00 a 3,35 a mediana é **4 partidas**; acima
-de 3,35 cai para **2**, com 5 de 14 em 0–1 partida. É o corte mais nítido da coleção e o que
-`designers.html` usa para classificar.
+**Cooperative games have a different pattern.** The seven active cooperative games all have weight at most 2.66. Every purchased cooperative game above 2.5 had only one or two plays, apart from Pandemic Legacy: Season 1, a campaign meant to be completed.
 
-**Cooperativos têm teto próprio, por volta de 2,1.** Os sete ativos (Cross Clues 23 partidas,
-Dorfromantik 19, Hanabi 10, Bomb Busters 9, ito 8, Just One 5, Sherlock Consulting Detective 3) estão
-todos em peso ≤ 2,66. Todo cooperativo acima de 2,5 que foi comprado saiu com 1 ou 2 partidas, exceto
-Pandemic Legacy S1, que é campanha feita para terminar.
+**Best with two is predictive mainly above weight 2.5.** Among nature/science engine builders, games best with two have a median of 6.5 plays versus 2.0 for games best with three or more. This difference disappears for lighter games; do not reject a light group filler merely because it is best with four.
 
-**"Melhor com 2" só prevê partidas acima de peso 2,5.** No grupo de engine builders de natureza-ciência,
-melhor-com-2 tem mediana de 6,5 partidas contra 2,0 de melhor-com-3+. **Nos jogos leves o efeito some**
-(6,24 contra 6,76, medianas iguais em 4): filler de grupo é o que mais vai à mesa. Não usar
-"melhor com 4" como objeção para jogo leve.
+**Competitive deckbuilders have seen more play than cooperative ones.** Competitive examples include Clank!, Dune: Imperium, Clank!: Catacombs, Star Wars: The Deckbuilding Game, and Lost Ruins of Arnak. Aeon's End and Marvel Champions were played once each and were not purchased.
 
-**Deckbuilder competitivo funciona; cooperativo não.** Competitivos: Clank! 6 partidas, Dune: Imperium 5,
-Clank!: Catacombs 5, SW Deckbuilding 5, Arnak 4. Cooperativos: Aeon's End (peso 2,93) e Marvel Champions
-(2,96), uma partida cada, nenhum comprado.
+## One entry per game in `designers.html`
 
-## Uma entrada por jogo em `designers.html`
+Collapse alternative editions of the same game. Rococo: Deluxe Edition replaces base Rococo; Glen More II: Chronicles replaces Glen More. Keep the newer Kraftwagen: Age of Engineering, and retain both Stockpile editions as requested.
 
-**Edições alternativas do mesmo jogo** não convivem: fica uma só. Darwin's Journey exclui a
-Collector's Edition; Rococo: Deluxe substitui o Rococo base; Glen More II: Chronicles substitui o
-Glen More por ser reimplementação. No Kraftwagen fica a **edição mais nova** (Age of Engineering,
-2024), a pedido. O **Stockpile é a exceção deliberada**: o base e a Epic Edition ficam os dois,
-também a pedido.
+Expansions are included with an `expansion` tag and an `exp` field naming the base game. Their verdict depends on whether the base game is owned, rather than applying the 3.35 weight line. Darwin's Journey: Fireland Expansion is the test case.
 
-**Expansões entram**, marcadas com a etiqueta `expansion` e o campo `exp` apontando o nome do jogo
-base. O veredito delas **não passa pela linha dos 3,35** — expansão não abre uma noite de jogo nova,
-aprofunda uma que já existe, então é julgada pelo base: se o base é da coleção, é 🟢; se não é,
-é 🟡 com o aviso de que o base faz falta. A Fireland (peso 4,19) é o caso de teste disso.
+The `br` field names a Brazilian publisher when one is confirmed. A missing `br` value must not be interpreted as absence when verification failed. Ludopedia game slugs usually derive from the English title: lowercase, remove accents, and replace nonalphanumeric runs with hyphens. `CO₂: Second Chance`, `Masters of Renaissance`, and `Age of Steam` are known exceptions in `LUDO_FIXO`. Check alternatives before concluding that a page or Brazilian edition is absent.
 
-**Edição brasileira** fica no campo `br` com o nome da editora nacional, ou ausente quando não há.
-Levantado na Ludopedia em 01/10/2026: a busca do site não devolve resultado por `fetch`, mas o slug de
-`/jogo/<slug>` é previsível a partir do nome em inglês (minúsculas, sem acento, não-alfanumérico vira
-hífen) e acertou 58 dos 61. **Os três erros do slug não eram ausência de página**: `CO₂: Second Chance`
-mora em `/jogo/co-second-chance` (o `₂` subscrito some em vez de virar `2`), `Masters of Renaissance`
-precisa do subtítulo inteiro, e o `Age of Steam` base não tem página — quem tem é a
-`age-of-steam-deluxe-edition`. Slug que falha pede variação antes de concluir que não há edição nacional.
+The original 61 links were revalidated on 2026-10-01. The original rows derive their Ludopedia URLs with `ludoSlug()`; `LUDO_FIXO` contains the exceptions. The self-test checks the URL shape. Ludopedia's Brazilian-publisher marker does not distinguish a released edition from an announced one. `index.html` distinguishes `released` and `announced` in `brasil.s` because those entries were checked individually.
 
-Os **61 slugs foram revalidados** um a um: todos resolvem. A página não guarda a URL — `ludoSlug()`
-deriva do nome, e `LUDO_FIXO` carrega só as três exceções. Há autoteste cobrindo a regra de derivação,
-as três exceções e o formato da URL. A editora sai dos links `a[href*="/editora/"]` da página, com a brasileira
-em primeiro. Título em português (Rá, Entropia, SETI: Agências Espaciais) confirma.
+Wishlist decisions do not belong in the creator catalogue. A game removed from the wishlist can still be missing from the collection.
 
-Editoras brasileiras que apareceram: Devir Brasil, Mosaico Jogos, MeepleBR Jogos, Grok Games,
-Asmodee (Galápagos), Jelly Monster, Mandala Jogos, Fire on Board, Precisamente Jogos,
-Vem pra Mesa Jogos, Bucaneiros Jogos e Jogo Secco. **A Ludopedia não distingue lançado de anunciado**,
-então o campo afirma só que existe editora nacional listada — diferente do `brasil.s` do `index.html`,
-que separa `released` de `announced` porque ali a checagem foi jogo a jogo.
+## Editing data
 
-**Status de wishlist não pertence a essa página.** Ela responde "o que falta deste catálogo", não "o
-que você decidiu sobre isso" — um jogo descartado da wishlist continua sendo uma lacuna do catálogo, e
-misturar as duas coisas já produziu uma linha errada.
+In `index.html`, `JOGOS` holds one game per line; `EXCLUIDOS` holds games outside the shortlist as `["name", "reason"]`. In `designers.html`, `JOGOS` also holds one record per line, and `tabs` identifies every creator credited on that game.
 
-## Editando os dados
+For scripted replacements, assert that the old text occurs exactly once before replacing it. Take care to read a complete game record: a previous edit cut off part of one by assuming it occupied only one line.
 
-Em `index.html`, os jogos estão no array `JOGOS` no topo do `<script>`, **um registro por linha**, e os
-jogos fora da rodada em `EXCLUIDOS`, como `["nome", "motivo"]`. Em `designers.html`, o array `JOGOS`
-tem um registro por linha com `tabs` indicando em quais abas o jogo aparece (um jogo pode estar em mais
-de uma: Rococo: Deluxe é Cramer e O'Toole).
+Do not hard-code counts in subtitles. Both pages compute them from their data, and the self-tests compare rendered text to the calculation.
 
-Ao editar por script, usar `assert txt.count(a) == 1` antes de substituir. Registro de `index.html`
-ocupa uma linha; para remover um, cuidado com o parser — já houve uma tentativa que cortou metade do
-registro porque assumiu uma linha só.
+## Self-tests
 
-**Contagens não devem ser escritas à mão.** O subtítulo das duas páginas se conta sozinho a partir dos
-dados, e há autoteste amarrando o texto renderizado ao cálculo. Um subtítulo fixo já ficou errado por
-seis dias sem ninguém ver.
+Open either page with `#test` appended to the URL and check the console for `Board-game checks passed` or `Designer-catalogue checks passed`. Run these checks after manual data edits. Existing tests have caught stale expected purchase order and BGG rank values.
 
-## Autoteste
+For a local preview, serve the directory with `python3 -m http.server 8731` and open `http://127.0.0.1:8731/index.html#test`. Add `?v=N` before `#test` when reopening after an edit to avoid a cached copy.
 
-Abrir qualquer das duas páginas com `#test` no fim da URL e olhar o console:
-`Board-game checks passed` e `Designer-catalogue checks passed`.
+## Recommendation guidance
 
-**Rodar sempre depois de editar os dados à mão.** Dois testes de `index.html` ficaram quebrados por
-dias depois de edições manuais — a ordem esperada comparava com um literal de `JSON.stringify` escrito
-com espaço após as vírgulas, formato que `JSON.stringify` nunca produz.
-
-Loop de verificação usado aqui:
-
-```
-cd board-games && python3 -m http.server 8731
-# abrir http://127.0.0.1:8731/index.html#test e ler o console
-pkill -f "http.server 8731"
-```
-
-O navegador cacheia: acrescentar `?v=N` na URL ao reabrir depois de editar.
-
-## Como dar conselho nesta base
-
-O usuário quer **recomendação com dado atrás, não enquete de opções**. O que funcionou:
-
-- Medir na coleção dele antes de opinar; ele reverte conclusões quando o número contradiz a impressão.
-- **Evidência direta sobre o jogo específico vale mais que média de categoria.** Se ele já teve e
-  vendeu, isso derruba qualquer estatística de faixa.
-- Separar "gostou" de "jogou". Notas 9+ com uma partida são o padrão mais comum da coleção.
-- Quando ele decide contra a recomendação, registrar na evidência do jogo e seguir — sem
-  reabrir o assunto depois.
+Support recommendations with collection data rather than a poll of options. Check direct evidence about a specific game before applying category averages. Distinguish liking a game from repeatedly playing it: high ratings after one play are common. When the user decides against a recommendation, record that in the game's evidence and move on without reopening the decision.
