@@ -36,13 +36,17 @@ As checked on 2026-10-01, `api.geekdo.com` responded to `curl`, while name searc
 - `/jogo/<slug>` pages did not respond to `curl` when checked; they were accessible through an open `ludopedia.com.br` browser tab.
 - The site rate-limited after roughly 90 requests, returning HTTP 429 with a short body. **Check response status before parsing.** Mark a Brazilian edition as unverified after a 429; do not interpret it as absent. Avoid large scans.
 - The HTML marks a Brazilian publisher with `<img class="ludo-fh-br" title="Editora nacional">` inside `.ludo-fh-cred`, immediately before the first Brazilian publisher.
+- **The page shows only the first two publishers and hides the rest behind a `.ludo-fh-mais` (`+N`) button.** Reading only the visible group produces false negatives: that is how Jamaica, published here by Galápagos, was recorded as having no Brazilian edition. **No flag in the visible portion does not mean no Brazilian edition.** Read every publisher before concluding absence; when in doubt set `brUnknown`.
+- General rule for this page: given a choice between asserting something unverified and saying "unchecked", say unchecked. A false "no Brazilian edition" can make the user import a game that is on sale locally.
 
 ## Catalogue rules (`designers.html`)
 
 - For the six expanded catalogues, select the top 20 BGG-ranked games that also have a rating of at least 7.4 and at least 1,000 ratings, plus any game the user owned or played. Rank uses a Bayesian average; it is not the same as the raw rating. If the cutoff changes, scan the full creator catalogue, not only its top 20.
 - The 1,000-rating floor filters out unreliable tiny samples. Previously observed catalogue sizes were 227 Cathala credits and 234 Dutrait credits; an exhaustive display would be less useful for purchase decisions.
 - The 7.4 rating floor applies to all ten tabs. Games the user owned or played are the only exception. The rank and rating-count cutoffs apply only to the six expanded tabs. This preserves meaningful differences between personal and public ratings, such as T.I.M.E Stories and Azul: Stained Glass of Sintra.
-- `linkeditems` entries with `rank` 0 are usually expansions or promos. Filtering for `rank > 0` isolates standalone games without another request.
+- `linkeditems` entries with `rank` 0 are usually expansions or promos. Filtering for `rank > 0` isolates standalone games without another request — but note that this hides **every** expansion, which is how Galileo Galilei: Luna went missing.
+- **Expansions**: list an expansion only when the user owns the game it expands. It is judged by that base game, so it is exempt from both the 7.4 floor and the 1,000-rating floor (Azul: Crystal Mosaic rates 7.26; Luna has 159 ratings). It renders indented under its base, outside the sort order.
+- Only full playable expansions belong — no promo cards, tiles, medals or mini-expansions. There is no automatic signal for this: weight, player count and playtime are all inherited from the base game, and rating counts track release date rather than size. The included list is a case-by-case judgement; the self-test only blocks names matching promo/cards/tiles/pack/mini-expansion.
 - When two editions represent the same game, keep the one carrying the strongest personal record (`own` > `sold` > `played` > none); break ties by rating count. This retains 7 Wonders (2010) over its Second Edition and The Castles of Burgundy: Special Edition over the base game. Stockpile deliberately keeps both base and Epic Editions; Kraftwagen deliberately keeps the newer edition.
 - Every row needs BGG measurements and a real collection status. Do not add rows with invented IDs, missing weight, or guessed ownership. The self-test enforces this.
 
