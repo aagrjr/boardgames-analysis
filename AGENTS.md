@@ -100,7 +100,10 @@ aprofunda uma que já existe, então é julgada pelo base: se o base é da cole�
 **Edição brasileira** fica no campo `br` com o nome da editora nacional, ou ausente quando não há.
 Levantado na Ludopedia em 01/10/2026: a busca do site não devolve resultado por `fetch`, mas o slug de
 `/jogo/<slug>` é previsível a partir do nome em inglês (minúsculas, sem acento, não-alfanumérico vira
-hífen) e acertou 58 dos 61. A editora sai dos links `a[href*="/editora/"]` da página, com a brasileira
+hífen) e acertou 58 dos 61. **Os três erros do slug não eram ausência de página**: `CO₂: Second Chance`
+mora em `/jogo/co-second-chance` (o `₂` subscrito some em vez de virar `2`), `Masters of Renaissance`
+precisa do subtítulo inteiro, e o `Age of Steam` base não tem página — quem tem é a
+`age-of-steam-deluxe-edition`. Slug que falha pede variação antes de concluir que não há edição nacional. A editora sai dos links `a[href*="/editora/"]` da página, com a brasileira
 em primeiro. Título em português (Rá, Entropia, SETI: Agências Espaciais) confirma.
 
 Editoras brasileiras que apareceram: Devir Brasil, Mosaico Jogos, MeepleBR Jogos, Grok Games,
