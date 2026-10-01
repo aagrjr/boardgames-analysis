@@ -13,7 +13,7 @@
 body{margin:0;background:linear-gradient(180deg,#0b1020 0%,#0f1628 100%);color:var(--text);
   font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
 main{max-width:1500px;margin:auto;padding:28px}
-h1{font-size:28px;margin:0 0 8px} .sub{color:var(--muted);margin-bottom:16px}
+h1{font-size:28px;margin:0 0 8px}
 a{color:var(--accent)}
 .abas{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
 .aba{padding:9px 15px;border-radius:12px;background:var(--panel2);border:1px solid var(--line);
@@ -36,9 +36,6 @@ button.chip{cursor:pointer}
 .chip.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
 select{background:var(--panel2);color:var(--text);border:1px solid var(--line);
   padding:7px 11px;border-radius:10px;cursor:pointer;font-size:13px;font-family:inherit}
-.intro{background:var(--panel);border:1px solid var(--line);border-radius:14px;
-  padding:12px 16px;margin-bottom:16px;color:var(--muted);font-size:13px}
-.intro b{color:var(--text)}
 .topo{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:8px}
 .topo h1{margin:0}
 a.navbtn{display:inline-flex;flex-direction:column;gap:2px;padding:9px 16px;border-radius:12px;
@@ -81,12 +78,6 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}
 <body>
 <main>
 <div class="topo"><h1>Designer &amp; Artist Catalogues</h1><a class="navbtn" href="index.html">&larr; Purchase wishlist<small>what to buy next, ranked</small></a></div>
-<div class="sub"><span id="sub-count"></span> Every credited game carries its BGG rating, weight and player count, plus your own rating and plays where your collection export has them. Every catalogue stops at a BGG rating of 7.4, and the six expanded ones also cut at the creator’s top 20 by rank and at least 1,000 ratings. Anything you have owned or played stays whatever BGG thinks of it.</div>
-
-<div class="intro">
-<b>The weight line is 3.35.</b> Your owned games between 3.00 and 3.35 have a median of <b>4 plays</b>; above 3.35 the median drops to <b>2</b>, with 5 of 14 stuck on 0&ndash;1 play. Fit verdicts use that line and your own ratings when you have them.
-</div>
-
 <div class="abas" id="abas"></div>
 <div id="stats"></div>
 <div class="barra">
@@ -416,12 +407,7 @@ function abasHTML() {
   return grupo('Designers', false) + grupo('Artists', true);
 }
 
-function subCount() {
-  return JOGOS.length + ' games across ' + Object.keys(DESIGNERS).length + ' catalogues.';
-}
-
 function render() {
-  document.getElementById('sub-count').textContent = subCount();
   document.getElementById('abas').innerHTML = abasHTML();
   const todos = JOGOS.filter(g => g.tabs.includes(st.aba));
   document.getElementById('stats').innerHTML = statsHTML(todos);
@@ -612,7 +598,6 @@ if (location.hash === '#test') {
     && !document.querySelector('[data-aba="cramer"]').classList.contains('art'),
     'Each tab must carry its role on the card');
   check(document.querySelectorAll('thead th').length === 8, 'Header must match the column list');
-  check(document.querySelector('#sub-count').textContent === subCount(), 'Subtitle must come from the data');
   console.log('Designer-catalogue checks passed');
 }
 </script>
