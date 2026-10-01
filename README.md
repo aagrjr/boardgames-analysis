@@ -233,3 +233,32 @@ SW Deckbuilding 5, Arnak 4) e os cooperativos não passaram da primeira partida 
 nota 8,5, 1 partida) e Marvel Champions (peso 2,96, nota 7,5, 1 partida), nenhum dos dois comprado. São os dois
 vizinhos mais próximos do Slay the Spire na coleção, com peso dentro de 0,05 do dele (2,91).
 Preço da edição Grok na LudoStore em 29/09/2026: R$ 760,00 no boleto.
+
+## Catálogos medidos para os seis criadores novos — 01/10/2026
+
+Você acrescentou Cathala, Feld, Luciani, Kiesling, Bauza e Dutrait às abas. As linhas existiam, mas
+103 das 177 não tinham nota, peso nem status: vinham só de nome, marcadas "unchecked", e por isso não
+recebiam veredito nenhum. Essa parte da tabela não respondia à pergunta que a página existe pra responder.
+
+O que mudou: a filiação de cada aba passou a vir dos créditos do próprio BGG (`linkeditems`), e cada
+jogo foi medido via `dynamicinfo` — nota, votos, peso, jogadores e duração. Status, nota pessoal e
+partidas vieram do export de 01/10/2026. **Não sobrou nenhuma linha sem medição**: 200 jogos, todos
+com id real do BGG e status real de coleção. O corte é top 20 por rank mais o que já está na coleção.
+
+As quatro abas originais (O'Toole 37, Cramer 11, Holek 6, Mangone 8) não foram tocadas.
+
+Cinco colisões de edição foram colapsadas pela regra "fica a que carrega o seu registro": 7 Wonders
+2010 (vendido, 9,5) no lugar da Second Edition, Castles of Burgundy: Special Edition (sua, 9,5) no
+lugar da base, Palaces of Carrara Second Edition (vendida) no lugar da primeira, Cyclades 2009
+(jogado) no lugar da Legendary, e AquaSphere 2014 (7.679 votos) no lugar da reimpressão de 2019
+(193 votos). Stockpile continua com as duas e Kraftwagen com a mais nova, como você pediu antes.
+
+Lacunas reais que apareceram: faltava **The Castles of Burgundy** base (rank 17) no Feld, **The Quest
+for El Dorado** (120) e **Robinson Crusoe** (121) no Dutrait, e **Marco Polo II** (209) no Luciani.
+
+Disponibilidade nacional: 112 jogos com editora brasileira confirmada, 37 confirmados como só
+importado, 21 ainda não verificados — a Ludopedia passou a responder 429 e a varredura foi
+interrompida de propósito em vez de tratar o erro como ausência de edição.
+
+**Super Cats** saiu: não aparece nos créditos de designer do Bauza no BGG. Se a atribuição vier de
+outra fonte, vale reconferir antes de recolocar.

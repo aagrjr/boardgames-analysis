@@ -44,13 +44,43 @@ chamada de dentro de uma aba já aberta em `boardgamegeek.com`:
 - `/api/geekitem/linkeditems?ajax=1&linkdata_index=boardgamedesigner&objectid=<pessoa>&objecttype=person&pageid=<n>&showcount=50&sort=rank&subtype=boardgamedesigner`
   — catálogo de uma pessoa. Máximo de 50 por página; paginar com `pageid`. Para artista, trocar os
   dois `boardgamedesigner` por `boardgameartist`.
-- Não existe endpoint de enquete: **melhor número de jogadores só está disponível para os jogos que
-  estão no export** (`bggbestplayers`). Para os demais, só dá para mostrar a faixa min–max.
-- `api.geekdo.com` é bloqueado por CORS; usar caminho relativo na origem `boardgamegeek.com`.
-- Páginas de jogo caem em desafio do Cloudflare. A busca (`/geeksearch.php`) funciona e já traz nota,
-  número de votos e rank.
+- `/api/dynamicinfo?objectid=<id>&objecttype=thing` — **nota, número de votos e peso**
+  (`item.stats.average`, `.usersrated`, `.avgweight`), rank em `item.rankinfo` e, o mais importante,
+  **a enquete de melhor número de jogadores** em `item.polls.userplayers.best`. Isto corrige o que
+  estava escrito aqui antes: existe sim endpoint de enquete, e ele vale para qualquer jogo, não só
+  para os que estão no export.
+- Em 01/10/2026, `api.geekdo.com` responde a `curl` sem CORS e sem Cloudflare — dá para varrer
+  centenas de jogos num script. Quem passou a cair no Cloudflare foi a busca (`/geeksearch.php`),
+  que antes era o caminho de nota e votos. Ou seja: **não há busca por nome**. Para achar o id de
+  uma pessoa, puxar `links.boardgamedesigner` de um jogo dela cujo id já se conhece; para achar
+  jogos, usar `linkeditems` a partir da pessoa.
 
 Os créditos levantados em 30/09/2026 estão em `designers.html`; se precisar refazer, é esse caminho.
+
+## Ludopedia
+
+- As páginas `/jogo/<slug>` **não respondem mais a `curl`** (Cloudflare). Funcionam com `fetch` de
+  dentro de uma aba já aberta em `ludopedia.com.br`.
+- **Há rate limit: a partir de ~90 requisições o site devolve 429** com um corpo de 73 bytes. Um 429
+  parseado sem checar o status vira silenciosamente "não tem edição nacional", que é uma afirmação
+  falsa sobre o dado. **Sempre conferir `r.status`** e, se der 429, marcar como não verificado em vez
+  de concluir ausência. Não varrer o site inteiro de uma vez.
+- O sinal de edição nacional é explícito no HTML: dentro de `.ludo-fh-cred` das editoras existe
+  `<img class="ludo-fh-br" title="Editora nacional">` logo antes da primeira editora brasileira.
+  Sem essa imagem, o jogo só tem importado.
+
+## Regras de catálogo (`designers.html`)
+
+- **Corte por catálogo**: os 20 melhores por rank do BGG, mais qualquer jogo que já esteja na coleção.
+  Cathala tem 227 créditos e Dutrait 234 — listar tudo não ajuda a decidir nada.
+- Itens com `rank` 0 no `linkeditems` são expansões e promos; filtrar por `rank > 0` separa
+  standalone sem precisar de outra chamada.
+- **Quando duas edições do mesmo jogo colidem**, fica a que carrega o registro pessoal
+  (`own` > `sold` > `played` > nenhum) e, no empate, a com mais votos. Foi assim que 7 Wonders 2010
+  ganhou da Second Edition e Castles of Burgundy: Special Edition ganhou da base. Stockpile (os dois,
+  a pedido) e Kraftwagen (o mais novo, a pedido) continuam sendo exceções explícitas.
+- Toda linha precisa de medição do BGG e de um status real da coleção. Linha sem id do BGG,
+  sem peso ou com status inventado não entra — o autoteste barra.
 
 ## Constantes medidas na coleção — não reinventar
 
