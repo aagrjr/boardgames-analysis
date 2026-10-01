@@ -65,6 +65,8 @@ tr.tem td{background:rgba(98,211,148,.07)}
 .zona.limite{border-color:var(--warn);color:var(--warn)}
 .zona.morta{border-color:var(--bad);color:var(--bad)}
 .sua{font-weight:700;font-size:15px}
+tr.filha td:first-child{padding-left:30px;position:relative}
+tr.filha td:first-child::before{content:"\21B3";position:absolute;left:12px;color:var(--muted)}
 .tag{display:inline-block;border:1px solid var(--line);border-radius:6px;padding:1px 6px;
   font-size:10px;font-weight:400;color:var(--muted);vertical-align:middle}
 .br{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:3px 8px;
@@ -328,9 +330,9 @@ function escapeHTML(s) {
   return String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
 }
 
-function linhaHTML(g) {
+function linhaHTML(g, filha) {
   const [v, txt] = veredito(g);
-  const cls = g.st === 'own' ? 'tem' : '';
+  const cls = [g.st === 'own' ? 'tem' : '', filha ? 'filha' : ''].filter(Boolean).join(' ');
   return '<tr class="' + cls + '">'
     + '<td><div class="nome">' + escapeHTML(g.nome) + (g.exp ? ' <span class="tag">expansion</span>' : '')
       + (g.arts ? ' <span class="tag" title="Artist credits may span editions or contributors; read edition notes where provided">Artists: '
@@ -357,11 +359,24 @@ function linhaHTML(g) {
 const COLS = [['nome', 'Game'], ['bgg', 'BGG'], ['peso', 'Weight'], ['br', 'BR edition'], [null, 'Players'],
               [null, 'Playtime'], ['nota', 'Your rating'], [null, 'Verdict']];
 
+// An expansion sits under its base game, whatever the sort says. If the base is not
+// in the list — filtered out, or not in the catalogue — it keeps its own place.
+function aninhar(l) {
+  const out = [];
+  for (const g of l) {
+    if (g.exp && l.some(b => b.nome === g.exp)) continue;
+    out.push([g, false]);
+    for (const e of l) if (e.exp === g.nome) out.push([e, true]);
+  }
+  return out;
+}
+
 function tabelaHTML(l) {
   if (!l.length) return '<div class="vazio">Nothing matches these filters.</div>';
   return '<div class="wrap-tabela"><table><thead><tr>'
     + COLS.map(([k, t]) => '<th>' + (k ? '<button data-ordem="' + k + '">' + t + '</button>' : t) + '</th>').join('')
-    + '</tr></thead><tbody>' + l.map(linhaHTML).join('') + '</tbody></table></div>';
+    + '</tr></thead><tbody>' + aninhar(l).map(([g, filha]) => linhaHTML(g, filha)).join('')
+    + '</tbody></table></div>';
 }
 
 function statsHTML(l) {
@@ -508,6 +523,18 @@ if (location.hash === '#test') {
   check(fireland.peso > LINHA && veredito(fireland)[0] === 'good',
     'An expansion for a game you own is judged by the base, not by the weight line');
   check(tabelaHTML([fireland]).includes('expansion'), 'Expansions must be labelled');
+  const darwin = JOGOS.find(g => g.nome === "Darwin's Journey");
+  const nest = aninhar([fireland, darwin]);
+  check(nest.length === 2 && nest[0][0] === darwin && nest[1][0] === fireland && nest[1][1] === true,
+    'An expansion sits under its base game even when the sort puts it first');
+  check(aninhar([darwin, fireland]).map(p => p[0]) .join() === [darwin, fireland].join(),
+    'Nesting must not duplicate or drop a row');
+  check(tabelaHTML([darwin, fireland]).includes('class="filha"')
+    && !tabelaHTML([fireland]).includes('filha'),
+    'The indent appears only when the base game is actually on screen');
+  const ordenada = aninhar(JOGOS.filter(g => g.tabs.includes('holek')));
+  check(ordenada.length === JOGOS.filter(g => g.tabs.includes('holek')).length,
+    'Nesting preserves the row count');
   check(JOGOS.filter(g => g.st === 'own').length === 23, 'Expected 23 owned games across the listed games');
   check(escapeHTML('<script>') === '&lt;script&gt;', 'Text must stay text');
   check(JOGOS.filter(g => g.br).length === 78, 'Expected 78 games with a confirmed Brazilian publisher');

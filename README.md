@@ -345,3 +345,14 @@ Stephenson's Rocket (6,94). As notas de edição continuam no histórico do git 
 A isenção que sobra é só uma: **jogo que você teve ou jogou fica**, mesmo abaixo de 7,4. São as
 linhas onde a sua nota discorda do BGG, que é informação, não ruído. O autoteste agora exige que
 nenhuma outra linha abaixo de 7,4 exista.
+
+## Expansão fica embaixo do jogo base — 01/10/2026
+
+Expansão agora aparece indentada logo abaixo do jogo que ela expande, com seta `↳`, independente da
+ordenação escolhida. Antes a nota alta jogava a expansão pra longe do base: SETI: Space Agencies tem
+8,86 contra 8,41 do SETI, então subia acima dele e a relação sumia.
+
+Se o jogo base não estiver na lista — filtrado, ou fora do catálogo — a expansão mantém o lugar dela
+na ordenação e não ganha indentação. Isso importa com o filtro "missing only" ligado, que esconde o
+base quando você já o tem. O autoteste cobre os dois casos e garante que o aninhamento não duplica
+nem perde linha.
