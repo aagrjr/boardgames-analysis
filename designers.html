@@ -54,7 +54,7 @@ tr.tem td{background:rgba(98,211,148,.07)}
 .nome{font-weight:700;font-size:15px}
 .meta{font-size:11px;color:var(--muted);margin-top:3px}
 .num{text-align:center;white-space:nowrap}
-.good{color:var(--good);font-weight:700}.warn{color:var(--warn);font-weight:700}.bad{color:var(--bad);font-weight:700}
+.good{color:var(--good);font-weight:700}.warn{color:var(--warn);font-weight:700}.bad{color:var(--bad);font-weight:700}.info{color:var(--accent);font-weight:700}
 .zona{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:2px 7px;font-size:11px}
 .zona.ok{border-color:var(--good);color:var(--good)}
 .zona.limite{border-color:var(--warn);color:var(--warn)}
@@ -73,10 +73,10 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}
 <body>
 <main>
 <div class="topo"><h1>Designer &amp; Artist Catalogues</h1><a class="navbtn" href="index.html">&larr; Purchase wishlist<small>what to buy next, ranked</small></a></div>
-<div class="sub"><span id="sub-count"></span> Which selected games by the people whose work already works for you are still missing &mdash; measured against your own collection, not opinion.</div>
+<div class="sub"><span id="sub-count"></span> A broader selection of credited games by creators you follow. Rows matched to your collection include your plays and ratings; unmatched rows are clearly marked unchecked.</div>
 
 <div class="intro">
-<b>The weight line is 3.35.</b> Your owned games between 3.00 and 3.35 have a median of <b>4 plays</b>; above 3.35 the median drops to <b>2</b>, with 5 of 14 stuck on 0&ndash;1 play. Verdicts below are computed from that line plus your own rating, never hand-written.
+<b>The weight line is 3.35.</b> Your owned games between 3.00 and 3.35 have a median of <b>4 plays</b>; above 3.35 the median drops to <b>2</b>, with 5 of 14 stuck on 0&ndash;1 play. Fit verdicts use that line and your own ratings when the data is available. Unchecked rows receive no fit verdict.
 </div>
 
 <div class="abas" id="abas"></div>
@@ -100,7 +100,7 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}
   <button class="chip" id="chip-solo">sole artist only</button>
 </div>
 <div id="saida"></div>
-<footer>Original four catalogues: BGG snapshot checked 2026-10-01. New entries: BGG averages and weights from your 2026-10-01 collection export; rating counts and Brazilian publisher listings are shown only where verified. Personal ratings, plays and ownership come from that export. Edition notes checked 2026-10-01. BGG game statistics can pool editions; Brazilian publisher listings do not confirm a specified edition. Weights and ratings drift.</footer>
+<footer>Original four catalogues: BGG snapshot checked 2026-10-01. New rows beyond your collection export come from creator credits on Ludopedia. BGG averages and weights are shown only where available; personal status and Brazilian publisher listings are marked unchecked where unavailable. Personal ratings, plays and ownership come from that export. Edition notes checked 2026-10-01. BGG game statistics can pool editions; Brazilian publisher listings do not confirm a specified edition. Weights and ratings drift.</footer>
 </main>
 <script>
 const DESIGNERS = {
@@ -108,12 +108,12 @@ const DESIGNERS = {
   holek:   {ludo: "https://ludopedia.com.br/designer/35250/Tom%C3%A1%C5%A1%20Holek", nome: 'Tom\u00e1\u0161 Holek',  txt: 'Small and very new: every title is 2024\u20132025. A bet on an early career, not a collection.'},
   mangone: {ludo: "https://ludopedia.com.br/designer/7679/Nestore%20Mangone", nome: 'Nestore Mangone',  txt: 'Co-designer of Entropy, which you just bought, and of Darwin\u2019s Journey, which you rated 9.0.'},
   otoole:  {ludo: "https://ludopedia.com.br/artista/4782/Ian%20O'Toole", nome: 'Ian O\u2019Toole',  txt: 'Artist, not designer. You rated six of his heavy games 8.4\u20139.0 and each stopped at one play. Edition notes identify his work on nine games. Shared contributors and announced editions are marked; BGG artist lists can combine different editions. Unmatched excluded at your request.'},
-  cathala: {"ludo": "https://ludopedia.com.br/designer/80/bruno-cathala", "nome": "Bruno Cathala", "txt": "Your 17 plays of Five Tribes and 12 of Duel for Middle-earth make his tactical, spatial games especially relevant. Includes selected games from your BGG export; the full catalogue is linked below.", "more": [["Sobek: 2 Players", "https://ludopedia.com.br/jogo/sobek-2-players"]]},
-  feld: {"ludo": "https://ludopedia.com.br/designer/316/stefan-feld", "nome": "Stefan Feld", "txt": "The Castles of Burgundy: Special Edition is yours at 9.5 over seven plays. Trajan scored 9.3 after two plays, but its weight crosses your 3.35 line. Includes selected games from your BGG export.", "more": [["Bonfire", "https://ludopedia.com.br/jogo/bonfire"], ["Carpe Diem", "https://ludopedia.com.br/jogo/carpe-diem"], ["The Castles of Tuscany", "https://ludopedia.com.br/jogo/the-castles-of-tuscany"]]},
-  luciani: {"ludo": "https://ludopedia.com.br/designer/878/Simone%20Luciani", "nome": "Simone Luciani", "txt": "Darwin’s Journey is yours at 9.0. Marco Polo scored 9.3 over three plays; Newton scored 8.9 after one. The heavier unplayed titles merit a play before buying. Includes selected games from your BGG export.", "more": [["Barrage", "https://ludopedia.com.br/jogo/barrage"], ["Grand Austria Hotel", "https://ludopedia.com.br/jogo/grand-austria-hotel"], ["Lorenzo il Magnifico", "https://ludopedia.com.br/jogo/lorenzo-il-magnifico"]]},
-  kiesling: {"ludo": "https://ludopedia.com.br/designer/1010/michael-kiesling", "nome": "Michael Kiesling", "txt": "Azul is yours at 9.0 over 17 plays. Stained Glass of Sintra scored 9.3 over eight plays before leaving the collection. Includes selected games from your BGG export.", "more": [["Azul Duel", "https://ludopedia.com.br/jogo/azul-duel"], ["Heaven & Ale", "https://ludopedia.com.br/jogo/heaven-ale"], ["Renature", "https://ludopedia.com.br/jogo/renature"]]},
-  bauza: {"ludo": "https://ludopedia.com.br/designer/31/antoine-bauza", "nome": "Antoine Bauza", "txt": "Duel for Middle-earth is yours at 9.4 over 12 plays; 7 Wonders Duel scored 9.5 over nine plays before leaving. Cooperative and family games here need a different fit judgment from the duels. Includes selected games from your BGG export.", "more": [["Oltréé", "https://ludopedia.com.br/jogo/oltree"]]},
-  dutrait: {"ludo": "https://boardgamegeek.com/boardgameartist/12130/vincent-dutrait/linkeditems/boardgameartist", "nome": "Vincent Dutrait", "txt": "Artist, not designer. You own Duel for Middle-earth, Heat, Jaipur and Unconscious Mind. Jaipur and Unconscious Mind list other artists too; credits can span contributors or editions. Includes selected games from your BGG export.", "more": [["Lewis & Clark: The Expedition", "https://ludopedia.com.br/jogo/lewis-clark-the-expedition"], ["Treasure Island", "https://ludopedia.com.br/jogo/treasure-island"], ["After Us", "https://ludopedia.com.br/jogo/after-us"], ["Luthier", "https://ludopedia.com.br/jogo/luthier"]], "source": "BGG"}
+  cathala: {"ludo": "https://ludopedia.com.br/designer/80/bruno-cathala", "nome": "Bruno Cathala", "txt": "Your 17 plays of Five Tribes and 12 of Duel for Middle-earth make his tactical, spatial games especially relevant. This table now includes more credited games beyond your collection export."},
+  feld: {"ludo": "https://ludopedia.com.br/designer/316/stefan-feld", "nome": "Stefan Feld", "txt": "The Castles of Burgundy: Special Edition is yours at 9.5 over seven plays. Trajan scored 9.3 after two plays, but its weight crosses your 3.35 line. This table now includes more credited games beyond your collection export."},
+  luciani: {"ludo": "https://ludopedia.com.br/designer/878/Simone%20Luciani", "nome": "Simone Luciani", "txt": "Darwin’s Journey is yours at 9.0. Marco Polo scored 9.3 over three plays; Newton scored 8.9 after one. The heavier unplayed titles merit a play before buying. This table now includes more credited games beyond your collection export."},
+  kiesling: {"ludo": "https://ludopedia.com.br/designer/1010/michael-kiesling", "nome": "Michael Kiesling", "txt": "Azul is yours at 9.0 over 17 plays. Stained Glass of Sintra scored 9.3 over eight plays before leaving the collection. This table now includes more credited games beyond your collection export."},
+  bauza: {"ludo": "https://ludopedia.com.br/designer/31/antoine-bauza", "nome": "Antoine Bauza", "txt": "Duel for Middle-earth is yours at 9.4 over 12 plays; 7 Wonders Duel scored 9.5 over nine plays before leaving. Cooperative and family games here need a different fit judgment from the duels. This table now includes more credited games beyond your collection export."},
+  dutrait: {"ludo": "https://boardgamegeek.com/boardgameartist/12130/vincent-dutrait/linkeditems/boardgameartist", "nome": "Vincent Dutrait", "txt": "Artist, not designer. You own Duel for Middle-earth, Heat, Jaipur and Unconscious Mind. Jaipur and Unconscious Mind list other artists too; credits can span contributors or editions. This table now includes more credited games beyond your collection export.", "source": "BGG"}
 };
 
 const JOGOS = [
@@ -210,7 +210,90 @@ const JOGOS = [
 {"id": "264055", "tabs": ["bauza"], "nome": "Draftosaurus", "ano": 2019, "bgg": 7.08, "votos": null, "peso": 1.24, "jog": [2, 5], "tempo": [15, 15], "nota": 7.8, "partidas": 3, "st": "sold", "br": "MeepleBR Jogos"},
 {"id": "366013", "tabs": ["dutrait"], "nome": "Heat: Pedal to the Metal", "ano": 2022, "bgg": 7.99, "votos": null, "peso": 2.2, "jog": [1, 6], "tempo": [30, 60], "nota": 8.7, "partidas": 2, "st": "own", "br": "Asmodee (Galápagos)"},
 {"id": "54043", "tabs": ["dutrait"], "nome": "Jaipur", "ano": 2009, "bgg": 7.48, "votos": null, "peso": 1.46, "jog": [2, 2], "tempo": [30, 30], "nota": 8.5, "partidas": 6, "st": "own", "br": "Asmodee (Galápagos)", "arts": 2},
-{"id": "329500", "tabs": ["dutrait"], "nome": "Unconscious Mind", "ano": 2024, "bgg": 7.87, "votos": null, "peso": 4.03, "jog": [1, 4], "tempo": [60, 120], "nota": 9.0, "partidas": 6, "st": "own", "br": "Mosaico Jogos", "arts": 3}
+{"id": "329500", "tabs": ["dutrait"], "nome": "Unconscious Mind", "ano": 2024, "bgg": 7.87, "votos": null, "peso": 4.03, "jog": [1, 4], "tempo": [60, 120], "nota": 9.0, "partidas": 6, "st": "own", "br": "Mosaico Jogos", "arts": 3},
+{"id": "ludo:cyclades-legendary-edition", "tabs": ["cathala"], "nome": "Cyclades: Legendary Edition", "ano": 2025, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/cyclades-legendary-edition"},
+{"id": "ludo:kingdomino-origins", "tabs": ["cathala"], "nome": "Kingdomino Origins", "ano": 2021, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/kingdomino-origins"},
+{"id": "ludo:queendomino", "tabs": ["cathala"], "nome": "Queendomino", "ano": 2017, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/queendomino"},
+{"id": "ludo:cleopatra-and-the-society-of-architects-deluxe-edition", "tabs": ["cathala"], "nome": "Cleopatra and the Society of Architects: Deluxe Edition", "ano": 2020, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/cleopatra-and-the-society-of-architects-deluxe-edition"},
+{"id": "ludo:yamatai", "tabs": ["cathala"], "nome": "Yamataï", "ano": 2017, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/yamatai"},
+{"id": "ludo:shadows-over-camelot", "tabs": ["cathala"], "nome": "Shadows over Camelot", "ano": 2005, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/shadows-over-camelot"},
+{"id": "ludo:conan", "tabs": ["cathala", "bauza"], "nome": "Conan", "ano": 2016, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/conan"},
+{"id": "ludo:the-little-prince-make-me-a-planet", "tabs": ["cathala", "bauza"], "nome": "The Little Prince: Make Me a Planet", "ano": 2013, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/the-little-prince-make-me-a-planet"},
+{"id": "ludo:mission-red-planet-2nd-edition", "tabs": ["cathala"], "nome": "Mission: Red Planet (2nd Edition)", "ano": 2015, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/mission-red-planet-2nd-edition"},
+{"id": "ludo:mr-jack", "tabs": ["cathala"], "nome": "Mr. Jack", "ano": 2006, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/mr-jack"},
+{"id": "ludo:sobek-2-players", "tabs": ["cathala"], "nome": "Sobek: 2 Players", "ano": 2021, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/sobek-2-players"},
+{"id": "ludo:velonimo", "tabs": ["cathala"], "nome": "Velonimo", "ano": 2020, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/velonimo"},
+{"id": "ludo:conspiracy-abyss-universe", "tabs": ["cathala"], "nome": "Conspiracy: Abyss Universe", "ano": 2019, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/conspiracy-abyss-universe"},
+{"id": "ludo:bonfire", "tabs": ["feld"], "nome": "Bonfire", "ano": 2020, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/bonfire"},
+{"id": "ludo:merlin", "tabs": ["feld"], "nome": "Merlin", "ano": 2017, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/merlin"},
+{"id": "ludo:in-the-year-of-the-dragon", "tabs": ["feld"], "nome": "In the Year of the Dragon", "ano": 2007, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/in-the-year-of-the-dragon"},
+{"id": "ludo:luna", "tabs": ["feld"], "nome": "Luna", "ano": 2010, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/luna"},
+{"id": "ludo:bruges", "tabs": ["feld"], "nome": "Bruges", "ano": 2013, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/bruges"},
+{"id": "ludo:amerigo", "tabs": ["feld"], "nome": "Amerigo", "ano": 2013, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/amerigo"},
+{"id": "ludo:the-oracle-of-delphi", "tabs": ["feld"], "nome": "The Oracle of Delphi", "ano": 2016, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/the-oracle-of-delphi"},
+{"id": "ludo:the-name-of-the-rose", "tabs": ["feld"], "nome": "The Name of the Rose", "ano": 2008, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/the-name-of-the-rose"},
+{"id": "ludo:the-castles-of-tuscany", "tabs": ["feld"], "nome": "The Castles of Tuscany", "ano": 2020, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/the-castles-of-tuscany"},
+{"id": "ludo:marrakesh", "tabs": ["feld"], "nome": "Marrakesh", "ano": 2022, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/marrakesh"},
+{"id": "ludo:macao", "tabs": ["feld"], "nome": "Macao", "ano": 2009, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/macao"},
+{"id": "ludo:aquasphere", "tabs": ["feld"], "nome": "AquaSphere", "ano": 2014, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/aquasphere"},
+{"id": "ludo:carpe-diem", "tabs": ["feld"], "nome": "Carpe Diem", "ano": 2018, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/carpe-diem"},
+{"id": "ludo:notre-dame", "tabs": ["feld"], "nome": "Notre Dame", "ano": 2007, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/notre-dame"},
+{"id": "ludo:jorvik", "tabs": ["feld"], "nome": "Jórvík", "ano": 2016, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/jorvik"},
+{"id": "ludo:the-castles-of-burgundy-the-card-game", "tabs": ["feld"], "nome": "The Castles of Burgundy: The Card Game", "ano": 2016, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/the-castles-of-burgundy-the-card-game"},
+{"id": "ludo:barrage", "tabs": ["luciani"], "nome": "Barrage", "ano": 2019, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/barrage"},
+{"id": "ludo:grand-austria-hotel", "tabs": ["luciani"], "nome": "Grand Austria Hotel", "ano": 2015, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/grand-austria-hotel"},
+{"id": "ludo:lorenzo-il-magnifico", "tabs": ["luciani"], "nome": "Lorenzo il Magnifico", "ano": 2016, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/lorenzo-il-magnifico"},
+{"id": "ludo:golem", "tabs": ["luciani"], "nome": "Golem", "ano": 2021, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/golem"},
+{"id": "ludo:sea-dragons", "tabs": ["luciani"], "nome": "Sea Dragons", "ano": 2023, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/sea-dragons"},
+{"id": "ludo:the-rats-of-wistar", "tabs": ["luciani"], "nome": "The Rats of Wistar", "ano": 2023, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/the-rats-of-wistar"},
+{"id": "ludo:mesos", "tabs": ["luciani"], "nome": "MESOS", "ano": 2024, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/mesos"},
+{"id": "ludo:council-of-four", "tabs": ["luciani"], "nome": "Council of Four", "ano": 2015, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/council-of-four"},
+{"id": "ludo:etherstone", "tabs": ["luciani"], "nome": "Etherstone", "ano": 2025, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/etherstone"},
+{"id": "ludo:high-season-grand-hotel-roll-write", "tabs": ["luciani"], "nome": "High Season: Grand Hotel Roll & Write", "ano": 2023, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/high-season-grand-hotel-roll-write"},
+{"id": "ludo:anunnaki-dawn-of-the-gods", "tabs": ["luciani"], "nome": "Anunnaki: Dawn of the Gods", "ano": 2023, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/anunnaki-dawn-of-the-gods"},
+{"id": "ludo:tikal", "tabs": ["kiesling"], "nome": "Tikal", "ano": 1999, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/tikal"},
+{"id": "ludo:azul-summer-pavilion", "tabs": ["kiesling"], "nome": "Azul: Summer Pavilion", "ano": 2019, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/azul-summer-pavilion"},
+{"id": "ludo:azul-queen-s-garden", "tabs": ["kiesling"], "nome": "Azul: Queen's Garden", "ano": 2021, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/azul-queen-s-garden"},
+{"id": "ludo:wandering-towers", "tabs": ["kiesling"], "nome": "Wandering Towers", "ano": 2022, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/wandering-towers"},
+{"id": "ludo:intarsia", "tabs": ["kiesling"], "nome": "Intarsia", "ano": 2024, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/intarsia"},
+{"id": "ludo:heaven-ale", "tabs": ["kiesling"], "nome": "Heaven & Ale", "ano": 2017, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/heaven-ale"},
+{"id": "ludo:cuzco", "tabs": ["kiesling"], "nome": "Cuzco", "ano": 2018, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/cuzco"},
+{"id": "ludo:paris", "tabs": ["kiesling"], "nome": "Paris", "ano": 2020, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/paris"},
+{"id": "ludo:torres", "tabs": ["kiesling"], "nome": "Torres", "ano": 1999, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/torres"},
+{"id": "ludo:porta-nigra", "tabs": ["kiesling"], "nome": "Porta Nigra", "ano": 2015, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/porta-nigra"},
+{"id": "ludo:azul-duel", "tabs": ["kiesling"], "nome": "Azul Duel", "ano": 2025, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/azul-duel"},
+{"id": "ludo:coal-baron", "tabs": ["kiesling"], "nome": "Coal Baron", "ano": 2013, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/coal-baron"},
+{"id": "ludo:renature", "tabs": ["kiesling"], "nome": "Renature", "ano": 2020, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/renature"},
+{"id": "ludo:abluxxen", "tabs": ["kiesling"], "nome": "Abluxxen", "ano": 2014, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/abluxxen"},
+{"id": "ludo:riverboat", "tabs": ["kiesling"], "nome": "Riverboat", "ano": 2017, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/riverboat"},
+{"id": "ludo:sanssouci", "tabs": ["kiesling"], "nome": "Sanssouci", "ano": 2013, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/sanssouci"},
+{"id": "ludo:oltree", "tabs": ["bauza", "dutrait"], "nome": "Oltréé", "ano": 2021, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/oltree"},
+{"id": "ludo:victorian-masterminds", "tabs": ["bauza"], "nome": "Victorian Masterminds", "ano": 2019, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/victorian-masterminds"},
+{"id": "ludo:namiji", "tabs": ["bauza"], "nome": "Namiji", "ano": 2022, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/namiji"},
+{"id": "ludo:oceanos", "tabs": ["bauza"], "nome": "Oceanos", "ano": 2016, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/oceanos"},
+{"id": "ludo:attack-on-titan-the-last-stand", "tabs": ["bauza"], "nome": "Attack on Titan: The Last Stand", "ano": 2017, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/attack-on-titan-the-last-stand"},
+{"id": "ludo:takenokolor", "tabs": ["bauza"], "nome": "Takenokolor", "ano": 2024, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/takenokolor"},
+{"id": "ludo:monster-chase", "tabs": ["bauza"], "nome": "Monster Chase", "ano": 2009, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/monster-chase"},
+{"id": "ludo:terror-in-meeple-city", "tabs": ["bauza"], "nome": "Terror in Meeple City", "ano": 2013, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/terror-in-meeple-city"},
+{"id": "ludo:super-cats", "tabs": ["bauza"], "nome": "Super Cats", "ano": 2019, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/super-cats"},
+{"id": "ludo:7-wonders-dice", "tabs": ["bauza"], "nome": "7 Wonders Dice", "ano": 2025, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/7-wonders-dice"},
+{"id": "ludo:welcome-back-to-the-dungeon", "tabs": ["bauza"], "nome": "Welcome Back to the Dungeon", "ano": 2016, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/welcome-back-to-the-dungeon"},
+{"id": "ludo:lewis-clark-the-expedition", "tabs": ["dutrait"], "nome": "Lewis & Clark: The Expedition", "ano": 2013, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/lewis-clark-the-expedition", "artistCreditUnknown": true},
+{"id": "ludo:treasure-island", "tabs": ["dutrait"], "nome": "Treasure Island", "ano": 2018, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/treasure-island"},
+{"id": "ludo:after-us", "tabs": ["dutrait"], "nome": "After Us", "ano": 2023, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/after-us"},
+{"id": "ludo:luthier", "tabs": ["dutrait"], "nome": "Luthier", "ano": 2025, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/luthier", "arts": 2},
+{"id": "ludo:broom-service", "tabs": ["dutrait"], "nome": "Broom Service", "ano": 2015, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/broom-service"},
+{"id": "ludo:museum", "tabs": ["dutrait"], "nome": "Museum", "ano": 2019, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/museum"},
+{"id": "ludo:canopy", "tabs": ["dutrait"], "nome": "Canopy", "ano": 2021, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/canopy", "artistCreditUnknown": true},
+{"id": "ludo:detective-city-of-angels", "tabs": ["dutrait"], "nome": "Detective: City of Angels", "ano": 2019, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/detective-city-of-angels", "artistCreditUnknown": true},
+{"id": "ludo:elysium", "tabs": ["dutrait"], "nome": "Elysium", "ano": 2015, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/elysium", "arts": 9},
+{"id": "ludo:smitten", "tabs": ["dutrait"], "nome": "Smitten", "ano": 2022, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/smitten"},
+{"id": "ludo:hutan", "tabs": ["dutrait"], "nome": "HUTAN", "ano": 2025, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/hutan"},
+{"id": "ludo:sherlock-13", "tabs": ["dutrait"], "nome": "Sherlock 13", "ano": 2013, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/sherlock-13"},
+{"id": "ludo:t-i-m-e-stories", "tabs": ["dutrait"], "nome": "T.I.M.E Stories", "ano": 2015, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/t-i-m-e-stories", "arts": 4},
+{"id": "ludo:discoveries-the-journals-of-lewis-clark", "tabs": ["dutrait"], "nome": "Discoveries: The Journals of Lewis & Clark", "ano": 2015, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/discoveries-the-journals-of-lewis-clark", "artistCreditUnknown": true},
+{"id": "ludo:medici-the-card-game", "tabs": ["dutrait"], "nome": "Medici: The Card Game", "ano": 2016, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/medici-the-card-game", "arts": 2},
+{"id": "ludo:medici-the-dice-game", "tabs": ["dutrait"], "nome": "Medici: The Dice Game", "ano": 2020, "bgg": null, "votos": null, "peso": null, "jog": [0, 0], "tempo": [0, 0], "nota": null, "partidas": 0, "st": "unknown", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/medici-the-dice-game"}
 ];
 
 const LINHA = 3.35;
@@ -224,11 +307,12 @@ const LUDO_FIXO = {
 const ludoSlug = nome => LUDO_FIXO[nome]
   || nome.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
          .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-const ludoURL = g => 'https://ludopedia.com.br/jogo/' + ludoSlug(g.nome);
-const FAROL = {good: '\u{1F7E2}', warn: '\u{1F7E1}', bad: '\u{1F534}', own: '\u{1F6D2}'};
+const ludoURL = g => g.ludoUrl || 'https://ludopedia.com.br/jogo/' + ludoSlug(g.nome);
+const FAROL = {good: '\u{1F7E2}', warn: '\u{1F7E1}', bad: '\u{1F534}', own: '\u{1F6D2}', info: '\u{1F50E}'};
 
 function veredito(g) {
   if (g.st === 'own') return ['own', 'In your collection'];
+  if (g.st === 'unknown') return ['info', 'Credit confirmed; collection status and fit unchecked'];
   if (g.exp) {
     const base = JOGOS.find(b => b.nome === g.exp);
     return base && base.st === 'own'
@@ -248,6 +332,7 @@ function veredito(g) {
 }
 
 const zonaHTML = g => {
+  if (g.peso == null) return '<span class="meta">unchecked</span>';
   const cls = g.peso > LINHA ? 'morta' : g.peso >= 3.0 ? 'limite' : 'ok';
   return '<span class="zona ' + cls + '">' + g.peso.toFixed(2) + '</span>';
 };
@@ -255,6 +340,7 @@ const zonaHTML = g => {
 const ST_TXT = {own: 'in collection', sold: 'owned, then sold', played: 'played, never owned', none: ''};
 
 function suaHTML(g) {
+  if (g.st === 'unknown') return '<span class="meta">collection status unchecked</span>';
   if (!g.nota && !g.partidas) return '<span class="meta">never played</span>';
   return (g.nota ? '<div class="sua">' + g.nota + '</div>' : '')
     + '<div class="meta">' + (g.partidas ? g.partidas + (g.partidas === 1 ? ' play' : ' plays') : 'no plays')
@@ -264,7 +350,8 @@ function suaHTML(g) {
 const fmtVotos = n => n.toLocaleString('en-US');
 
 const CHAVE = {
-  fit: g => (g.st === 'own' ? -1 : 0) + (g.peso > LINHA ? 0 : 2) + (g.nota || g.bgg) / 10,
+  fit: g => g.peso == null || g.bgg == null ? null
+    : (g.st === 'own' ? -1 : 0) + (g.peso > LINHA ? 0 : 2) + (g.nota || g.bgg) / 10,
   nota: g => g.nota, bgg: g => g.bgg, votos: g => g.votos,
   peso: g => g.peso, ano: g => g.ano, nome: g => g.nome, br: g => g.br || null
 };
@@ -273,10 +360,10 @@ const st = {aba: 'cramer', ordem: 'fit', dir: -1, faltando: false, leves: false,
 
 function filtrados() {
   let l = JOGOS.filter(g => g.tabs.includes(st.aba));
-  if (st.faltando) l = l.filter(g => g.st !== 'own');
+  if (st.faltando) l = l.filter(g => g.st !== 'own' && g.st !== 'unknown');
   if (st.leves) l = l.filter(g => g.peso <= LINHA);
   if (st.br) l = l.filter(g => g.br);
-  if (st.solo) l = l.filter(g => !g.arts);
+  if (st.solo) l = l.filter(g => !g.arts && !g.artistCreditUnknown);
   return ordenar(l);
 }
 
@@ -300,16 +387,17 @@ function linhaHTML(g) {
   const cls = g.st === 'own' ? 'tem' : '';
   return '<tr class="' + cls + '">'
     + '<td><div class="nome">' + escapeHTML(g.nome) + (g.exp ? ' <span class="tag">expansion</span>' : '')
-      + (g.arts ? ' <span class="tag" title="BGG credits may span editions or contributors; read the edition note">BGG: '
+      + (g.arts ? ' <span class="tag" title="Artist credits may span editions or contributors; read edition notes where provided">Artists: '
           + g.arts + ' artist credits</span>' : '')
       + '</div>' + (g.edition ? '<div class="meta">Edition: <a href="' + escapeHTML(g.editionUrl)
           + '" target="_blank" rel="noopener">' + escapeHTML(g.edition) + '</a></div>'
           + '<div class="meta">' + escapeHTML(g.creditNote) + '</div>' : '')
       + '<div class="meta">' + (g.edition ? 'Base game: ' : '') + g.ano
-      + ' \u00b7 <a href="https://boardgamegeek.com/boardgame/' + g.id + '" target="_blank" rel="noopener">'
-          + (g.edition ? 'BGG game data' : 'BGG') + '</a>'
-      + ' \u00b7 <a href="' + ludoURL(g) + '" target="_blank" rel="noopener">Ludopedia</a></div></td>'
-    + '<td class="num">' + g.bgg.toFixed(2) + '<div class="meta">' + (g.votos == null ? 'rating count unavailable' : fmtVotos(g.votos) + ' ratings') + '</div></td>'
+      + (g.bgg == null ? '' : ' \u00b7 <a href="https://boardgamegeek.com/boardgame/' + g.id + '" target="_blank" rel="noopener">'
+          + (g.edition ? 'BGG game data' : 'BGG') + '</a>')
+      + ' \u00b7 <a href="' + escapeHTML(ludoURL(g)) + '" target="_blank" rel="noopener">Ludopedia</a></div></td>'
+    + '<td class="num">' + (g.bgg == null ? '<span class="meta">unchecked</span>' : g.bgg.toFixed(2)
+      + '<div class="meta">' + (g.votos == null ? 'rating count unavailable' : fmtVotos(g.votos) + ' ratings') + '</div>') + '</td>'
     + '<td class="num">' + zonaHTML(g) + '</td>'
     + '<td>' + (g.br ? '<span class="br sim" title="Brazilian publisher listed on Ludopedia">' + escapeHTML(g.br) + '</span>'
         : g.brUnknown ? '<span class="br">BR publisher unchecked</span>' : '<span class="br">no BR edition</span>') + '</td>'
@@ -331,12 +419,12 @@ function tabelaHTML(l) {
 }
 
 function statsHTML(l) {
-  const faltam = l.filter(g => g.st !== 'own');
+  const faltam = l.filter(g => g.st !== 'own' && g.st !== 'unknown');
   const cabem = faltam.filter(g => g.peso <= LINHA);
   const med = l.filter(g => g.nota).map(g => g.nota);
   return '<div>listed games<b>' + l.length + '</b></div>'
     + '<div>you own<b>' + l.filter(g => g.st === 'own').length + '</b></div>'
-    + '<div>missing<b>' + faltam.length + '</b></div>'
+    + '<div>known missing<b>' + faltam.length + '</b></div>'
     + '<div>missing, under 3.35 and BR publisher listed<b>' + cabem.filter(g => g.br).length + '</b></div>';
 }
 
@@ -395,20 +483,26 @@ render();
 
 if (location.hash === '#test') {
   const check = (ok, msg) => { if (!ok) throw new Error(msg); };
-  check(JOGOS.length === 94, 'Expected 94 distinct listed games');
+  check(JOGOS.length === 177, 'Expected 177 distinct listed games');
   check(Object.keys(DESIGNERS).every(k => JOGOS.some(g => g.tabs.includes(k))), 'Every tab needs games');
-  check(new Set(JOGOS.map(g => g.id)).size === JOGOS.length, 'One entry per BGG game ID');
+  check(new Set(JOGOS.map(g => g.id)).size === JOGOS.length, 'Every listed game needs one unique ID');
   check(['cathala', 'bauza', 'dutrait'].every(k => JOGOS.find(g => g.id === '421006').tabs.includes(k)), 'Shared creator credits need one linked game');
   check(JOGOS.find(g => g.id === '157354').partidas === 17 && JOGOS.find(g => g.id === '230802').partidas === 17, 'Export play counts must carry into new tabs');
   check(JOGOS.find(g => g.id === '256226').st === 'sold' && JOGOS.find(g => g.id === '102680').st === 'played', 'Past ownership must differ from never owned');
   check(tabelaHTML([JOGOS.find(g => g.id === '400602')]).includes('rating count unavailable') && tabelaHTML([JOGOS.find(g => g.id === '37046')]).includes('BR publisher unchecked'), 'Unknown source fields must be explicit');
-  check(DESIGNERS.dutrait.source === 'BGG' && DESIGNERS.kiesling.more.some(([name]) => name === 'Azul Duel'), 'New creator links must lead to credited works');
+  check(DESIGNERS.dutrait.source === 'BGG' && JOGOS.some(g => g.nome === 'Azul Duel' && g.tabs.includes('kiesling')), 'New creator links must lead to credited works');
   check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 37, 'O\u2019Toole catalogue size');
   check(JOGOS.filter(g => g.tabs.includes('cramer')).length === 11, 'Cramer catalogue size');
   check(JOGOS.filter(g => g.tabs.includes('holek')).length === 6, 'Holek catalogue size');
   check(JOGOS.filter(g => g.tabs.includes('mangone')).length === 8, 'Mangone catalogue size');
   check(!JOGOS.some(g => /Unmatched/.test(g.nome)), 'Unmatched must stay out at your request');
-  check(JOGOS.every(g => g.peso > 0 && g.peso < 5 && g.bgg > 0 && g.bgg <= 10 && (g.votos == null || g.votos > 0)), 'Invalid numbers');
+  check(JOGOS.every(g => (g.peso == null || (g.peso > 0 && g.peso < 5))
+    && (g.bgg == null || (g.bgg > 0 && g.bgg <= 10)) && (g.votos == null || g.votos > 0)), 'Invalid numbers');
+  check(['cathala','feld','luciani','kiesling','bauza','dutrait'].every(k =>
+    JOGOS.filter(g => g.tabs.includes(k)).length >= 20), 'Expanded creator catalogues need at least 20 games');
+  check(JOGOS.filter(g => g.st === 'unknown').every(g => g.bgg == null && g.peso == null
+    && tabelaHTML([g]).includes('collection status unchecked') && !tabelaHTML([g]).includes('boardgamegeek.com/boardgame/ludo:')),
+    'External credits must not invent collection status or BGG measurements');
   check(JOGOS.every(g => Number.isInteger(g.ano) && g.ano > 1900), 'Every game needs a year');
   check(JOGOS.every(g => g.nota == null || (g.nota > 0 && g.nota <= 10)), 'Invalid personal rating');
   const rococo = JOGOS.find(g => g.nome === 'Rococo: Deluxe Edition');
@@ -441,7 +535,7 @@ if (location.hash === '#test') {
   check(JOGOS.filter(g => g.st === 'own').length === 20, 'Expected 20 owned games across the listed games');
   check(escapeHTML('<script>') === '&lt;script&gt;', 'Text must stay text');
   check(JOGOS.filter(g => g.br).length === 61, 'Expected 61 games with a confirmed Brazilian publisher');
-  check(JOGOS.filter(g => g.arts).length === 6, 'Shared or unresolved artist credits should be marked');
+  check(JOGOS.filter(g => g.arts).length === 10, 'Shared or unresolved artist credits should be marked');
   const editions = JOGOS.filter(g => g.edition);
   check(editions.length === 9 && editions.every(g => g.creditNote && /^https:\/\//.test(g.editionUrl)),
     'All nine requested games need a sourced edition and credit note');
@@ -463,7 +557,7 @@ if (location.hash === '#test') {
   check(tabelaHTML([JOGOS[0]]).includes('>Ludopedia</a>') && tabelaHTML([JOGOS[0]]).includes('>BGG</a>'),
     'Both source links must render');
   st.aba = 'otoole'; st.solo = true;
-  check(filtrados().every(g => !g.arts), 'Sole-artist filter must drop shared credits');
+  check(filtrados().every(g => !g.arts && !g.artistCreditUnknown), 'Sole-artist filter must drop shared or unverified credits');
   st.solo = false; st.aba = 'cramer';
   check(JOGOS.find(g => g.nome === 'Entropy').br === 'Mosaico Jogos'
     && JOGOS.find(g => g.nome === 'Ra').br === 'Precisamente Jogos'
@@ -472,7 +566,7 @@ if (location.hash === '#test') {
   st.br = true; check(filtrados().every(g => g.br), 'BR filter must drop imports'); st.br = false;
   check(document.querySelector('a.navbtn[href="index.html"]'), 'The wishlist must stay one button away');
   st.aba = 'cramer'; st.faltando = true;
-  check(filtrados().every(g => g.st !== 'own' && !g.fora), 'Missing-only filter must drop owned and removed');
+  check(filtrados().every(g => g.st !== 'own' && g.st !== 'unknown' && !g.fora), 'Missing-only filter must drop owned and unchecked');
   st.leves = true;
   check(filtrados().every(g => g.peso <= LINHA), 'Weight filter must respect the 3.35 line');
   st.faltando = false; st.leves = false;
