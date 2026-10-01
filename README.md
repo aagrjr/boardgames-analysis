@@ -278,3 +278,24 @@ Ian O'Toole e Vincent Dutrait são os dois artistas; os outros oito são designe
 O link do Dutrait passou a apontar pro catálogo dele na Ludopedia
 (`/artista/1091/Vincent Dutrait`) em vez do BGG, igual aos demais. O autoteste agora exige que todo
 card aponte pra uma página de criador da Ludopedia.
+
+## Corte de nota 7,4 nas abas expandidas — 01/10/2026
+
+A pedido, as seis abas novas passaram a listar só jogos com nota acima de 7,4 no BGG. De 200 linhas
+para 131. Dutrait 31→16, Bauza 25→13, Cathala 25→12, Luciani 23→18, Feld 23→11, Kiesling 25→11.
+
+Duas decisões que valem registro:
+
+**As quatro abas curadas ficaram inteiras** (O'Toole 37, Cramer 11, Holek 6, Mangone 8). O corte faz
+sentido onde existe um corte arbitrário por rank; essas quatro foram levantadas jogo a jogo junto com
+você, com nota de edição pesquisada em nove. Aplicar 7,4 lá derrubaria Cramer de 11 para 4 — e levaria
+Calimala, Black Angel e Stephenson's Rocket, os três com pesquisa de edição. Se quiser o corte também
+nelas, é uma linha.
+
+**Jogo que você teve ou jogou fica, mesmo abaixo de 7,4.** São 17 linhas, e é onde o seu julgamento
+discorda do BGG: T.I.M.E Stories (7,34 no BGG, 9,5 seu), Stained Glass of Sintra (7,28 e 9,3), Abyss
+(7,32 e 8,9), Mexica (7,24 e 8,5). Cortá-los esconderia justamente a evidência mais útil da página.
+
+## Decisão: não haverá página de lista de venda — 01/10/2026
+
+Registrado a pedido. Eu tinha oferecido três vezes; não oferecer de novo.

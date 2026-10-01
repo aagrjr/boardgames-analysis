@@ -71,8 +71,14 @@ Os créditos levantados em 30/09/2026 estão em `designers.html`; se precisar re
 
 ## Regras de catálogo (`designers.html`)
 
-- **Corte por catálogo**: os 20 melhores por rank do BGG, mais qualquer jogo que já esteja na coleção.
-  Cathala tem 227 créditos e Dutrait 234 — listar tudo não ajuda a decidir nada.
+- **Corte por catálogo**: os 20 melhores por rank do BGG **e nota acima de 7,4**, mais qualquer jogo
+  que você já teve ou jogou. Cathala tem 227 créditos e Dutrait 234 — listar tudo não ajuda a decidir nada.
+- O corte de 7,4 vale só para as seis abas expandidas. **O'Toole, Cramer, Holek e Mangone ficam
+  inteiras**: são catálogos pequenos, levantados junto com o usuário, e com nota de edição pesquisada
+  em nove jogos. Aplicar o corte lá derrubaria Cramer de 11 para 4, incluindo três dos jogos pesquisados.
+- A exceção "já teve ou jogou" não é cortesia: são justamente as linhas onde o seu julgamento diverge
+  do BGG. T.I.M.E Stories tem 7,34 no BGG e 9,5 seu; Stained Glass of Sintra, 7,28 e 9,3. Essa
+  discordância é informação, não ruído.
 - Itens com `rank` 0 no `linkeditems` são expansões e promos; filtrar por `rank > 0` separa
   standalone sem precisar de outra chamada.
 - **Quando duas edições do mesmo jogo colidem**, fica a que carrega o registro pessoal
