@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Board Game Wishlist</title>
+<style>
+:root{
+  --bg:#0b1020; --panel:#121a2b; --panel2:#172238; --text:#eef4ff; --muted:#9fb0c8;
+  --line:#283652; --accent:#78a9ff; --good:#62d394; --warn:#f6c85f; --bad:#ff7b7b; --chip:#1d2a44;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#0b1020 0%,#0f1628 100%);color:var(--text);
+  font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+main{max-width:1600px;margin:auto;padding:28px}
+h1{font-size:28px;margin:0 0 8px} .sub{color:var(--muted);margin-bottom:16px}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+#stats{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:12px;margin-bottom:18px}
+#stats div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;
+  color:var(--muted);font-size:12px}
+#stats b{display:block;font-size:22px;color:var(--text)}
+.barra{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.chip{padding:6px 11px;border-radius:999px;background:var(--chip);border:1px solid var(--line);
+  color:var(--text);font-size:12px}
+button.chip{cursor:pointer}
+.chip.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+select,button{background:var(--panel2);color:var(--text);border:1px solid var(--line);
+  padding:7px 11px;border-radius:10px;cursor:pointer;font-size:13px}
+.sep{flex:1}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;
+  display:flex;flex-direction:column;gap:9px}
+.card.descartado{opacity:.45}
+.card-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.nome{font-weight:700;font-size:16px}
+.src{font-size:11px;color:var(--muted);margin-top:2px}
+.acoes{display:flex;gap:4px;flex:none}
+.acoes button{padding:4px 8px;font-size:14px;line-height:1}
+.acoes .fav.on{color:var(--warn);border-color:var(--warn)}
+.specs{display:flex;flex-wrap:wrap;gap:6px}
+.specs span{background:var(--panel2);border:1px solid var(--line);border-radius:8px;
+  padding:3px 8px;font-size:12px;color:var(--muted)}
+.specs b{color:var(--text)}
+.dois{background:var(--panel2);border:1px solid var(--good);border-radius:8px;
+  padding:3px 8px;font-size:12px;color:var(--good)}
+.dois.ruim{border-color:var(--bad);color:var(--bad)}
+.dois.meio{border-color:var(--warn);color:var(--warn)}
+.br{display:inline-block;background:var(--panel2);border:1px solid var(--line);border-radius:8px;
+  padding:3px 8px;font-size:12px;color:var(--muted);white-space:normal}
+.br.released{border-color:var(--good);color:var(--good)}
+.br.announced{border-color:var(--accent);color:var(--accent)}
+.players{font-size:11px;color:var(--muted);margin-top:4px}
+.stars{white-space:nowrap;font-size:12px;color:var(--muted)}
+.card > .stars{white-space:normal}
+.evidence{margin-top:7px;white-space:normal;text-align:left}
+th button{font:inherit;color:inherit;border:0;background:none;padding:0;text-align:left;border-radius:0}
+.specs .dois{color:var(--good);border-color:var(--good)}
+.specs .dois.ruim{color:var(--bad);border-color:var(--bad)}
+.specs .dois.meio{color:var(--warn);border-color:var(--warn)}
+.verdito{font-size:13px}
+.buying{color:var(--accent);font-weight:700}
+.good{color:var(--good);font-weight:700}.warn{color:var(--warn);font-weight:700}.bad{color:var(--bad);font-weight:700}
+details{font-size:12px;color:var(--muted)}
+details summary{cursor:pointer;color:var(--accent)}
+details p{margin:6px 0 0}
+details b{color:var(--text)}
+#excluidos{margin-top:18px;background:var(--panel);border:1px solid var(--line);
+  border-radius:14px;padding:12px 16px}
+#excluidos ul{margin:10px 0 0;padding-left:18px}
+#excluidos li{margin-bottom:4px}
+#excluidos b{color:var(--text)}
+textarea.nota{width:100%;min-height:44px;background:var(--panel2);color:var(--text);
+  border:1px solid var(--line);border-radius:10px;padding:7px 9px;font:inherit;font-size:12px;resize:vertical}
+.wrap-tabela{overflow:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+table{width:100%;border-collapse:collapse;min-width:1400px}
+/* colunas de texto longo: sem largura minima o veredito vira uma coluna de 1 palavra */
+th:nth-child(7),th:nth-child(8),th:nth-child(10){min-width:200px}
+th:nth-child(10){min-width:260px}
+td .nome{font-size:15px}
+th,td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{position:sticky;top:0;background:#111a2d;text-align:left;font-size:12px;color:#c8d5e8;
+  z-index:1;cursor:pointer;white-space:nowrap}
+tr.descartado td{opacity:.45}
+tr:hover td{background:rgba(255,255,255,.025)}
+.num{text-align:center;white-space:nowrap}
+.vazio{color:var(--muted);padding:30px;text-align:center}
+footer{margin-top:18px;color:var(--muted);font-size:12px}
+@media(max-width:800px){
+  main{padding:14px} h1{font-size:21px}
+  #stats{grid-template-columns:repeat(2,1fr)}
+  .grid{grid-template-columns:1fr}
+}
+.shopping{min-width:220px;max-width:320px;font-size:12px;white-space:normal}
+.shopping-item{margin:0 0 10px}.shopping a{color:var(--accent)}
+.shopping small{display:block;color:var(--muted);margin-top:3px}
+.bgg-rank{display:block;font-size:11px;font-weight:400;line-height:1.4;white-space:normal}
+</style>
+</head>
+<body>
+<main>
+<h1>Board Game Wishlist</h1>
+<div class="sub"><span id="sub-count"></span> You mostly play <b>at 2</b>,
+so the priorities are: personal taste fit &rsaquo; quality at 2 &rsaquo; collection redundancy
+&rsaquo; mechanical uniqueness &rsaquo; game-night role &rsaquo; weight &rsaquo; playtime.<br><b>Purchase order does not use numerical ratings.</b> Qualitative preferences, 2-player fit and collection value set the order.</div>
+
+<div class="legend">
+  <span class="chip">&#128994; Buy / strong fit</span>
+  <span class="chip">&#128993; Try first / conditional</span>
+  <span class="chip">&#128308; Skip</span>
+  <span class="chip">&#128722; Already decided</span>
+  <span class="chip">Purchase priority considers collection value, not ratings</span>
+</div>
+
+<div id="stats"></div>
+
+<div class="barra">
+  <button class="chip" id="chip-fav">&#9733; want</button>
+  <button class="chip" id="chip-desc">dismissed</button>
+  <span class="sep"></span>
+  <select id="ordem" aria-label="Sort games">
+    <option value="bggRank">BGG overall rank</option>
+    <option value="bgg">BGG rating</option>
+    <option value="peso">weight</option>
+    <option value="tempoMax">playtime (maximum)</option>
+    <option value="melhor">BGG best player count</option>
+    <option value="novidade">uniqueness</option>
+    <option value="rank" selected>recommended purchase order</option>
+  </select>
+  <button id="dir"></button>
+  <button class="chip" id="chip-vista"></button>
+</div>
+
+<div id="lista"></div>
+
+<details id="excluidos"><summary></summary><ul></ul></details>
+
+<footer>
+Collection evidence was reconciled with your BGG collection export and session notes.
+BGG values are snapshots, not live data. Overall ranks were checked against indexed BGG pages on 2026-09-14 and may lag live ranks; n/a means no overall rank for that edition or expansion. Personal ratings are not shown and do not set the order; time sorting uses maximum listed duration.
+Recommended purchase order also considers 2-player fit, collection value and practical playing opportunities. Card-only
+games are deprioritized, games you previously owned and sold stay out unless you explicitly reconsider
+them, and heavy Euros only get in when they add enough to justify competing with existing favorites.
+Quality at 2 is a filter and a modifier, not the ranking by itself, and collection fit asks whether a
+game adds a useful new role &mdash; not just whether you'd enjoy it.
+Committed purchases keep their rank and follow the selected sort, but are excluded from undecided-candidate statistics.
+Viticulture, including Tuscany and visitor expansions, is excluded for insufficient collection value; the earlier sale reason remains uncertain. Rebellion remains excluded. Great Western Trail: Second Edition was removed at your request on 2026-09-14.
+Explicitly rejected games remain excluded regardless of their ratings.
+<br>&#9733;/&#10005;/notes stay in this browser's <code>localStorage</code> only.
+</footer>
+</main>
+<script>
+// tempo e score sao faixas [min,max]; novidade e a collection_uniqueness do relatorio.
+// `melhor` = melhor contagem segundo o BGG; `players` = faixa oficial da caixa.
+const JOGOS = [
+{"n": 1, "bggRank": 28, "bggUrl": "https://boardgamegeek.com/boardgame/266507", "tipo": "wishlist", "nome": "Clank! Legacy: Acquisitions Incorporated", "ano": 2019, "brasil": {"s": "announced", "txt": "Asmodee/Galápagos; no confirmed date (Ludopedia, checked 2026-09-18)."}, "bgg": 8.48, "peso": 2.74, "tempo": [90, 120], "melhor": "4", "players": "2–4", "jog": 4, "score": [9, 9], "novidade": 5, "novoTxt": "Legacy campaign and persistent narrative progression; 5/5 reflects its campaign role, not wholly new mechanisms", "dois": "good at 2", "v": "good", "veredito": "BUY", "razao": "The legacy campaign adds persistent narrative and exploration to familiar deck-building mechanisms. Its distinct campaign role supports first priority, provided both players want the commitment.", "overlap": "Clank!: Catacombs — the closest owned deck-building, exploration and push-your-luck comparison; Dune: Imperium and Lost Ruins of Arnak — deck-building.", "compete": "Clank!: Catacombs — exploration and deck-building sessions. Legacy also needs repeated campaign sessions.", "confidence": "Moderate", "evidence": "Owned Clank!: Catacombs 9.0 (4 plays); original Clank! 8.4 (6); Pandemic Legacy: Season 1 10.0 (9); Ticket to Ride Legacy 9.0 (13). Strong related-game evidence, but Legacy itself is unrated.", "preocupacao": "Substantial overlap with Catacombs; the campaign must justify another Clank! box and repeated sessions.", "shopping": [{"store": "Caixinha Boardgames", "status": "Not found", "url": null, "price": null, "pix": null, "note": ""}, {"store": "Playeasy", "status": "Not found", "url": null, "price": null, "pix": null, "note": ""}], "bggVotos": 11587, "bggRankChecked": "2026-09-29"},
+{"n": 2, "bggRank": null, "bggUrl": "https://boardgamegeek.com/boardgamecompilation/465819", "tipo": "wishlist", "nome": "Concordia: Special Edition", "ano": 2027, "brasil": {"s": "none", "txt": "No Brazilian edition announced for this edition; the base game had a RedBox/Buró release."}, "bgg": null, "bggNota": "Edition rating excluded from gameplay evaluation in your session notes; use your base-game experience as evidence.", "peso": 3.05, "tempo": [100, 100], "melhor": "3–4", "players": "1–5", "jog": 3, "score": null, "novidade": 4.5, "novoTxt": "Classic Euro design, card-driven action selection, elegant rules-to-depth ratio", "dois": "good at 2", "v": "good", "veredito": "BUY", "razao": "Provides substantial strategic depth without adding another extremely heavy modern Euro.", "overlap": "Yokohama — some network development and efficiency overlap.", "compete": "Five Tribes, Yokohama, The Castles of Burgundy.", "rating": 9.3, "ratingGame": "Concordia (base game)", "plays": 1, "evidence": "Base Concordia: your 9.3 after 1 logged play. Special Edition remains unrated; this is evidence for the underlying game, not an actual rating of this edition.", "shopping": [{"store": "Caixinha Boardgames", "status": "Not found", "url": null, "price": null, "pix": null, "note": "Only regular Concordia found; not the Special Edition on this list."}, {"store": "Playeasy", "status": "Not found", "url": null, "price": null, "pix": null, "note": ""}], "bggVotos": 865, "bggRankChecked": "2026-09-29"},
+{"n": 3, "bggRank": 191, "bggUrl": "https://boardgamegeek.com/boardgame/400366", "tipo": "wishlist", "nome": "Wondrous Creatures", "ano": 2024, "brasil": {"s": "announced", "txt": "Mosaico Jogos, as \"Criaturas Maravilhosas\"; no date and no store listing yet."}, "bgg": 8.03, "peso": 3.03, "tempo": [40, 80], "melhor": "2–3", "players": "1–4", "jog": 2, "score": [8.6, 8.6], "novidade": 3.5, "novoTxt": "Medium-weight engine building, excellent 2-player suitability, shorter strategic Euro option", "dois": "excellent at 2", "v": "good", "veredito": "GOOD BUY", "razao": "Some engine-building overlap exists, but excellent 2-player performance and the 40–80 minute duration give it a useful role.", "overlap": "Ark Nova — engine and tableau development; Lost Ruins of Arnak — engine building and action efficiency; Harmonies and newly owned Planet Unknown — some spatial optimization, with different core systems.", "compete": "The White Castle, Lost Ruins of Arnak, Harmonies, Planet Unknown — shorter strategic sessions.", "confidence": "Moderate", "evidence": "Owned Ark Nova 9.6, Lost Ruins of Arnak 9.0, Everdell 8.3 and Wyrmspan 8.3. Related systems support interest, but enjoyment varies; 8.6 remains an estimate.", "preocupacao": "Its shorter 2-player role is useful, but engine building and spatial optimization are already well represented.", "shopping": [{"store": "Caixinha Boardgames", "status": "Not found", "url": null, "price": null, "pix": null, "note": ""}, {"store": "Playeasy", "status": "Not found", "url": null, "price": null, "pix": null, "note": ""}], "bggVotos": 7559, "bggRankChecked": "2026-09-29"},
+{"n": 4, "bggRank": 56, "bggUrl": "https://boardgamegeek.com/boardgame/436217", "tipo": "candidato", "nome": "The Lord of the Rings: Fate of the Fellowship", "ano": 2025, "brasil": {"s": "released", "txt": "Galápagos, as \"O Senhor dos Anéis: Sina da Sociedade\"; already in Brazilian stores."}, "bgg": 8.34, "peso": 3.1, "tempo": [60, 150], "players": "1–5", "melhor": "3", "jog": 3, "dois": "good at 2", "score": null, "rating": 8.5, "plays": 1, "novidade": 4.5, "novoTxt": "Cooperative map-based crisis management, character abilities and a shared Middle-earth adventure; a useful role beyond another heavy Euro", "v": "good", "veredito": "GOOD CANDIDATE", "razao": "A useful cooperative role and good two-player fit support its place after Wondrous Creatures. A replay would help establish whether this previously owned game deserves shelf space again.", "preocupacao": "60–150 minutes. Previously owned; the sale reason is unknown. Consider whether it will displace existing cooperative games.", "overlap": "Low direct overlap with currently owned games. Bomb Busters, Dorfromantik and the LOTR trick-taking game share cooperation but use different core systems. The closest system comparison, Pandemic, is previously owned.", "compete": "Clank! Legacy — thematic adventure sessions; SETI, Brass: Birmingham and Galactic Cruise — longer game nights.", "evidence": "Your rating: 8.5 after 1 logged play. Pandemic 9.5 (6 plays) and Pandemic Legacy: Season 1 10.0 (9) support the system fit, but your direct Fate rating takes precedence. The collection export recommends 2 players and lists 3 as best. Actively reconsidered despite prior ownership; sale reason unknown.", "shopping": [{"store": "Caixinha Boardgames", "status": "Sold out", "url": "https://www.caixinhaboardgames.com.br/produtos/o-senhor-dos-aneis-a-sina-da-sociedade-um-jogo-pandemic-system/", "price": 599, "pix": 557.07, "note": ""}, {"store": "Playeasy", "status": "Sold out", "url": "https://www.playeasy.com.br/o-senhor-dos-aneis-sina-da-sociedade-um-jogo-pandemic-system", "price": null, "pix": null, "note": ""}], "bggVotos": 11943, "bggRankChecked": "2026-09-29"},
+{"n": 5, "bggRank": 505, "bggUrl": "https://boardgamegeek.com/boardgame/422732", "tipo": "wishlist", "nome": "Agent Avenue", "ano": 2024, "brasil": {"s": "announced", "txt": "Forjamundo, announced for 2026 alongside Riskit and Fantasmagória."}, "bgg": 7.51, "peso": 1.22, "tempo": [10, 20], "melhor": "2", "players": "2–4", "jog": 2, "score": [8.5, 8.5], "novidade": 5, "novoTxt": "Very quick 2-player game, bluffing, deduction", "dois": "excellent at 2", "v": "good", "veredito": "BUY", "razao": "Excellent at 2, very easy to table and mechanically distinct enough from the quick duel games you already own.", "overlap": "None significant.", "compete": "LOTR Duel, Watergate, Splendor Duel, Jaipur, Patchwork, Tag Team.", "confidence": "Low", "evidence": "Owned LOTR Duel 9.4 (11 plays), Watergate 9.2 (2), Splendor Duel 8.7 (4) and Jaipur 8.5 (6) support the quick-duel role. They do not directly establish your response to its bluffing. BUY reflects purchase value; 8.5 is tentative.", "preocupacao": "Bluffing fit is less certain than its practical 10–20 minute role; newly owned Tag Team already fills a quick-duel slot.", "shopping": [{"store": "Caixinha Boardgames", "status": "Not found", "url": null, "price": null, "pix": null, "note": ""}, {"store": "Playeasy", "status": "Not found", "url": null, "price": null, "pix": null, "note": ""}], "bggVotos": 7687, "bggRankChecked": "2026-09-29"},
+{"n": 6, "bggRank": 2940, "bggUrl": "https://boardgamegeek.com/boardgame/429845", "tipo": "wishlist", "nome": "Jisogi: Anime Studio Tycoon", "ano": 2025, "brasil": {"s": "none", "txt": "No Portuguese edition; the publisher store does not ship to Brazil, so import only."}, "bgg": 7.62, "bggNota": "early BGG data", "peso": 2.89, "tempo": [60, 120], "melhor": "3", "players": "1–4", "jog": 3, "score": [8.5, 8.9], "novidade": 4, "novoTxt": "Anime studio management theme, tycoon/business experience, medium-heavy Euro without 4+ complexity", "dois": "good at 2", "v": "good", "veredito": "GOOD CANDIDATE", "razao": "Strongly aligned with your Euro tastes, while having enough thematic and management identity to distinguish itself.", "overlap": "Galactic Cruise — engine and development systems; Ark Nova — tableau and engine development; Unconscious Mind — interconnected Euro-style development.", "compete": "The White Castle, Darwin's Journey, Galactic Cruise, Nippon: Zaibatsu.", "confidence": "Low", "evidence": "Owned Galactic Cruise 9.2, Ark Nova 9.6 and Unconscious Mind 9.0 offer broad Euro comparisons. No direct rating or written evidence that the anime theme improves your enjoyment; the existing range is provisional.", "preocupacao": "Broad taste fit is better supported than this specific game; thematic novelty alone does not establish a precise score.", "shopping": [{"store": "Caixinha Boardgames", "status": "Not found", "url": null, "price": null, "pix": null, "note": ""}, {"store": "Playeasy", "status": "Not found", "url": null, "price": null, "pix": null, "note": ""}], "bggVotos": 901, "bggRankChecked": "2026-09-29"},
+{"n": 7, "bggRank": 2843, "bggUrl": "https://boardgamegeek.com/boardgame/447776", "tipo": "wishlist", "nome": "The Game Makers", "ano": 2026, "brasil": {"s": "none", "txt": "Nothing announced for Brazil."}, "bgg": 7.54, "bggNota": "From your BGG collection export, checked 2026-09-14; early data for a 2026 release.", "peso": 2.94, "tempo": [60, 90], "tempoNota": "approximate; depends on player count", "melhor": "2–3", "players": "1–6", "jog": 2, "score": null, "confidence": "Low", "novidade": 4, "novoTxt": "A rotating warehouse governs forklift availability; components can fulfill game contracts or improve your factory.", "dois": "good at 2", "v": "warn", "veredito": "TRY FIRST", "razao": "Try before buying. Simultaneous factory development and forklift timing fit your Euro interests, but add less variety than a more interactive game.", "overlap": "Galactic Cruise, Ark Nova and Unconscious Mind — developing an efficient personal operation.", "compete": "Existing Euro games and the higher-priority wishlist candidates.", "evidence": "Added at your request on 2026-09-11. Qualitative collection fit only; no previous personal score used and no numerical enjoyment estimate assigned. <a href=\"https://go.boardgamearena.com/gamepanel?game=thegamemakers\">Rules and gameplay reference</a>. BGG data added 2026-09-14 from your collection export: weight 2.94, rating 7.53, 60–90 minutes, community best at 2–3 players; the two-player chip follows that vote.", "preocupacao": "Large table and storage footprint, limited direct interaction, and competition with existing engine builders. Try on Board Game Arena first.", "shopping": [], "bggVotos": 980, "bggRankChecked": "2026-09-29"},
+{"n": 8, "bggRank": 81, "bggRankChecked": "2026-09-29", "bggUrl": "https://boardgamegeek.com/boardgame/244521/the-quacks-of-quedlinburg", "tipo": "wishlist", "nome": "The Quacks of Quedlinburg", "ano": 2018, "brasil": {"s": "released", "txt": "Portuguese-language edition appears in Brazilian listings; store availability not checked (Compara Jogos, checked 2026-09-24)."}, "bgg": 7.8, "peso": 1.94, "tempo": [45, 45], "melhor": "4", "players": "2–4", "jog": 4, "score": null, "novidade": 4, "novoTxt": "Bag-building push-your-luck; a distinct light, simultaneous-play role without being a card-only game.", "dois": "good at 2; best with 4", "v": "warn", "veredito": "CONDITIONAL", "razao": "It fills a mechanism gap with tactile bag-building and a fun low-pressure group game. Your collection already has many light options, and the high luck and stronger 4-player experience make it a conditional buy.", "overlap": "No close owned bag-building equivalent; lighter group-game role overlaps broadly with Hitster, Flip 7, Spot it! and other quick accessible games.", "compete": "Light accessible group games; it is not a substitute for your medium-heavy strategy sessions.", "confidence": "Moderate", "evidence": "Added at your request on 2026-09-24. BGG snapshot: rating 7.8, overall rank 80, weight 1.94/5, 45 minutes, 2–4 players; community best at 4. Brazilian listing and BGG data: https://www.comparajogos.com.br/item/quacks.", "preocupacao": "Very light and luck-driven relative to your usual strategy games; best when the group wants a relaxed, simultaneous game.", "shopping": [], "bggVotos": 60317},
+{"n": 9, "bggRank": 309, "bggUrl": "https://boardgamegeek.com/boardgame/454103", "tipo": "wishlist", "nome": "Magical Athlete", "ano": 2025, "brasil": {"s": "announced", "txt": "Asmodee/Galápagos; no confirmed date (Ludopedia, checked 2026-09-18)."}, "bgg": 7.8, "peso": 1.22, "tempo": [30, 30], "melhor": "5–6", "players": "2–6", "jog": 5, "score": [7.3, 8], "novidade": 5, "novoTxt": "Chaotic social racing; a deliberate group-game purchase, with some role overlap with Hot Streak", "dois": "poor at 2", "v": "buying", "veredito": "COMMITTED", "razao": "Already committed, with its rank retained for comparison. Poor 2-player fit does not reopen this decision.", "overlap": "Hot Streak — shared racing and chaotic outcomes, with a different central system.", "compete": "Hot Streak (owned, rated 8.0) — social racing sessions.", "confidence": "Low", "evidence": "Owned Hot Streak 8.0 (2 plays); Camel Up 7.0 (8) and Jamaica 7.3 (1) give mixed related-game evidence. The existing estimate is tentative and does not reopen your committed purchase.", "shopping": [{"store": "Caixinha Boardgames", "status": "Not found", "url": null, "price": null, "pix": null, "note": ""}, {"store": "Playeasy", "status": "Not found", "url": null, "price": null, "pix": null, "note": ""}], "bggRankChecked": "2026-09-29"}
+];
+
+const EXCLUIDOS = [
+  [
+    "Arcs (base game)",
+    "already bought — now in the collection; bought together with The Blighted Reach in a promotion on 2026-09-18"
+  ],
+  [
+    "The Blighted Reach (Arcs expansion)",
+    "already bought — now in the collection; bought together with the base game in a promotion on 2026-09-18"
+  ],
+  [
+    "Civolution",
+    "removed at your request on 2026-09-15"
+  ],
+  [
+    "Great Western Trail: Second Edition",
+    "removed at your request on 2026-09-14; original-edition history: 9.8 after 2 plays"
+  ],
+  [
+    "Trajan",
+    "removed at your request on 2026-09-14; weaker collection fit: its ~3.6 weight sits between the lighter optimization games you play most (Five Tribes, The White Castle, The Castles of Burgundy) and the heavy-game nights; historical rating 9.3 after 2 plays"
+  ],
+  [
+    "Smartphone Inc.",
+    "removed: supports two players, but lower priority for our usual two-player sessions; Update 1.1 recommended if reconsidered"
+  ],
+  [
+    "Village (base game)",
+    "removed at your request on 2026-09-14; previously owned and sold (8.7 after 6 logged plays), and Trajan was preferred in a direct comparison"
+  ],
+  [
+    "Clinic: Deluxe Edition",
+    "removed at your request on 2026-09-12; rules overhead and competition with owned heavy Euros lower purchase priority"
+  ],
+  [
+    "Trismegistus (2026 edition)",
+    "removed from the wishlist at your request on 2026-09-12"
+  ],
+  [
+    "Gaia Project",
+    "owned — purchased by you on 2026-09-09; removed from purchase candidates"
+  ],
+  [
+    "Pipeline",
+    "removed from the wishlist by you on 2026-09-09; historical personal rating 9.0 after 1 logged play remains separate from purchase priority"
+  ],
+  [
+    "Revive",
+    "removed from the wishlist by you on 2026-09-09"
+  ],
+  [
+    "Speakeasy",
+    "removed by you to retain Gaia Project as the preferred heavy-game candidate; Speakeasy is unplayed"
+  ],
+  [
+    "Great Western Trail: New Zealand",
+    "removed by you after considering it as an alternative; Second Edition is also excluded"
+  ],
+  [
+    "Twilight Struggle",
+    "removed by you: you feel its design is outdated and no longer want to reacquire it; historical rating 9.2 after 1 play remains separate from purchase priority"
+  ],
+  [
+    "Survive the Island",
+    "removed by you: its strongest role is with 3–5 players, a low priority for mostly two-player sessions; earlier-edition rating 8.1 after 6 plays does not establish a need to reacquire"
+  ],
+  [
+    "Viticulture: Essential Edition",
+    "including Tuscany and visitor expansions — insufficient added value for the current collection; previously owned, sale reason uncertain"
+  ],
+  [
+    "Star Wars: Rebellion",
+    "previously owned — decided not to reacquire"
+  ],
+  [
+    "El Grande",
+    "already bought — now in the collection"
+  ],
+  [
+    "Planet Unknown",
+    "already bought — now in the collection"
+  ],
+  [
+    "Tag Team",
+    "already bought — now in the collection"
+  ],
+  [
+    "Compile: Main 1",
+    "watched gameplay videos and didn't like what you saw; card-only play is also a negative"
+  ],
+  [
+    "The Quest for El Dorado",
+    "removed from the active recommendation list"
+  ],
+  [
+    "The Druids of Edora",
+    "too redundant with games already in the collection"
+  ],
+  [
+    "Valheim: The Board Game",
+    "removed from the active table"
+  ],
+  [
+    "Brazil: Imperial",
+    "considered, but removed by you before reaching the active table"
+  ],
+  [
+    "Sky Team",
+    "previously owned and sold"
+  ],
+  [
+    "Forest Shuffle",
+    "previously owned and sold"
+  ],
+  [
+    "The Vale of Eternity",
+    "previously owned and sold"
+  ],
+  [
+    "Thunder Road: Vendetta",
+    "not a strong enough fit for mostly 2-player sessions"
+  ],
+  [
+    "Ready Set Bet",
+    "best with larger groups, poor fit for mostly 2-player sessions"
+  ],
+  [
+    "Zoo Vadis",
+    "does not support 2 players"
+  ],
+  [
+    "The Gang",
+    "does not support 2 players"
+  ],
+  [
+    "Nucleum",
+    "high redundancy with the heavy Euros you own"
+  ],
+  [
+    "Terra Mystica: Big Box",
+    "evaluated, but its strongest player counts are higher than your usual 2-player sessions"
+  ],
+  [
+    "Black Forest",
+    "lower collection value and redundancy"
+  ],
+  [
+    "Daybreak",
+    "removed from wishlist"
+  ],
+  [
+    "Age of Innovation",
+    "heavy-Euro redundancy"
+  ],
+  [
+    "Feya's Swamp",
+    "previously removed; reconsidered conceptually but not re-added"
+  ],
+  [
+    "Stupor Mundi",
+    "removed from wishlist"
+  ],
+  [
+    "A Place for All My Books",
+    "lighter spatial optimization is already well represented"
+  ],
+  [
+    "Bonsai",
+    "overlaps with Harmonies, Cascadia and Planet Unknown"
+  ],
+  [
+    "Horror on the Orient Express: The Board Game",
+    "evaluated, not added to the active list"
+  ],
+  [
+    "Avalon: The Riven Veil",
+    "evaluated, kept as a watch candidate rather than added"
+  ],
+  [
+    "Slay the Spire: The Board Game",
+    "removed at your request on 2026-09-26 after watching a gameplay video; it is not for you"
+  ],
+  [
+    "Ants",
+    "removed at your request on 2026-09-26"
+  ],
+  [
+    "Drillers",
+    "removed at your request on 2026-09-26"
+  ],
+  [
+    "Entropy",
+    "owned — purchased by you on 2026-09-30"
+  ]
+];
+
+const KEY = 'board-games:';
+const load = (k, d) => { try { return JSON.parse(localStorage.getItem(KEY + k)) ?? d; } catch { return d; } };
+const save = (k, v) => localStorage.setItem(KEY + k, JSON.stringify(v));
+
+JOGOS.forEach(g => {
+  g.id = (g.storageName ?? g.nome).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  g.tempoMax = g.tempo[1];
+  g.rank = g.n ?? 99;
+  g.estrelas = '★'.repeat(Math.floor(g.novidade)) + (g.novidade % 1 ? '½' : '');
+});
+
+// padrao: ordem da wishlist por rank, com a compra ja decidida no fim.
+const st = { fav: false, desc: false, ordem: 'rank', dir: 1, tabela: innerWidth > 800 };
+
+const fmt = f => f[0] === f[1] ? f[0] : f[0] + '–' + f[1];
+
+// farol do veredito: verde compra, amarelo condicional, vermelho passa, check ja tem.
+const FAROL = { good: '🟢', warn: '🟡', bad: '🔴', buying: '🛒' };
+const bggHTML = g => (g.bgg == null ? 'n/a' : (g.bggAprox ? '~' : '') + g.bgg)
+  + (g.bggNota ? `<abbr title="${g.bggNota}">*</abbr>` : '')
+  + `<span class="bgg-rank" title="BGG overall rank snapshot checked ${g.bggRankChecked || '2026-09-14'}; may change">${g.bggRank == null ? 'Overall: n/a' : 'Overall #' + g.bggRank.toLocaleString('en-US')}</span>`;
+const BR_LABEL = { released: 'BR edition out', announced: 'BR edition announced', none: 'No BR edition' };
+const brasilHTML = g => `<span class="br ${g.brasil.s}" title="${escapeHTML(g.brasil.txt)}">${BR_LABEL[g.brasil.s]}</span>`;
+const doisHTML = g => g.dois
+  ? `<span class="dois ${/poor/.test(g.dois) ? 'ruim' : /fair/.test(g.dois) ? 'meio' : ''}">${g.dois}</span>` : '';
+const vereditoHTML = g => `${FAROL[g.v]} <span class="${g.v}">${g.veredito}.</span> ${g.razao}`
+  + (g.preocupacao ? `<div class="players"><b>Main concern:</b> ${g.preocupacao}</div>` : '');
+
+const escapeHTML = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
+const evidenciaHTML = g => '<details class="evidence"><summary>Evidence</summary><p>' + g.evidence + '</p></details>';
+
+function filtrar() {
+  return JOGOS.filter(g => {
+    if ((load('desc:' + g.id, false)) !== st.desc) return false;
+    if (st.fav && !load('fav:' + g.id, false)) return false;
+    return true;
+  });
+}
+
+const CHAVE = { bgg: g => g.bgg, peso: g => g.peso,
+                tempoMax: g => g.tempoMax, melhor: g => g.jog, novidade: g => g.novidade,
+                rank: g => g.rank, bggRank: g => g.bggRank };
+const ordenar = l => l.slice().sort((a, b) => {
+  const x = CHAVE[st.ordem](a), y = CHAVE[st.ordem](b);
+  if (x == null || y == null) return x == null ? (y == null ? 0 : 1) : -1;
+  return (typeof x === 'string' ? x.localeCompare(y) : x - y) * st.dir || a.rank - b.rank;
+});
+function sortBy(key, toggle = false) {
+  st.dir = toggle && st.ordem === key ? -st.dir : ['bgg', 'novidade'].includes(key) ? -1 : 1;
+  st.ordem = key;
+  render();
+}
+const median = values => {
+  const v = values.slice().sort((a, b) => a - b), i = Math.floor(v.length / 2);
+  return v.length ? (v.length % 2 ? v[i] : (v[i - 1] + v[i]) / 2) : null;
+};
+function stats() {
+  const vis = filtrar(), candidates = vis.filter(g => g.v !== 'buying');
+  const weight = median(candidates.map(g => g.peso).filter(v => v != null));
+  document.getElementById('stats').innerHTML = `
+    <div>candidates shown<b>${candidates.length}</b></div>
+    <div>committed shown<b>${vis.length - candidates.length}</b></div>
+    <div>median candidate weight<b>${weight == null ? '—' : weight.toFixed(2)}</b></div>
+    <div>wanted candidates shown<b>${candidates.filter(g => load('fav:' + g.id, false)).length}</b></div>`;
+}
+
+const brl = value => value.toLocaleString('pt-BR', {style:'currency',currency:'BRL'});
+function shoppingHTML(g) {
+  if (!g.shopping.length) return '<div class="shopping">Stores and prices not checked for this addition.</div>';
+  return '<div class="shopping">' + g.shopping.map(o => '<div class="shopping-item"><b>' + escapeHTML(o.store) + '</b> · <span class="' + (o.status === 'Available' ? 'good' : '') + '">' + escapeHTML(o.status) + '</span>'
+    + (o.price != null ? '<div>' + brl(o.price) + ' · <b>' + brl(o.pix) + ' Pix</b></div>' : '')
+    + (o.status === 'Sold out' && o.price != null ? '<small>Listed price; unavailable for purchase.</small>' : '')
+    + (o.note ? '<small>' + escapeHTML(o.note) + '</small>' : '')
+    + (o.url ? '<a href="' + escapeHTML(o.url) + '" target="_blank" rel="noopener noreferrer">View product ↗</a>' : '') + '</div>').join('')
+    + '<small>Checked 09 Sep 2026 · shipping excluded.<br>Not found = no matching listing located. Prices and stock may change.</small></div>';
+}
+
+function cardHTML(g) {
+  const fav = load('fav:' + g.id, false), desc = load('desc:' + g.id, false);
+  return `<div class="card ${desc ? 'descartado' : ''}" data-id="${g.id}">
+    <div class="card-top">
+      <div>
+        <div class="nome">${g.nome}</div>
+        <div class="src">Purchase priority #${g.n}${g.v === 'buying' ? ' · Committed purchase' : ''} · ${g.ano}</div>
+      </div>
+      <div class="acoes">
+        <button class="fav ${fav ? 'on' : ''}" title="want">&#9733;</button>
+        <button class="descartar" title="${desc ? 'restore' : 'dismiss'}">${desc ? '&#8634;' : '&#10005;'}</button>
+      </div>
+    </div>
+    <div class="specs">
+      <span>BGG <b>${bggHTML(g)}</b></span>
+      <span>weight <b>${(g.peso == null ? 'n/a' : g.peso.toFixed(2))}</b></span>
+      <span><b>${fmt(g.tempo)}</b> min${g.tempoNota ? " · " + g.tempoNota : ""}</span>
+      <span>best at <b>${g.melhor}</b>${g.players ? ' of ' + g.players : ''}</span>
+      ${doisHTML(g)}
+      ${brasilHTML(g)}
+    </div>
+    <div class="players">${g.brasil.txt}</div>
+    <div class="stars">${g.estrelas} ${g.novoTxt}</div>
+    <div class="verdito">${vereditoHTML(g)}</div>
+    <details open><summary>Stores &amp; prices</summary>${shoppingHTML(g)}</details>
+    <details><summary>overlap and competition</summary>
+      <p><b>Overlap:</b> ${g.overlap}</p>
+      <p><b>Same game night:</b> ${g.compete}</p>
+    </details>
+    ${evidenciaHTML(g)}
+    <textarea class="nota" placeholder="notes...">${escapeHTML(load('nota:' + g.id, ''))}</textarea>
+  </div>`;
+}
+
+const COLS = [['rank', '#', 1], ['nome', 'Game', 0], ['bgg', 'BGG', 1],
+  ['peso', 'Weight', 1], ['tempoMax', 'Playtime', 1], ['melhor', 'Best count', 1],
+  ['overlap', 'Mechanical overlap with owned games', 0],
+  ['compete', 'Same-game-night competitors', 0], ['novidade', 'Adds something new?', 0],
+  ['veredito', 'Verdict + reason', 0]];
+
+function celula(g, col) {
+  if (col === 'tempoMax') return fmt(g.tempo) + 'm';
+  if (col === 'bgg') return bggHTML(g);
+  if (col === 'peso') return (g.peso == null ? 'n/a' : g.peso.toFixed(2));
+  if (col === 'novidade') return `<span class="stars">${g.estrelas}</span> ${g.novoTxt}`;
+  if (col === 'nome') return `<div class="nome">${g.nome}</div><div class="players">${g.ano}</div><div style="margin-top:5px">${brasilHTML(g)}</div>`;
+  if (col === 'rank') return g.n ?? '—';
+  if (col === 'melhor') return g.melhor
+    + (g.players ? `<div class="players">of ${g.players}</div>` : '')
+    + (g.dois ? `<div style="margin-top:5px">${doisHTML(g)}</div>` : '');
+  if (col === 'veredito') return vereditoHTML(g) + evidenciaHTML(g);
+  return g[col];
+}
+
+function tabelaHTML(l) {
+  return `<div class="wrap-tabela"><table><thead><tr>${
+    COLS.map(c => `<th scope="col"${CHAVE[c[0]] ? ' aria-sort="' + (st.ordem === c[0] ? (st.dir > 0 ? 'ascending' : 'descending') : 'none') + '"' : ''}>${CHAVE[c[0]] ? `<button data-col="${c[0]}">${c[1]}${st.ordem === c[0] ? (st.dir > 0 ? ' &uarr;' : ' &darr;') : ''}</button>` : c[1]}</th>`).join('')
+  }</tr></thead><tbody>${l.map(g => {
+    const desc = load('desc:' + g.id, false);
+    return `<tr class="${desc ? 'descartado' : ''}" data-id="${g.id}">${
+      COLS.map(c => `<td class="${c[2] ? 'num' : ''}">${celula(g, c[0])}</td>`).join('')
+    }</tr>`;
+  }).join('')}</tbody></table></div>`;
+}
+
+const ATUALIZADO = '2026-09-30';
+function subCount() {
+  const cand = JOGOS.filter(g => g.v !== 'buying').length, comp = JOGOS.length - cand;
+  return `Updated ${ATUALIZADO} \u00b7 ${cand} candidate${cand === 1 ? '' : 's'}, `
+    + `${comp} committed purchase${comp === 1 ? '' : 's'}, ${EXCLUIDOS.length} out of the running.`;
+}
+
+function render() {
+  document.getElementById('sub-count').textContent = subCount();
+  document.getElementById('ordem').value = st.ordem;
+  document.getElementById('dir').innerHTML = st.dir > 0 ? '&uarr; ascending' : '&darr; descending';
+  document.getElementById('chip-fav').setAttribute('aria-pressed', st.fav);
+  document.getElementById('chip-desc').setAttribute('aria-pressed', st.desc);
+  const l = ordenar(filtrar());
+  document.getElementById('lista').innerHTML = !l.length
+    ? '<div class="vazio">No games match these filters.</div>'
+    : st.tabela ? tabelaHTML(l) : '<div class="grid">' + l.map(cardHTML).join('') + '</div>';
+  stats();
+}
+
+document.addEventListener('click', e => {
+  if (e.target.id === 'chip-fav') { st.fav = !st.fav; e.target.classList.toggle('on'); return render(); }
+  if (e.target.id === 'chip-desc') { st.desc = !st.desc; e.target.classList.toggle('on'); return render(); }
+  if (e.target.id === 'chip-vista') { st.tabela = !st.tabela;
+    e.target.textContent = st.tabela ? 'Cards' : 'Table'; e.target.classList.toggle('on'); return render(); }
+  const sortButton = e.target.closest('button[data-col]');
+  if (sortButton) return sortBy(sortButton.dataset.col, true);
+  // Os botões de favorito e descarte ficam nos cards.
+  const alvo = e.target.closest('[data-id]');
+  if (!alvo) return;
+  if (e.target.closest('.fav')) { save('fav:' + alvo.dataset.id, !load('fav:' + alvo.dataset.id, false)); return render(); }
+  if (e.target.closest('.descartar')) { save('desc:' + alvo.dataset.id, !load('desc:' + alvo.dataset.id, false)); return render(); }
+});
+
+document.getElementById('ordem').addEventListener('change', e => sortBy(e.target.value));
+document.getElementById('dir').addEventListener('click', e => {
+  st.dir = -st.dir;
+  render();
+});
+document.addEventListener('input', e => {
+  if (e.target.classList.contains('nota'))
+    save('nota:' + e.target.closest('[data-id]').dataset.id, e.target.value);
+});
+
+const ex = document.getElementById('excluidos');
+ex.querySelector('summary').textContent = `${EXCLUIDOS.length} games out of this round`;
+ex.querySelector('ul').innerHTML = EXCLUIDOS.map(([n, m]) => `<li><b>${n}</b> — ${m}</li>`).join('');
+
+const vista = document.getElementById('chip-vista');
+vista.textContent = st.tabela ? 'Cards' : 'Table';
+vista.classList.toggle('on', st.tabela);
+render();
+
+// Self-check: open with #test, then inspect the console. No saved preferences are changed.
+if (location.hash === '#test') {
+  const check = (ok, message) => { if (!ok) throw new Error(message); };
+  JOGOS.forEach(g => {
+    check(!g.shopping.length || ['Caixinha Boardgames','Playeasy'].every(store => g.shopping.some(o => o.store === store)), 'Missing store: ' + g.nome);
+    check(g.shopping.every(o => ['Available','Sold out','Not found'].includes(o.status) && (!o.url || /^https:\/\/www\.(caixinhaboardgames|playeasy)\.com\.br\//.test(o.url)) && (o.price == null || (o.price > 0 && o.pix > 0 && o.pix <= o.price))), 'Invalid offer');
+    check(cardHTML(g).includes(shoppingHTML(g)) && !tabelaHTML([g]).includes('shopping') && !tabelaHTML([g]).includes('class="fav') && COLS.length === 10, 'Stores and actions should remain only in cards');
+  });
+  check(!JOGOS.some(g => g.nome.startsWith('Arcs') || g.nome.startsWith('The Blighted Reach')) && ['Arcs (base game)', 'The Blighted Reach (Arcs expansion)'].every(nome => EXCLUIDOS.some(([n]) => n === nome)), 'Arcs and its campaign must stay excluded as purchases');
+  check(JOGOS.length === 9 && JOGOS.filter(g => g.v !== 'buying').length === 8, 'Expected 8 candidate options and 1 commitment');
+  check(EXCLUIDOS.length === 48 && EXCLUIDOS.some(([name]) => name === 'Star Wars: Rebellion') && !JOGOS.some(g => g.nome === 'Star Wars: Rebellion'), 'Rebellion must stay excluded');
+  check(JOGOS.map(g => g.nome).join(' | ') === 'Clank! Legacy: Acquisitions Incorporated | Concordia: Special Edition | Wondrous Creatures | The Lord of the Rings: Fate of the Fellowship | Agent Avenue | Jisogi: Anime Studio Tycoon | The Game Makers | The Quacks of Quedlinburg | Magical Athlete', 'Expected purchase order excluding historical ratings');
+  check(new Set(JOGOS.map(g => g.id)).size === 9, 'Duplicate ids');
+  check(JOGOS.filter(g => g.v !== 'buying').every((g, i) => g.n === i + 1), 'Purchase priorities must be 1–8');
+  const committed = JOGOS.find(g => g.v === 'buying');
+  check(committed.nome === 'Magical Athlete' && committed.n === 9, 'Commitment must retain rank 9');
+  check(celula(committed, 'rank') === 9 && cardHTML(committed).includes('Purchase priority #9 · Committed purchase'), 'Committed rank must appear in both views');
+  JOGOS.forEach(g => {
+    check(!(g.rating != null && g.score != null), 'Exactly one rating or estimate: ' + g.nome);
+    check(g.tempo[0] <= g.tempo[1] && (!g.score || g.score[0] <= g.score[1]), 'Inverted range: ' + g.nome);
+    check((g.peso == null || (g.peso > 0 && g.peso < 5)), 'Invalid numbers: ' + g.nome);
+    check(g.bgg == null || (g.bgg > 0 && g.bgg <= 10), 'Invalid BGG rating');
+    check(FAROL[g.v] && g.evidence, 'Missing verdict or evidence');
+    check(cardHTML(g).includes(evidenciaHTML(g)) && celula(g, 'veredito').includes(evidenciaHTML(g)), 'Evidence missing from a view');
+  });
+  check(!JOGOS.some(g => g.nome === 'Trajan') && EXCLUIDOS.some(([name]) => name === 'Trajan'), 'Trajan must stay excluded');
+  check(JOGOS.find(g => g.nome === 'Concordia: Special Edition').ratingGame === 'Concordia (base game)', 'Edition must be labeled');
+  check(!JOGOS.some(g => g.nome.startsWith('Viticulture')) && EXCLUIDOS.some(([name]) => name.startsWith('Viticulture')), 'Viticulture must stay excluded');
+  const gwt = JOGOS.find(g => g.nome === 'Great Western Trail: Second Edition');
+  check(!gwt && EXCLUIDOS.some(([name]) => name === 'Great Western Trail: Second Edition'), 'GWT must stay excluded');
+  check(!JOGOS.some(g => g.nome === 'Gaia Project') && EXCLUIDOS.some(([name, reason]) => name === 'Gaia Project' && reason.startsWith('owned')), 'Purchased Gaia must be marked owned');
+  const fellowship = JOGOS.find(g => g.nome === 'The Lord of the Rings: Fate of the Fellowship');
+  check(fellowship?.n === 4 && fellowship.rating === 8.5 && fellowship.plays === 1 && fellowship.score === null, 'Fellowship must use your actual rating at priority 4');
+  check(!JOGOS.some(g => g.nome === 'Twilight Struggle') && EXCLUIDOS.some(([name]) => name === 'Twilight Struggle'), 'Twilight Struggle must stay excluded');
+  check(!JOGOS.some(g => g.nome === 'Revive') && EXCLUIDOS.some(([name]) => name === 'Revive'), 'Revive must stay excluded');
+  check(!JOGOS.some(g => g.nome === 'Survive the Island') && EXCLUIDOS.some(([name]) => name === 'Survive the Island'), 'Survive must stay excluded');
+  check(!JOGOS.some(g => g.nome === 'Speakeasy') && EXCLUIDOS.some(([name]) => name === 'Speakeasy'), 'Speakeasy must stay excluded');
+  check(!JOGOS.some(g => g.nome === 'Clinic: Deluxe Edition') && EXCLUIDOS.some(([name]) => name === 'Clinic: Deluxe Edition'), 'Clinic must stay excluded');
+  check(!JOGOS.some(g => g.nome === 'Pipeline') && EXCLUIDOS.some(([name]) => name === 'Pipeline'), 'Pipeline must stay excluded');
+  check(!JOGOS.some(g => g.nome.startsWith('Village')) && EXCLUIDOS.some(([name]) => name.startsWith('Village')), 'Village must stay excluded');
+  check(!JOGOS.some(g => g.nome.startsWith('Trismegistus')) && EXCLUIDOS.some(([name]) => name.startsWith('Trismegistus')), 'Trismegistus must stay excluded');
+  const nz = JOGOS.find(g => g.nome === 'Great Western Trail: New Zealand');
+  check(!nz && EXCLUIDOS.some(([name]) => name === 'Great Western Trail: New Zealand'), 'New Zealand must stay excluded');
+  check(JOGOS.every(g => g.bggVotos == null || Number.isInteger(g.bggVotos) && g.bggVotos > 0), 'BGG vote counts must be positive integers where recorded');
+  check(subCount() === 'Updated 2026-09-30 \u00b7 8 candidates, 1 committed purchase, 48 out of the running.' && document.querySelector('#sub-count').textContent === subCount(), 'Subtitle counts must be derived from the data, not hardcoded');
+  check(median([1, 4, 2, 3]) === 2.5 && median([]) === null, 'Median calculation');
+  check(escapeHTML('</textarea><script>') === '&lt;/textarea&gt;&lt;script&gt;', 'Notes must remain text');
+  check(!COLS.some(c => c[0] === 'personalScore') && !CHAVE.personalScore && !document.querySelector('#ordem option[value="personalScore"]'), 'Personal rating column must stay removed');
+  check(JOGOS.every(g => g.bggRank == null || (Number.isInteger(g.bggRank) && g.bggRank > 0)), 'BGG overall ranks must be positive integers');
+  check(bggHTML(JOGOS.find(g => g.nome.startsWith('Clank!'))).includes('Overall #28') && bggHTML(JOGOS.find(g => g.nome === 'Concordia: Special Edition')).includes('Overall: n/a'), 'BGG rank display must distinguish ranked games and unranked editions');
+  check(!JOGOS.some(g => g.nome === 'Entropy') && EXCLUIDOS.some(([name, reason]) => name === 'Entropy' && reason.startsWith('owned')), 'Purchased Entropy must be marked owned');
+  check(!JOGOS.some(g => g.nome === 'Slay the Spire: The Board Game') && EXCLUIDOS.some(([name, reason]) => name === 'Slay the Spire: The Board Game' && reason.includes('not for you')), 'Slay the Spire must remain excluded after your video review');
+  check(!JOGOS.some(g => g.nome === 'Drillers') && EXCLUIDOS.some(([name]) => name === 'Drillers'), 'Drillers must stay excluded after your removal request');
+  check(!JOGOS.some(g => g.nome === 'Ants') && EXCLUIDOS.some(([name]) => name === 'Ants'), 'Ants must stay excluded after your removal request');
+  check(!JOGOS.some(g => g.nome === 'Civolution') && EXCLUIDOS.some(([name]) => name === 'Civolution'), 'Civolution must stay excluded');
+  const previous = { ...st };
+  for (const key of Object.keys(CHAVE)) {
+    for (const dir of [1, -1]) {
+      st.ordem = key; st.dir = dir;
+      const sorted = ordenar(JOGOS);
+      const values = sorted.map(CHAVE[key]);
+      const valid = values.filter(v => v != null);
+      check(values.slice(0, valid.length).every(v => v != null), 'Missing values must sort last');
+      check(valid.every((v, i) => !i || (typeof v === 'string' ? valid[i - 1].localeCompare(v) : valid[i - 1] - v) * dir <= 0), 'Sort failed: ' + key);
+    }
+  }
+  sortBy('bggRank');
+  check(st.dir === 1 && ordenar(JOGOS)[0].bggRank === 28, 'BGG overall rank must default to best rank first');
+  sortBy('peso'); sortBy('peso', true);
+  check(st.dir === -1, 'Header must toggle direction');
+  sortBy('rank');
+  check(st.dir === 1 && ordenar(JOGOS)[0].n === 1, 'Dropdown must restore recommended order');
+  Object.assign(st, previous); render();
+  check(JOGOS.every(g => Number.isInteger(g.ano) && g.ano > 1900 && celula(g, 'nome').includes(String(g.ano)) && cardHTML(g).includes(' · ' + g.ano)), 'Every game needs a BGG release year in both views');
+  check(JOGOS.every(g => g.brasil && BR_LABEL[g.brasil.s] && g.brasil.txt && celula(g, 'nome').includes(BR_LABEL[g.brasil.s]) && cardHTML(g).includes(g.brasil.txt)), 'Every game needs a Brazilian-edition status in both views');
+  console.log('Board-game checks passed');
+}
+</script>
+</body>
+</html>
