@@ -29,6 +29,10 @@ Atenção a dois detalhes do export:
   comprou** — é diferente de "comprou e vendeu". Essa distinção já foi confundida.
 - Há **linhas duplicadas** (o mesmo `objectid` aparece duas vezes, às vezes com notas diferentes).
   Deduplicar por `objectid` antes de somar partidas.
+- **O export atrasa em relação às compras.** Um jogo comprado depois do último download aparece com
+  `own=0`. A compra fica registrada no `EXCLUIDOS` do `index.html` com motivo começando em `owned` ou
+  `already bought`; `designers.html` usa isso como fallback de posse. Foi o caso do Entropy, que
+  aparecia como "removido da wishlist" sendo que tinha acabado de ser comprado.
 
 ## API do BGG
 
@@ -79,6 +83,18 @@ melhor-com-2 tem mediana de 6,5 partidas contra 2,0 de melhor-com-3+. **Nos jogo
 **Deckbuilder competitivo funciona; cooperativo não.** Competitivos: Clank! 6 partidas, Dune: Imperium 5,
 Clank!: Catacombs 5, SW Deckbuilding 5, Arnak 4. Cooperativos: Aeon's End (peso 2,93) e Marvel Champions
 (2,96), uma partida cada, nenhum comprado.
+
+## Uma entrada por jogo em `designers.html`
+
+Edição alternativa e expansão **não** entram ao lado do jogo base: Darwin's Journey não convive com a
+Collector's Edition nem com a Fireland; SETI não convive com Space Agencies; Rococo: Deluxe substitui
+o Rococo base. Quando nenhuma versão é da coleção, fica a de mais votos no BGG (Stockpile sobre a Epic
+Edition, Kraftwagen sobre a Age of Engineering). Glen More II: Chronicles substitui o Glen More por ser
+reimplementação. Há autoteste cobrindo cada um desses pares.
+
+**Status de wishlist não pertence a essa página.** Ela responde "o que falta deste catálogo", não "o
+que você decidiu sobre isso" — um jogo descartado da wishlist continua sendo uma lacuna do catálogo, e
+misturar as duas coisas já produziu uma linha errada.
 
 ## Editando os dados
 

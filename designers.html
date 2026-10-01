@@ -51,7 +51,6 @@ th{position:sticky;top:0;background:#111a2d;text-align:left;font-size:12px;color
 th button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
 tr:hover td{background:rgba(255,255,255,.025)}
 tr.tem td{background:rgba(98,211,148,.07)}
-tr.fora td{opacity:.5}
 .nome{font-weight:700;font-size:15px}
 .meta{font-size:11px;color:var(--muted);margin-top:3px}
 .num{text-align:center;white-space:nowrap}
@@ -93,7 +92,7 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}
   <button class="chip" id="chip-leves">weight &le; 3.35 only</button>
 </div>
 <div id="saida"></div>
-<footer>BGG snapshot taken 2026-10-01 via the site&rsquo;s own API. Your ratings and plays come from the collection export. Weights and ratings drift.</footer>
+<footer>BGG snapshot taken 2026-10-01 via the site&rsquo;s own API. Your ratings and plays come from the collection export of 2026-10-01. Weights and ratings drift.</footer>
 </main>
 <script>
 const DESIGNERS = {
@@ -104,79 +103,71 @@ const DESIGNERS = {
 };
 
 const JOGOS = [
-{"id": "445048", "tabs": ["holek"], "nome": "SETI: Space Agencies", "ano": 2025, "bgg": 8.86, "votos": 2282, "peso": 3.75, "jog": [1, 4], "tempo": [40, 160], "nota": 9.7, "partidas": 0, "st": "own", "fora": null},
-{"id": "418059", "tabs": ["holek"], "nome": "SETI: Search for Extraterrestrial Intelligence", "ano": 2024, "bgg": 8.41, "votos": 22354, "peso": 3.84, "jog": [1, 4], "tempo": [40, 160], "nota": 9.7, "partidas": 5, "st": "own", "fora": null},
-{"id": "391137", "tabs": ["otoole"], "nome": "Galactic Cruise", "ano": 2025, "bgg": 8.28, "votos": 8125, "peso": 3.98, "jog": [1, 4], "tempo": [90, 150], "nota": 9.2, "partidas": 3, "st": "own", "fora": null},
-{"id": "296100", "tabs": ["cramer", "otoole"], "nome": "Rococo: Deluxe Edition", "ano": 2020, "bgg": 8.17, "votos": 4521, "peso": 3.06, "jog": [1, 5], "tempo": [60, 120], "nota": 9.2, "partidas": 8, "st": "own", "fora": null},
-{"id": "274364", "tabs": ["cramer"], "nome": "Watergate", "ano": 2019, "bgg": 7.7, "votos": 14665, "peso": 2.3, "jog": [2, 2], "tempo": [30, 60], "nota": 9.2, "partidas": 2, "st": "own", "fora": null},
-{"id": "161533", "tabs": ["otoole"], "nome": "Lisboa", "ano": 2017, "bgg": 8.16, "votos": 13141, "peso": 4.56, "jog": [1, 4], "tempo": [60, 120], "nota": 9.0, "partidas": 1, "st": "played", "fora": null},
-{"id": "322289", "tabs": ["mangone"], "nome": "Darwin's Journey", "ano": 2023, "bgg": 8.09, "votos": 12882, "peso": 3.91, "jog": [1, 4], "tempo": [60, 120], "nota": 9.0, "partidas": 2, "st": "own", "fora": null},
-{"id": "144344", "tabs": ["cramer"], "nome": "Rococo", "ano": 2013, "bgg": 7.58, "votos": 9643, "peso": 3.09, "jog": [2, 5], "tempo": [60, 120], "nota": 9.0, "partidas": 2, "st": "played", "fora": null},
-{"id": "256730", "tabs": ["otoole"], "nome": "Pipeline", "ano": 2019, "bgg": 7.53, "votos": 5683, "peso": 3.91, "jog": [2, 4], "tempo": [60, 120], "nota": 9.0, "partidas": 1, "st": "played", "fora": "removed from the wishlist by you on 2026-09-09; historical personal rating 9.0 after 1 logged play remains separate from purchase priority"},
-{"id": "244711", "tabs": ["mangone"], "nome": "Newton", "ano": 2018, "bgg": 7.49, "votos": 8143, "peso": 3.37, "jog": [1, 4], "tempo": [90, 90], "nota": 8.9, "partidas": 1, "st": "played", "fora": null},
-{"id": "284378", "tabs": ["otoole"], "nome": "Kanban EV", "ano": 2020, "bgg": 8.37, "votos": 10662, "peso": 4.3, "jog": [1, 4], "tempo": [60, 180], "nota": 8.8, "partidas": 1, "st": "sold", "fora": null},
-{"id": "408180", "tabs": ["mangone"], "nome": "Shackleton Base: A Journey to the Moon", "ano": 2024, "bgg": 8.01, "votos": 4712, "peso": 3.93, "jog": [1, 4], "tempo": [60, 120], "nota": 8.8, "partidas": 1, "st": "own", "fora": null},
-{"id": "393333", "tabs": ["holek"], "nome": "Galileo Galilei", "ano": 2024, "bgg": 7.64, "votos": 3398, "peso": 3.03, "jog": [1, 4], "tempo": [50, 100], "nota": 8.6, "partidas": 1, "st": "own", "fora": null},
-{"id": "125153", "tabs": ["otoole"], "nome": "The Gallerist", "ano": 2015, "bgg": 8, "votos": 16775, "peso": 4.21, "jog": [1, 4], "tempo": [60, 150], "nota": 8.5, "partidas": 1, "st": "played", "fora": null},
-{"id": "62219", "tabs": ["otoole"], "nome": "Dominant Species", "ano": 2010, "bgg": 7.8, "votos": 22594, "peso": 4.04, "jog": [2, 6], "tempo": [120, 240], "nota": 8.5, "partidas": 1, "st": "played", "fora": null},
-{"id": "310873", "tabs": ["otoole"], "nome": "Carnegie", "ano": 2022, "bgg": 7.95, "votos": 12270, "peso": 3.82, "jog": [1, 4], "tempo": [90, 120], "nota": 8.4, "partidas": 1, "st": "played", "fora": null},
-{"id": "328413", "tabs": ["mangone"], "nome": "Darwin's Journey: Collector's Edition", "ano": 2023, "bgg": 8.55, "votos": 1652, "peso": 3.87, "jog": [1, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "337627", "tabs": ["otoole"], "nome": "Voidfall", "ano": 2023, "bgg": 8.5, "votos": 7454, "peso": 4.62, "jog": [1, 4], "tempo": [90, 240], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "375459", "tabs": ["otoole"], "nome": "Speakeasy", "ano": 2025, "bgg": 8.42, "votos": 4600, "peso": 4.43, "jog": [1, 4], "tempo": [50, 180], "nota": null, "partidas": 0, "st": "none", "fora": "removed by you to retain Gaia Project as the preferred heavy-game candidate; Speakeasy is unplayed"},
-{"id": "265537", "tabs": ["cramer"], "nome": "Weimar: The Fight for Democracy", "ano": 2023, "bgg": 8.31, "votos": 865, "peso": 4, "jog": [4, 4], "tempo": [180, 360], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "365448", "tabs": ["mangone"], "nome": "Darwin's Journey: Fireland Expansion", "ano": 2023, "bgg": 8.22, "votos": 914, "peso": 4.19, "jog": [1, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "184267", "tabs": ["otoole"], "nome": "On Mars", "ano": 2020, "bgg": 8.16, "votos": 15313, "peso": 4.62, "jog": [1, 4], "tempo": [90, 150], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "276182", "tabs": ["otoole"], "nome": "Dead Reckoning", "ano": 2022, "bgg": 8.13, "votos": 4263, "peso": 3.44, "jog": [1, 4], "tempo": [90, 150], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "175640", "tabs": ["otoole"], "nome": "Vinhos: Deluxe Edition", "ano": 2016, "bgg": 8.04, "votos": 8142, "peso": 3.99, "jog": [1, 4], "tempo": [90, 180], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "382518", "tabs": ["otoole"], "nome": "Sankore: The Pride of Mansa Musa", "ano": 2024, "bgg": 7.94, "votos": 1744, "peso": 4.26, "jog": [1, 4], "tempo": [150, 180], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "282391", "tabs": ["otoole"], "nome": "Stockpile: Epic Edition", "ano": 2019, "bgg": 7.93, "votos": 1123, "peso": 2.21, "jog": [2, 5], "tempo": [45, 45], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "347305", "tabs": ["otoole"], "nome": "Inventions: Evolution of Ideas", "ano": 2024, "bgg": 7.91, "votos": 3055, "peso": 4.6, "jog": [1, 4], "tempo": [60, 150], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "4098", "tabs": ["otoole"], "nome": "Age of Steam", "ano": 2002, "bgg": 7.88, "votos": 12878, "peso": 3.86, "jog": [1, 6], "tempo": [120, 120], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "429438", "tabs": ["otoole"], "nome": "Ayar: Children of the Sun", "ano": 2025, "bgg": 7.87, "votos": 1075, "peso": 3.25, "jog": [1, 4], "tempo": [60, 90], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "265188", "tabs": ["cramer"], "nome": "Glen More II: Chronicles", "ano": 2019, "bgg": 7.85, "votos": 9675, "peso": 3, "jog": [2, 4], "tempo": [90, 120], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "187617", "tabs": ["otoole"], "nome": "Nemo's War (Second Edition)", "ano": 2017, "bgg": 7.78, "votos": 5864, "peso": 3.29, "jog": [1, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "448159", "tabs": ["otoole"], "nome": "Railway Boom", "ano": 2025, "bgg": 7.76, "votos": 1164, "peso": 3.17, "jog": [2, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "462941", "tabs": ["mangone"], "nome": "Entropy", "ano": 2026, "bgg": 7.75, "votos": 650, "peso": 3.58, "jog": [1, 4], "tempo": [90, 150], "nota": null, "partidas": 0, "st": "none", "fora": "owned — purchased by you on 2026-09-30"},
-{"id": "12", "tabs": ["otoole"], "nome": "Ra", "ano": 1999, "bgg": 7.72, "votos": 33060, "peso": 2.3, "jog": [2, 5], "tempo": [45, 60], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "42", "tabs": ["otoole"], "nome": "Tigris & Euphrates", "ano": 1997, "bgg": 7.7, "votos": 30179, "peso": 3.47, "jog": [2, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "237179", "tabs": ["otoole"], "nome": "Weather Machine", "ano": 2022, "bgg": 7.68, "votos": 4257, "peso": 4.56, "jog": [2, 4], "tempo": [60, 150], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "422042", "tabs": ["holek"], "nome": "Tea Garden", "ano": 2024, "bgg": 7.55, "votos": 1960, "peso": 3.09, "jog": [2, 4], "tempo": [90, 120], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "272739", "tabs": ["otoole"], "nome": "Clinic: Deluxe Edition", "ano": 2019, "bgg": 7.55, "votos": 3210, "peso": 4.01, "jog": [1, 4], "tempo": [60, 150], "nota": null, "partidas": 0, "st": "none", "fora": "removed at your request on 2026-09-12; rules overhead and competition with owned heavy Euros lower purchase priority"},
-{"id": "392492", "tabs": ["mangone"], "nome": "Stupor Mundi", "ano": 2025, "bgg": 7.52, "votos": 1566, "peso": 3.25, "jog": [1, 4], "tempo": [90, 150], "nota": null, "partidas": 0, "st": "none", "fora": "removed from wishlist"},
-{"id": "142379", "tabs": ["otoole"], "nome": "Escape Plan", "ano": 2019, "bgg": 7.48, "votos": 5994, "peso": 3.69, "jog": [1, 5], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "306040", "tabs": ["otoole"], "nome": "Merv: The Heart of the Silk Road", "ano": 2020, "bgg": 7.46, "votos": 4789, "peso": 3.44, "jog": [1, 4], "tempo": [90, 90], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "214887", "tabs": ["otoole"], "nome": "CO2: Second Chance", "ano": 2018, "bgg": 7.46, "votos": 3817, "peso": 4.09, "jog": [1, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "304510", "tabs": ["otoole"], "nome": "Pampero", "ano": 2024, "bgg": 7.44, "votos": 1437, "peso": 3.94, "jog": [1, 4], "tempo": [60, 150], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "161614", "tabs": ["otoole"], "nome": "Stockpile", "ano": 2015, "bgg": 7.42, "votos": 7878, "peso": 2.12, "jog": [2, 5], "tempo": [45, 45], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "391124", "tabs": ["cramer"], "nome": "Kraftwagen: Age of Engineering", "ano": 2024, "bgg": 7.4, "votos": 601, "peso": 2.91, "jog": [2, 4], "tempo": [75, 90], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "96913", "tabs": ["cramer"], "nome": "Lancaster", "ano": 2011, "bgg": 7.38, "votos": 7956, "peso": 2.99, "jog": [2, 5], "tempo": [60, 60], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "199383", "tabs": ["otoole"], "nome": "Calimala", "ano": 2017, "bgg": 7.32, "votos": 3292, "peso": 2.82, "jog": [2, 5], "tempo": [75, 75], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "352574", "tabs": ["otoole"], "nome": "Fit to Print", "ano": 2023, "bgg": 7.3, "votos": 4374, "peso": 2.12, "jog": [1, 6], "tempo": [15, 30], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "66362", "tabs": ["cramer"], "nome": "Glen More", "ano": 2010, "bgg": 7.29, "votos": 9517, "peso": 2.67, "jog": [2, 5], "tempo": [60, 60], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "401216", "tabs": ["otoole"], "nome": "Cascadero", "ano": 2024, "bgg": 7.26, "votos": 2044, "peso": 2.55, "jog": [2, 4], "tempo": [45, 60], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "228372", "tabs": ["otoole"], "nome": "Iberian Gauge", "ano": 2017, "bgg": 7.25, "votos": 1977, "peso": 2.48, "jog": [3, 5], "tempo": [60, 90], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "171879", "tabs": ["cramer"], "nome": "Kraftwagen", "ano": 2015, "bgg": 7.21, "votos": 2807, "peso": 2.86, "jog": [2, 4], "tempo": [75, 75], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "191972", "tabs": ["cramer"], "nome": "Dynasties: Heirate & Herrsche", "ano": 2016, "bgg": 7.19, "votos": 1341, "peso": 3, "jog": [3, 5], "tempo": [60, 90], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "443932", "tabs": ["holek"], "nome": "Aquaria", "ano": 2025, "bgg": 7.18, "votos": 743, "peso": 3.05, "jog": [1, 4], "tempo": [45, 120], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "230244", "tabs": ["otoole"], "nome": "Black Angel", "ano": 2019, "bgg": 7.18, "votos": 5347, "peso": 3.87, "jog": [1, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "161882", "tabs": ["otoole"], "nome": "Irish Gauge", "ano": 2014, "bgg": 7.15, "votos": 4045, "peso": 2.33, "jog": [3, 5], "tempo": [60, 60], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "297486", "tabs": ["otoole"], "nome": "Ride the Rails", "ano": 2020, "bgg": 7.11, "votos": 2354, "peso": 2.28, "jog": [3, 5], "tempo": [45, 60], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "280453", "tabs": ["mangone"], "nome": "Masters of Renaissance", "ano": 2019, "bgg": 7.08, "votos": 2502, "peso": 2.14, "jog": [1, 4], "tempo": [30, 45], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "435330", "tabs": ["holek"], "nome": "Pondscape", "ano": 2025, "bgg": 7.03, "votos": 1085, "peso": 2, "jog": [1, 4], "tempo": [20, 35], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "348554", "tabs": ["mangone"], "nome": "Autobahn", "ano": 2022, "bgg": 7.02, "votos": 2099, "peso": 3.81, "jog": [1, 4], "tempo": [90, 150], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "103092", "tabs": ["cramer"], "nome": "Helvetia", "ano": 2011, "bgg": 6.98, "votos": 2129, "peso": 3.05, "jog": [2, 4], "tempo": [90, 90], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "376223", "tabs": ["cramer"], "nome": "The Hunt", "ano": 2023, "bgg": 6.97, "votos": 847, "peso": 2.27, "jog": [2, 2], "tempo": [20, 45], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "204", "tabs": ["otoole"], "nome": "Stephenson's Rocket", "ano": 1999, "bgg": 6.94, "votos": 3302, "peso": 3.04, "jog": [2, 4], "tempo": [60, 90], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "192834", "tabs": ["cramer"], "nome": "Fight for Olympus", "ano": 2016, "bgg": 6.68, "votos": 1438, "peso": 2.1, "jog": [2, 2], "tempo": [30, 30], "nota": null, "partidas": 0, "st": "none", "fora": null},
-{"id": "181761", "tabs": ["cramer"], "nome": "Plums", "ano": 2015, "bgg": 6.54, "votos": 1525, "peso": 1.81, "jog": [3, 5], "tempo": [30, 40], "nota": null, "partidas": 0, "st": "none", "fora": null}
+{"id": "418059", "tabs": ["holek"], "nome": "SETI: Search for Extraterrestrial Intelligence", "ano": 2024, "bgg": 8.41, "votos": 22354, "peso": 3.84, "jog": [1, 4], "tempo": [40, 160], "nota": 9.7, "partidas": 5, "st": "own"},
+{"id": "391137", "tabs": ["otoole"], "nome": "Galactic Cruise", "ano": 2025, "bgg": 8.28, "votos": 8125, "peso": 3.98, "jog": [1, 4], "tempo": [90, 150], "nota": 9.2, "partidas": 3, "st": "own"},
+{"id": "296100", "tabs": ["cramer", "otoole"], "nome": "Rococo: Deluxe Edition", "ano": 2020, "bgg": 8.17, "votos": 4521, "peso": 3.06, "jog": [1, 5], "tempo": [60, 120], "nota": 9.2, "partidas": 8, "st": "own"},
+{"id": "274364", "tabs": ["cramer"], "nome": "Watergate", "ano": 2019, "bgg": 7.7, "votos": 14665, "peso": 2.3, "jog": [2, 2], "tempo": [30, 60], "nota": 9.2, "partidas": 2, "st": "own"},
+{"id": "161533", "tabs": ["otoole"], "nome": "Lisboa", "ano": 2017, "bgg": 8.16, "votos": 13141, "peso": 4.56, "jog": [1, 4], "tempo": [60, 120], "nota": 9.0, "partidas": 1, "st": "played"},
+{"id": "322289", "tabs": ["mangone"], "nome": "Darwin's Journey", "ano": 2023, "bgg": 8.09, "votos": 12882, "peso": 3.91, "jog": [1, 4], "tempo": [60, 120], "nota": 9.0, "partidas": 2, "st": "own"},
+{"id": "256730", "tabs": ["otoole"], "nome": "Pipeline", "ano": 2019, "bgg": 7.53, "votos": 5683, "peso": 3.91, "jog": [2, 4], "tempo": [60, 120], "nota": 9.0, "partidas": 1, "st": "played"},
+{"id": "244711", "tabs": ["mangone"], "nome": "Newton", "ano": 2018, "bgg": 7.49, "votos": 8143, "peso": 3.37, "jog": [1, 4], "tempo": [90, 90], "nota": 8.9, "partidas": 1, "st": "played"},
+{"id": "284378", "tabs": ["otoole"], "nome": "Kanban EV", "ano": 2020, "bgg": 8.37, "votos": 10662, "peso": 4.3, "jog": [1, 4], "tempo": [60, 180], "nota": 8.8, "partidas": 1, "st": "sold"},
+{"id": "408180", "tabs": ["mangone"], "nome": "Shackleton Base: A Journey to the Moon", "ano": 2024, "bgg": 8.01, "votos": 4712, "peso": 3.93, "jog": [1, 4], "tempo": [60, 120], "nota": 8.8, "partidas": 1, "st": "own"},
+{"id": "393333", "tabs": ["holek"], "nome": "Galileo Galilei", "ano": 2024, "bgg": 7.64, "votos": 3398, "peso": 3.03, "jog": [1, 4], "tempo": [50, 100], "nota": 8.6, "partidas": 1, "st": "own"},
+{"id": "125153", "tabs": ["otoole"], "nome": "The Gallerist", "ano": 2015, "bgg": 8, "votos": 16775, "peso": 4.21, "jog": [1, 4], "tempo": [60, 150], "nota": 8.5, "partidas": 1, "st": "played"},
+{"id": "62219", "tabs": ["otoole"], "nome": "Dominant Species", "ano": 2010, "bgg": 7.8, "votos": 22594, "peso": 4.04, "jog": [2, 6], "tempo": [120, 240], "nota": 8.5, "partidas": 1, "st": "played"},
+{"id": "310873", "tabs": ["otoole"], "nome": "Carnegie", "ano": 2022, "bgg": 7.95, "votos": 12270, "peso": 3.82, "jog": [1, 4], "tempo": [90, 120], "nota": 8.4, "partidas": 1, "st": "played"},
+{"id": "337627", "tabs": ["otoole"], "nome": "Voidfall", "ano": 2023, "bgg": 8.5, "votos": 7454, "peso": 4.62, "jog": [1, 4], "tempo": [90, 240], "nota": null, "partidas": 0, "st": "none"},
+{"id": "375459", "tabs": ["otoole"], "nome": "Speakeasy", "ano": 2025, "bgg": 8.42, "votos": 4600, "peso": 4.43, "jog": [1, 4], "tempo": [50, 180], "nota": null, "partidas": 0, "st": "none"},
+{"id": "265537", "tabs": ["cramer"], "nome": "Weimar: The Fight for Democracy", "ano": 2023, "bgg": 8.31, "votos": 865, "peso": 4, "jog": [4, 4], "tempo": [180, 360], "nota": null, "partidas": 0, "st": "none"},
+{"id": "184267", "tabs": ["otoole"], "nome": "On Mars", "ano": 2020, "bgg": 8.16, "votos": 15313, "peso": 4.62, "jog": [1, 4], "tempo": [90, 150], "nota": null, "partidas": 0, "st": "none"},
+{"id": "276182", "tabs": ["otoole"], "nome": "Dead Reckoning", "ano": 2022, "bgg": 8.13, "votos": 4263, "peso": 3.44, "jog": [1, 4], "tempo": [90, 150], "nota": null, "partidas": 0, "st": "none"},
+{"id": "175640", "tabs": ["otoole"], "nome": "Vinhos: Deluxe Edition", "ano": 2016, "bgg": 8.04, "votos": 8142, "peso": 3.99, "jog": [1, 4], "tempo": [90, 180], "nota": null, "partidas": 0, "st": "none"},
+{"id": "382518", "tabs": ["otoole"], "nome": "Sankore: The Pride of Mansa Musa", "ano": 2024, "bgg": 7.94, "votos": 1744, "peso": 4.26, "jog": [1, 4], "tempo": [150, 180], "nota": null, "partidas": 0, "st": "none"},
+{"id": "347305", "tabs": ["otoole"], "nome": "Inventions: Evolution of Ideas", "ano": 2024, "bgg": 7.91, "votos": 3055, "peso": 4.6, "jog": [1, 4], "tempo": [60, 150], "nota": null, "partidas": 0, "st": "none"},
+{"id": "4098", "tabs": ["otoole"], "nome": "Age of Steam", "ano": 2002, "bgg": 7.88, "votos": 12878, "peso": 3.86, "jog": [1, 6], "tempo": [120, 120], "nota": null, "partidas": 0, "st": "none"},
+{"id": "429438", "tabs": ["otoole"], "nome": "Ayar: Children of the Sun", "ano": 2025, "bgg": 7.87, "votos": 1075, "peso": 3.25, "jog": [1, 4], "tempo": [60, 90], "nota": null, "partidas": 0, "st": "none"},
+{"id": "265188", "tabs": ["cramer"], "nome": "Glen More II: Chronicles", "ano": 2019, "bgg": 7.85, "votos": 9675, "peso": 3, "jog": [2, 4], "tempo": [90, 120], "nota": null, "partidas": 0, "st": "none"},
+{"id": "187617", "tabs": ["otoole"], "nome": "Nemo's War (Second Edition)", "ano": 2017, "bgg": 7.78, "votos": 5864, "peso": 3.29, "jog": [1, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none"},
+{"id": "448159", "tabs": ["otoole"], "nome": "Railway Boom", "ano": 2025, "bgg": 7.76, "votos": 1164, "peso": 3.17, "jog": [2, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none"},
+{"id": "462941", "tabs": ["mangone"], "nome": "Entropy", "ano": 2026, "bgg": 7.75, "votos": 650, "peso": 3.58, "jog": [1, 4], "tempo": [90, 150], "nota": null, "partidas": 0, "st": "own"},
+{"id": "12", "tabs": ["otoole"], "nome": "Ra", "ano": 1999, "bgg": 7.72, "votos": 33060, "peso": 2.3, "jog": [2, 5], "tempo": [45, 60], "nota": null, "partidas": 0, "st": "none"},
+{"id": "42", "tabs": ["otoole"], "nome": "Tigris & Euphrates", "ano": 1997, "bgg": 7.7, "votos": 30179, "peso": 3.47, "jog": [2, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none"},
+{"id": "237179", "tabs": ["otoole"], "nome": "Weather Machine", "ano": 2022, "bgg": 7.68, "votos": 4257, "peso": 4.56, "jog": [2, 4], "tempo": [60, 150], "nota": null, "partidas": 0, "st": "none"},
+{"id": "422042", "tabs": ["holek"], "nome": "Tea Garden", "ano": 2024, "bgg": 7.55, "votos": 1960, "peso": 3.09, "jog": [2, 4], "tempo": [90, 120], "nota": null, "partidas": 0, "st": "none"},
+{"id": "272739", "tabs": ["otoole"], "nome": "Clinic: Deluxe Edition", "ano": 2019, "bgg": 7.55, "votos": 3210, "peso": 4.01, "jog": [1, 4], "tempo": [60, 150], "nota": null, "partidas": 0, "st": "none"},
+{"id": "392492", "tabs": ["mangone"], "nome": "Stupor Mundi", "ano": 2025, "bgg": 7.52, "votos": 1566, "peso": 3.25, "jog": [1, 4], "tempo": [90, 150], "nota": null, "partidas": 0, "st": "none"},
+{"id": "142379", "tabs": ["otoole"], "nome": "Escape Plan", "ano": 2019, "bgg": 7.48, "votos": 5994, "peso": 3.69, "jog": [1, 5], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none"},
+{"id": "306040", "tabs": ["otoole"], "nome": "Merv: The Heart of the Silk Road", "ano": 2020, "bgg": 7.46, "votos": 4789, "peso": 3.44, "jog": [1, 4], "tempo": [90, 90], "nota": null, "partidas": 0, "st": "none"},
+{"id": "214887", "tabs": ["otoole"], "nome": "CO2: Second Chance", "ano": 2018, "bgg": 7.46, "votos": 3817, "peso": 4.09, "jog": [1, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none"},
+{"id": "304510", "tabs": ["otoole"], "nome": "Pampero", "ano": 2024, "bgg": 7.44, "votos": 1437, "peso": 3.94, "jog": [1, 4], "tempo": [60, 150], "nota": null, "partidas": 0, "st": "none"},
+{"id": "161614", "tabs": ["otoole"], "nome": "Stockpile", "ano": 2015, "bgg": 7.42, "votos": 7878, "peso": 2.12, "jog": [2, 5], "tempo": [45, 45], "nota": null, "partidas": 0, "st": "none"},
+{"id": "96913", "tabs": ["cramer"], "nome": "Lancaster", "ano": 2011, "bgg": 7.38, "votos": 7956, "peso": 2.99, "jog": [2, 5], "tempo": [60, 60], "nota": null, "partidas": 0, "st": "none"},
+{"id": "199383", "tabs": ["otoole"], "nome": "Calimala", "ano": 2017, "bgg": 7.32, "votos": 3292, "peso": 2.82, "jog": [2, 5], "tempo": [75, 75], "nota": null, "partidas": 0, "st": "none"},
+{"id": "352574", "tabs": ["otoole"], "nome": "Fit to Print", "ano": 2023, "bgg": 7.3, "votos": 4374, "peso": 2.12, "jog": [1, 6], "tempo": [15, 30], "nota": null, "partidas": 0, "st": "none"},
+{"id": "401216", "tabs": ["otoole"], "nome": "Cascadero", "ano": 2024, "bgg": 7.26, "votos": 2044, "peso": 2.55, "jog": [2, 4], "tempo": [45, 60], "nota": null, "partidas": 0, "st": "none"},
+{"id": "228372", "tabs": ["otoole"], "nome": "Iberian Gauge", "ano": 2017, "bgg": 7.25, "votos": 1977, "peso": 2.48, "jog": [3, 5], "tempo": [60, 90], "nota": null, "partidas": 0, "st": "none"},
+{"id": "171879", "tabs": ["cramer"], "nome": "Kraftwagen", "ano": 2015, "bgg": 7.21, "votos": 2807, "peso": 2.86, "jog": [2, 4], "tempo": [75, 75], "nota": null, "partidas": 0, "st": "none"},
+{"id": "191972", "tabs": ["cramer"], "nome": "Dynasties: Heirate & Herrsche", "ano": 2016, "bgg": 7.19, "votos": 1341, "peso": 3, "jog": [3, 5], "tempo": [60, 90], "nota": null, "partidas": 0, "st": "none"},
+{"id": "443932", "tabs": ["holek"], "nome": "Aquaria", "ano": 2025, "bgg": 7.18, "votos": 743, "peso": 3.05, "jog": [1, 4], "tempo": [45, 120], "nota": null, "partidas": 0, "st": "none"},
+{"id": "230244", "tabs": ["otoole"], "nome": "Black Angel", "ano": 2019, "bgg": 7.18, "votos": 5347, "peso": 3.87, "jog": [1, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none"},
+{"id": "161882", "tabs": ["otoole"], "nome": "Irish Gauge", "ano": 2014, "bgg": 7.15, "votos": 4045, "peso": 2.33, "jog": [3, 5], "tempo": [60, 60], "nota": null, "partidas": 0, "st": "none"},
+{"id": "297486", "tabs": ["otoole"], "nome": "Ride the Rails", "ano": 2020, "bgg": 7.11, "votos": 2354, "peso": 2.28, "jog": [3, 5], "tempo": [45, 60], "nota": null, "partidas": 0, "st": "none"},
+{"id": "280453", "tabs": ["mangone"], "nome": "Masters of Renaissance", "ano": 2019, "bgg": 7.08, "votos": 2502, "peso": 2.14, "jog": [1, 4], "tempo": [30, 45], "nota": null, "partidas": 0, "st": "none"},
+{"id": "435330", "tabs": ["holek"], "nome": "Pondscape", "ano": 2025, "bgg": 7.03, "votos": 1085, "peso": 2, "jog": [1, 4], "tempo": [20, 35], "nota": null, "partidas": 0, "st": "none"},
+{"id": "348554", "tabs": ["mangone"], "nome": "Autobahn", "ano": 2022, "bgg": 7.02, "votos": 2099, "peso": 3.81, "jog": [1, 4], "tempo": [90, 150], "nota": null, "partidas": 0, "st": "none"},
+{"id": "103092", "tabs": ["cramer"], "nome": "Helvetia", "ano": 2011, "bgg": 6.98, "votos": 2129, "peso": 3.05, "jog": [2, 4], "tempo": [90, 90], "nota": null, "partidas": 0, "st": "none"},
+{"id": "376223", "tabs": ["cramer"], "nome": "The Hunt", "ano": 2023, "bgg": 6.97, "votos": 847, "peso": 2.27, "jog": [2, 2], "tempo": [20, 45], "nota": null, "partidas": 0, "st": "none"},
+{"id": "204", "tabs": ["otoole"], "nome": "Stephenson's Rocket", "ano": 1999, "bgg": 6.94, "votos": 3302, "peso": 3.04, "jog": [2, 4], "tempo": [60, 90], "nota": null, "partidas": 0, "st": "none"},
+{"id": "192834", "tabs": ["cramer"], "nome": "Fight for Olympus", "ano": 2016, "bgg": 6.68, "votos": 1438, "peso": 2.1, "jog": [2, 2], "tempo": [30, 30], "nota": null, "partidas": 0, "st": "none"},
+{"id": "181761", "tabs": ["cramer"], "nome": "Plums", "ano": 2015, "bgg": 6.54, "votos": 1525, "peso": 1.81, "jog": [3, 5], "tempo": [30, 40], "nota": null, "partidas": 0, "st": "none"}
 ];
 
 const LINHA = 3.35;
-const FAROL = {good: '\u{1F7E2}', warn: '\u{1F7E1}', bad: '\u{1F534}', own: '\u{1F6D2}', fora: '\u2715'};
+const FAROL = {good: '\u{1F7E2}', warn: '\u{1F7E1}', bad: '\u{1F534}', own: '\u{1F6D2}'};
 
 function veredito(g) {
   if (g.st === 'own') return ['own', 'In your collection'];
-  if (g.fora) return ['fora', 'You removed this from the wishlist'];
   if (g.peso > LINHA) {
     return g.nota >= 8.4
       ? ['warn', 'You rated it ' + g.nota + ', but ' + g.peso + ' is past your 3.35 line \u2014 expect few plays']
@@ -205,7 +196,7 @@ function suaHTML(g) {
 const fmtVotos = n => n.toLocaleString('en-US');
 
 const CHAVE = {
-  fit: g => (g.st === 'own' || g.fora ? -1 : 0) + (g.peso > LINHA ? 0 : 2) + (g.nota || g.bgg) / 10,
+  fit: g => (g.st === 'own' ? -1 : 0) + (g.peso > LINHA ? 0 : 2) + (g.nota || g.bgg) / 10,
   nota: g => g.nota, bgg: g => g.bgg, votos: g => g.votos,
   peso: g => g.peso, ano: g => g.ano, nome: g => g.nome
 };
@@ -214,7 +205,7 @@ const st = {aba: 'cramer', ordem: 'fit', dir: -1, faltando: false, leves: false}
 
 function filtrados() {
   let l = JOGOS.filter(g => g.tabs.includes(st.aba));
-  if (st.faltando) l = l.filter(g => g.st !== 'own' && !g.fora);
+  if (st.faltando) l = l.filter(g => g.st !== 'own');
   if (st.leves) l = l.filter(g => g.peso <= LINHA);
   return ordenar(l);
 }
@@ -236,7 +227,7 @@ function escapeHTML(s) {
 
 function linhaHTML(g) {
   const [v, txt] = veredito(g);
-  const cls = g.st === 'own' ? 'tem' : g.fora ? 'fora' : '';
+  const cls = g.st === 'own' ? 'tem' : '';
   return '<tr class="' + cls + '">'
     + '<td><div class="nome">' + escapeHTML(g.nome) + '</div><div class="meta">' + g.ano
       + ' \u00b7 <a href="https://boardgamegeek.com/boardgame/' + g.id + '" target="_blank" rel="noopener">BGG</a></div></td>'
@@ -245,8 +236,7 @@ function linhaHTML(g) {
     + '<td class="num">' + (g.jog[0] ? g.jog[0] + '\u2013' + g.jog[1] : '\u2014') + '</td>'
     + '<td class="num">' + (g.tempo[0] ? (g.tempo[0] === g.tempo[1] ? g.tempo[0] : g.tempo[0] + '\u2013' + g.tempo[1]) + 'm' : '\u2014') + '</td>'
     + '<td class="num">' + suaHTML(g) + '</td>'
-    + '<td>' + FAROL[v] + ' <span class="' + (v === 'own' || v === 'fora' ? '' : v) + '">' + escapeHTML(txt) + '</span>'
-      + (g.fora ? '<div class="meta">' + escapeHTML(g.fora) + '</div>' : '') + '</td>'
+    + '<td>' + FAROL[v] + ' <span class="' + (v === 'own' ? '' : v) + '">' + escapeHTML(txt) + '</span></td>'
     + '</tr>';
 }
 
@@ -261,7 +251,7 @@ function tabelaHTML(l) {
 }
 
 function statsHTML(l) {
-  const faltam = l.filter(g => g.st !== 'own' && !g.fora);
+  const faltam = l.filter(g => g.st !== 'own');
   const cabem = faltam.filter(g => g.peso <= LINHA);
   const med = l.filter(g => g.nota).map(g => g.nota);
   return '<div>catalogue<b>' + l.length + '</b></div>'
@@ -315,12 +305,12 @@ render();
 
 if (location.hash === '#test') {
   const check = (ok, msg) => { if (!ok) throw new Error(msg); };
-  check(JOGOS.length === 65, 'Expected 65 catalogue entries');
+  check(JOGOS.length === 58, 'Expected 58 catalogue entries');
   check(Object.keys(DESIGNERS).every(k => JOGOS.some(g => g.tabs.includes(k))), 'Every tab needs games');
-  check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 37, 'O\u2019Toole catalogue size');
-  check(JOGOS.filter(g => g.tabs.includes('cramer')).length === 14, 'Cramer catalogue size');
-  check(JOGOS.filter(g => g.tabs.includes('holek')).length === 6, 'Holek catalogue size');
-  check(JOGOS.filter(g => g.tabs.includes('mangone')).length === 9, 'Mangone catalogue size');
+  check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 36, 'O\u2019Toole catalogue size');
+  check(JOGOS.filter(g => g.tabs.includes('cramer')).length === 11, 'Cramer catalogue size');
+  check(JOGOS.filter(g => g.tabs.includes('holek')).length === 5, 'Holek catalogue size');
+  check(JOGOS.filter(g => g.tabs.includes('mangone')).length === 7, 'Mangone catalogue size');
   check(!JOGOS.some(g => /Unmatched/.test(g.nome)), 'Unmatched must stay out at your request');
   check(JOGOS.every(g => g.peso > 0 && g.peso < 5 && g.bgg > 0 && g.bgg <= 10 && g.votos > 0), 'Invalid numbers');
   check(JOGOS.every(g => Number.isInteger(g.ano) && g.ano > 1900), 'Every game needs a year');
@@ -334,8 +324,17 @@ if (location.hash === '#test') {
   const ra = JOGOS.find(g => g.nome === 'Ra');
   check(ra.peso < LINHA && veredito(ra)[0] === 'good', 'Ra must read as a fit');
   check(veredito(JOGOS.find(g => g.nome === 'On Mars'))[0] === 'bad', 'Untested heavy must read as a miss');
-  check(JOGOS.filter(g => g.fora).length === 5 && JOGOS.find(g => g.nome === 'Pipeline').fora,
-    'Removed games must carry their reason');
+  check(!JOGOS.some(g => 'fora' in g) && !/wishlist/i.test(document.querySelector('table').innerHTML),
+    'Wishlist status does not belong on this page');
+  check(veredito(JOGOS.find(g => g.nome === 'Entropy'))[0] === 'own',
+    'A purchase made after the export must still read as owned');
+  check(!JOGOS.some(g => /Collector's Edition|Fireland|Space Agencies/.test(g.nome))
+    && JOGOS.filter(g => /^Darwin.s Journey/.test(g.nome)).length === 1
+    && JOGOS.filter(g => /^Rococo/.test(g.nome)).length === 1
+    && JOGOS.filter(g => /^Stockpile/.test(g.nome)).length === 1
+    && JOGOS.filter(g => /^Kraftwagen/.test(g.nome)).length === 1
+    && JOGOS.filter(g => /^Glen More/.test(g.nome)).length === 1,
+    'One entry per game: no alternate editions or expansions alongside their base');
   check(JOGOS.filter(g => g.st === 'own').length === 8, 'Expected 8 owned games across the catalogues');
   check(escapeHTML('<script>') === '&lt;script&gt;', 'Text must stay text');
   check(document.querySelector('a.navbtn[href="index.html"]'), 'The wishlist must stay one button away');
