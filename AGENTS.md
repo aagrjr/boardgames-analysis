@@ -71,8 +71,13 @@ Os créditos levantados em 30/09/2026 estão em `designers.html`; se precisar re
 
 ## Regras de catálogo (`designers.html`)
 
-- **Corte por catálogo**: os 20 melhores por rank do BGG **e nota acima de 7,4**, mais qualquer jogo
-  que você já teve ou jogou. Cathala tem 227 créditos e Dutrait 234 — listar tudo não ajuda a decidir nada.
+- **Corte por catálogo**: os 20 melhores por rank do BGG **e nota 7,4 ou mais e pelo menos mil
+  avaliações**, mais qualquer jogo que você já teve ou jogou.
+- **Rank e nota não são a mesma coisa.** O rank do BGG é média bayesiana: jogo com nota alta e
+  poucos votos fica mal rankeado. Cortar por rank antes de cortar por nota deixou 19 jogos de
+  fora. Se mexer no corte, refazer a varredura pelo catálogo inteiro, não pelo top 20.
+- O piso de mil avaliações existe porque 7,76 com 41 votos não é medição. Vale para as abas
+  expandidas; jogo que o usuário teve ou jogou entra de qualquer jeito. Cathala tem 227 créditos e Dutrait 234 — listar tudo não ajuda a decidir nada.
 - O corte de 7,4 vale só para as seis abas expandidas. **O'Toole, Cramer, Holek e Mangone ficam
   inteiras**: são catálogos pequenos, levantados junto com o usuário, e com nota de edição pesquisada
   em nove jogos. Aplicar o corte lá derrubaria Cramer de 11 para 4, incluindo três dos jogos pesquisados.

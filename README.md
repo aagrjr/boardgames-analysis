@@ -299,3 +299,33 @@ discorda do BGG: T.I.M.E Stories (7,34 no BGG, 9,5 seu), Stained Glass of Sintra
 ## Decisão: não haverá página de lista de venda — 01/10/2026
 
 Registrado a pedido. Eu tinha oferecido três vezes; não oferecer de novo.
+
+## Auditoria do corte de 7,4 — 01/10/2026
+
+Pergunta sua: filtrando por 7,4 ou mais, ficou algum jogo de fora? Ficou, por dois motivos meus.
+
+**1. O operador estava errado.** Usei `> 7.4` e você pediu "7,4 ou melhor". **Macao** (Feld) tem
+exatamente 7,40 e caiu por causa disso. Voltou.
+
+**2. O corte de rank rodava antes do de nota.** As abas expandidas foram montadas com o top 20 por
+rank do BGG e só depois filtradas por nota — mas rank e nota não são a mesma coisa: o rank usa média
+bayesiana, então jogo com nota alta e poucos votos afunda no rank. Medi os 275 jogos com rank que
+nunca tinham sido olhados. **19 têm 7,4 ou mais.**
+
+Desses 19, a maioria não se sustenta: dez têm menos de mil avaliações, e 7,76 com 41 votos não é
+nota, é ruído. Adotei piso de **1.000 avaliações** — critério meu, não seu; dá pra mudar. Um é
+expansão (El Dorado: Golden Temples) e sai pela regra que já existia.
+
+Entraram seis: **Amsterdam** (7,59 · peso 3,35 · Feld), **Hamburg** (7,48 · 3,05 · Feld),
+**Perspectives** (7,65 · 1,81 · Dutrait), **Frosted Blooms** (7,47 · 1,97 · Cathala),
+**Miyabi** (7,43 · 2,03 · Kiesling) e **Tenpenny Parks** (7,42 · 2,19 · Dutrait).
+
+**Welcome To...: Collector's Edition** (8,27) apareceu no levantamento e foi descartada: você teve o
+Welcome To..., deu 9,0 em 4 partidas e vendeu. É exatamente o caso da sua regra de não listar edição
+alternativa de jogo que você já teve.
+
+Isto muda o Feld: a aba dele não tinha nenhuma recomendação com edição nacional, e agora tem dois
+jogos dentro da sua faixa de peso — ainda sem edição nacional confirmada, porque a varredura da
+Ludopedia segue parada.
+
+Total: 131 → 138 linhas. O piso de mil avaliações agora é autoteste.
