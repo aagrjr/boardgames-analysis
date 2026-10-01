@@ -93,15 +93,25 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}
 .shopping{min-width:220px;max-width:320px;font-size:12px;white-space:normal}
 .shopping-item{margin:0 0 10px}.shopping a{color:var(--accent)}
 .shopping small{display:block;color:var(--muted);margin-top:3px}
+.topo{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.topo h1{margin:0}
+a.navbtn{display:inline-flex;flex-direction:column;gap:2px;padding:9px 16px;border-radius:12px;
+  background:var(--panel2);border:1px solid var(--line);color:var(--text);text-decoration:none;
+  font-size:13px;font-weight:700;white-space:nowrap;transition:border-color .12s,color .12s,background .12s}
+a.navbtn:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+a.navbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+a.navbtn small{color:var(--muted);font-size:11px;font-weight:400}
+a.navbtn:hover small{color:var(--accent)}
+@media(max-width:800px){ a.navbtn{width:100%;align-items:center} }
 .bgg-rank{display:block;font-size:11px;font-weight:400;line-height:1.4;white-space:normal}
 </style>
 </head>
 <body>
 <main>
-<h1>Board Game Wishlist</h1>
+<div class="topo"><h1>Board Game Wishlist</h1><a class="navbtn" href="designers.html">Designer catalogues &rarr;<small>65 games across 4 people whose work fits you</small></a></div>
 <div class="sub"><span id="sub-count"></span> You mostly play <b>at 2</b>,
 so the priorities are: personal taste fit &rsaquo; quality at 2 &rsaquo; collection redundancy
-&rsaquo; mechanical uniqueness &rsaquo; game-night role &rsaquo; weight &rsaquo; playtime.<br><b>Purchase order does not use numerical ratings.</b> Qualitative preferences, 2-player fit and collection value set the order. <a href="designers.html" style="color:var(--accent)">Designer catalogues &rarr;</a></div>
+&rsaquo; mechanical uniqueness &rsaquo; game-night role &rsaquo; weight &rsaquo; playtime.<br><b>Purchase order does not use numerical ratings.</b> Qualitative preferences, 2-player fit and collection value set the order.</div>
 
 <div class="legend">
   <span class="chip">&#128994; Buy / strong fit</span>
@@ -598,7 +608,7 @@ if (location.hash === '#test') {
   check(!nz && EXCLUIDOS.some(([name]) => name === 'Great Western Trail: New Zealand'), 'New Zealand must stay excluded');
   check(JOGOS.every(g => g.bggVotos == null || Number.isInteger(g.bggVotos) && g.bggVotos > 0), 'BGG vote counts must be positive integers where recorded');
   check(subCount() === 'Updated 2026-09-30 \u00b7 8 candidates, 1 committed purchase, 48 out of the running.' && document.querySelector('#sub-count').textContent === subCount(), 'Subtitle counts must be derived from the data, not hardcoded');
-  check(document.querySelector('a[href="designers.html"]'), 'The designer catalogues must stay one click away');
+  check(document.querySelector('a.navbtn[href="designers.html"]'), 'The designer catalogues must stay one button away');
   check(median([1, 4, 2, 3]) === 2.5 && median([]) === null, 'Median calculation');
   check(escapeHTML('</textarea><script>') === '&lt;/textarea&gt;&lt;script&gt;', 'Notes must remain text');
   check(!COLS.some(c => c[0] === 'personalScore') && !CHAVE.personalScore && !document.querySelector('#ordem option[value="personalScore"]'), 'Personal rating column must stay removed');

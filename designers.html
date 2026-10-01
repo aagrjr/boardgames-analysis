@@ -34,6 +34,16 @@ select{background:var(--panel2);color:var(--text);border:1px solid var(--line);
 .intro{background:var(--panel);border:1px solid var(--line);border-radius:14px;
   padding:12px 16px;margin-bottom:16px;color:var(--muted);font-size:13px}
 .intro b{color:var(--text)}
+.topo{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:8px}
+.topo h1{margin:0}
+a.navbtn{display:inline-flex;flex-direction:column;gap:2px;padding:9px 16px;border-radius:12px;
+  background:var(--panel2);border:1px solid var(--line);color:var(--text);text-decoration:none;
+  font-size:13px;font-weight:700;white-space:nowrap;transition:border-color .12s,color .12s,background .12s}
+a.navbtn:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+a.navbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+a.navbtn small{color:var(--muted);font-size:11px;font-weight:400}
+a.navbtn:hover small{color:var(--accent)}
+@media(max-width:800px){ a.navbtn{width:100%;align-items:center} }
 .wrap-tabela{overflow:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
 table{width:100%;border-collapse:collapse;min-width:1050px}
 th,td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top}
@@ -58,8 +68,8 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}
 </head>
 <body>
 <main>
-<h1>Designer Catalogues</h1>
-<div class="sub"><span id="sub-count"></span> Which games by the people whose work already works for you are still missing &mdash; measured against your own collection, not opinion. <a href="index.html">&larr; purchase wishlist</a></div>
+<div class="topo"><h1>Designer Catalogues</h1><a class="navbtn" href="index.html">&larr; Purchase wishlist<small>what to buy next, ranked</small></a></div>
+<div class="sub"><span id="sub-count"></span> Which games by the people whose work already works for you are still missing &mdash; measured against your own collection, not opinion.</div>
 
 <div class="intro">
 <b>The weight line is 3.35.</b> Your owned games between 3.00 and 3.35 have a median of <b>4 plays</b>; above 3.35 the median drops to <b>2</b>, with 5 of 14 stuck on 0&ndash;1 play. Verdicts below are computed from that line plus your own rating, never hand-written.
@@ -328,6 +338,7 @@ if (location.hash === '#test') {
     'Removed games must carry their reason');
   check(JOGOS.filter(g => g.st === 'own').length === 8, 'Expected 8 owned games across the catalogues');
   check(escapeHTML('<script>') === '&lt;script&gt;', 'Text must stay text');
+  check(document.querySelector('a.navbtn[href="index.html"]'), 'The wishlist must stay one button away');
   st.aba = 'cramer'; st.faltando = true;
   check(filtrados().every(g => g.st !== 'own' && !g.fora), 'Missing-only filter must drop owned and removed');
   st.leves = true;
