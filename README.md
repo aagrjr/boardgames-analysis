@@ -329,3 +329,19 @@ jogos dentro da sua faixa de peso — ainda sem edição nacional confirmada, po
 Ludopedia segue parada.
 
 Total: 131 → 138 linhas. O piso de mil avaliações agora é autoteste.
+
+## A linha de 7,4 passou a valer para as dez abas — 01/10/2026
+
+Você viu jogos abaixo de 7,4 na página e perguntou se devia. Não devia: eram duas isenções minhas,
+e a aba padrão era o pior lugar pra isso aparecer — Cramer abria com cinco jogos abaixo da linha que
+você nunca tocou, até Plums com 6,54.
+
+Escolha sua: **7,4 em todas as abas, mantendo o que você já teve ou jogou.** 138 → 120 linhas.
+O'Toole 37→29, Cramer 11→5, Holek 6→4, Mangone 8→6.
+
+Saem três jogos com pesquisa de edição feita antes — Calimala (7,32), Black Angel (7,18) e
+Stephenson's Rocket (6,94). As notas de edição continuam no histórico do git se precisar.
+
+A isenção que sobra é só uma: **jogo que você teve ou jogou fica**, mesmo abaixo de 7,4. São as
+linhas onde a sua nota discorda do BGG, que é informação, não ruído. O autoteste agora exige que
+nenhuma outra linha abaixo de 7,4 exista.

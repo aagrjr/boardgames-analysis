@@ -78,9 +78,9 @@ Os créditos levantados em 30/09/2026 estão em `designers.html`; se precisar re
   fora. Se mexer no corte, refazer a varredura pelo catálogo inteiro, não pelo top 20.
 - O piso de mil avaliações existe porque 7,76 com 41 votos não é medição. Vale para as abas
   expandidas; jogo que o usuário teve ou jogou entra de qualquer jeito. Cathala tem 227 créditos e Dutrait 234 — listar tudo não ajuda a decidir nada.
-- O corte de 7,4 vale só para as seis abas expandidas. **O'Toole, Cramer, Holek e Mangone ficam
-  inteiras**: são catálogos pequenos, levantados junto com o usuário, e com nota de edição pesquisada
-  em nove jogos. Aplicar o corte lá derrubaria Cramer de 11 para 4, incluindo três dos jogos pesquisados.
+- **O corte de 7,4 vale para as dez abas**, decidido pelo usuário em 01/10/2026 depois de ver jogos
+  abaixo da linha na aba padrão. A única isenção é jogo que ele já teve ou jogou. O corte por rank e
+  o piso de mil avaliações continuam valendo só para as seis abas expandidas.
 - A exceção "já teve ou jogou" não é cortesia: são justamente as linhas onde o seu julgamento diverge
   do BGG. T.I.M.E Stories tem 7,34 no BGG e 9,5 seu; Stained Glass of Sintra, 7,28 e 9,3. Essa
   discordância é informação, não ruído.
