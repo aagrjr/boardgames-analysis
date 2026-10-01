@@ -244,7 +244,6 @@ const JOGOS = [
 {"id": "137408", "tabs": ["feld"], "nome": "Amerigo", "ano": 2013, "bgg": 7.43, "votos": 6498, "peso": 2.97, "jog": [2, 4], "tempo": [90, 90], "nota": null, "partidas": 0, "st": "none", "brUnknown": true},
 {"id": "140620", "tabs": ["dutrait"], "nome": "Lewis & Clark: The Expedition", "ano": 2013, "bgg": 7.43, "votos": 16697, "peso": 3.32, "jog": [1, 5], "tempo": [120, 120], "nota": null, "partidas": 0, "st": "none", "br": "MeepleBR Jogos"},
 {"id": "285533", "tabs": ["kiesling"], "nome": "Miyabi", "ano": 2019, "bgg": 7.43, "votos": 2007, "peso": 2.03, "jog": [2, 4], "tempo": [45, 45], "nota": null, "partidas": 0, "st": "none", "brUnknown": true},
-{"id": "161614", "tabs": ["otoole"], "nome": "Stockpile", "ano": 2015, "bgg": 7.42, "votos": 7878, "peso": 2.12, "jog": [2, 5], "tempo": [45, 45], "nota": null, "partidas": 0, "st": "none", "arts": 2, "edition": "Nauvoo Games English edition (2015)", "editionUrl": "https://boardgamegeek.com/boardgameversion/244461/40920581", "creditNote": "Ian O'Toole and Jacqui Davis are both credited in this edition."},
 {"id": "136888", "tabs": ["feld"], "nome": "Bruges", "ano": 2013, "bgg": 7.42, "votos": 12355, "peso": 2.75, "jog": [2, 4], "tempo": [60, 60], "nota": null, "partidas": 0, "st": "none", "brUnknown": true},
 {"id": "294702", "tabs": ["dutrait"], "nome": "Tenpenny Parks", "ano": 2022, "bgg": 7.42, "votos": 1915, "peso": 2.19, "jog": [1, 4], "tempo": [45, 75], "nota": null, "partidas": 0, "st": "none", "brUnknown": true},
 {"id": "346965", "tabs": ["kiesling"], "nome": "Azul: Queen's Garden", "ano": 2021, "bgg": 7.41, "votos": 6659, "peso": 2.92, "jog": [2, 4], "tempo": [45, 60], "nota": null, "partidas": 0, "st": "none", "br": "Asmodee (Galápagos)"},
@@ -459,7 +458,7 @@ render();
 
 if (location.hash === '#test') {
   const check = (ok, msg) => { if (!ok) throw new Error(msg); };
-  check(JOGOS.length === 130, 'Expected 130 distinct listed games');
+  check(JOGOS.length === 129, 'Expected 129 distinct listed games');
   check(Object.keys(DESIGNERS).every(k => JOGOS.some(g => g.tabs.includes(k))), 'Every tab needs games');
   check(new Set(JOGOS.map(g => g.id)).size === JOGOS.length, 'Every listed game needs one unique ID');
   check(['cathala', 'bauza', 'dutrait'].every(k => JOGOS.find(g => g.id === '421006').tabs.includes(k)), 'Shared creator credits need one linked game');
@@ -474,7 +473,7 @@ if (location.hash === '#test') {
     'Every creator card links to their own Ludopedia catalogue');
   check(Object.keys(DESIGNERS).every(k => JOGOS.some(g => g.tabs.includes(k) && g.st !== 'own')),
     'Every catalogue must reach past your shelf, or it has nothing to recommend');
-  check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 31, 'O\u2019Toole catalogue size');
+  check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 30, 'O\u2019Toole catalogue size');
   check(JOGOS.filter(g => g.tabs.includes('cramer')).length === 5, 'Cramer catalogue size');
   check(JOGOS.filter(g => g.tabs.includes('holek')).length === 5, 'Holek catalogue size');
   check(JOGOS.filter(g => g.tabs.includes('mangone')).length === 7, 'Mangone catalogue size');
@@ -525,7 +524,9 @@ if (location.hash === '#test') {
     && JOGOS.find(g => /^7 Wonders$/.test(g.nome)).nota === 9.5
     && JOGOS.find(g => /^The Palaces of Carrara/.test(g.nome)).st === 'sold',
     'When two editions collide, the one carrying your own record is the one that survives');
-  check(JOGOS.filter(g => /^Stockpile/.test(g.nome)).length === 2, 'Both Stockpiles stay, at your request');
+  check(JOGOS.filter(g => /^Stockpile/.test(g.nome)).length === 1
+    && JOGOS.find(g => /^Stockpile/.test(g.nome)).nome === 'Stockpile: Epic Edition',
+    'Only the Epic Edition of Stockpile stays, at your request');
   const exps = JOGOS.filter(g => g.exp);
   check(exps.length === 12 && exps.every(g => JOGOS.some(b => b.nome === g.exp)),
     'Every expansion must point at a base game present in the catalogue');
@@ -552,11 +553,11 @@ if (location.hash === '#test') {
   check(JOGOS.filter(g => g.br).length === 79, 'Expected 79 games with a confirmed Brazilian publisher');
   check(JOGOS.filter(g => g.brUnknown).length === 33 && JOGOS.every(g => !(g.br && g.brUnknown)),
     'Brazilian availability is either a named publisher, a checked absence, or an explicit unchecked \u2014 never two at once');
-  check(JOGOS.filter(g => g.arts).length === 13, 'Shared artist credits should be marked');
+  check(JOGOS.filter(g => g.arts).length === 12, 'Shared artist credits should be marked');
   const editions = JOGOS.filter(g => g.edition);
-  check(editions.length === 6 && editions.every(g => g.creditNote && /^https:\/\//.test(g.editionUrl)),
+  check(editions.length === 5 && editions.every(g => g.creditNote && /^https:\/\//.test(g.editionUrl)),
     'Every surviving edition-researched game keeps its source and credit note');
-  check(JOGOS.find(g => g.nome === 'Stockpile').arts === 2
+  check(JOGOS.find(g => g.nome === 'Stockpile: Epic Edition').arts === 2
     && !JOGOS.find(g => g.nome === 'Ra').arts, 'Verified edition credits must replace pooled artist lists');
   check(editions.every(g => tabelaHTML([g]).includes(escapeHTML(g.editionUrl))
     && tabelaHTML([g]).includes(escapeHTML(g.creditNote))), 'Edition source and contribution must render');
