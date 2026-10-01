@@ -13,7 +13,7 @@ Publicadas em GitHub Pages a partir de `main` na raiz: <https://aagrjr.github.io
 Um push na `main` republica; o build leva menos de um minuto. As duas páginas se linkam entre si e há
 autoteste exigindo que o link exista.
 
-A **página é em inglês**; `README.md` e este arquivo ficam em pt-BR.
+As **páginas e o `README.md` são em inglês**; este arquivo fica em pt-BR.
 
 ## Fonte de verdade dos dados pessoais
 
@@ -203,5 +203,5 @@ O usuário quer **recomendação com dado atrás, não enquete de opções**. O 
 - **Evidência direta sobre o jogo específico vale mais que média de categoria.** Se ele já teve e
   vendeu, isso derruba qualquer estatística de faixa.
 - Separar "gostou" de "jogou". Notas 9+ com uma partida são o padrão mais comum da coleção.
-- Quando ele decide contra a recomendação, registrar no README como referência e seguir — sem
+- Quando ele decide contra a recomendação, registrar na evidência do jogo e seguir — sem
   reabrir o assunto depois.
