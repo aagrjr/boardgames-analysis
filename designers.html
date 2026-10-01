@@ -60,6 +60,8 @@ tr.tem td{background:rgba(98,211,148,.07)}
 .zona.limite{border-color:var(--warn);color:var(--warn)}
 .zona.morta{border-color:var(--bad);color:var(--bad)}
 .sua{font-weight:700;font-size:15px}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:6px;padding:1px 6px;
+  font-size:10px;font-weight:400;color:var(--muted);vertical-align:middle}
 .vazio{color:var(--muted);padding:30px;text-align:center}
 footer{margin-top:18px;color:var(--muted);font-size:12px}
 @media(max-width:800px){ main{padding:14px} h1{font-size:21px} #stats{grid-template-columns:repeat(2,1fr)} }
@@ -103,6 +105,7 @@ const DESIGNERS = {
 };
 
 const JOGOS = [
+{"id": "445048", "tabs": ["holek"], "nome": "SETI: Space Agencies", "ano": 2025, "bgg": 8.86, "votos": 2282, "peso": 3.75, "jog": [1, 4], "tempo": [40, 160], "nota": 9.7, "partidas": 0, "st": "own", "exp": "SETI: Search for Extraterrestrial Intelligence"},
 {"id": "418059", "tabs": ["holek"], "nome": "SETI: Search for Extraterrestrial Intelligence", "ano": 2024, "bgg": 8.41, "votos": 22354, "peso": 3.84, "jog": [1, 4], "tempo": [40, 160], "nota": 9.7, "partidas": 5, "st": "own"},
 {"id": "391137", "tabs": ["otoole"], "nome": "Galactic Cruise", "ano": 2025, "bgg": 8.28, "votos": 8125, "peso": 3.98, "jog": [1, 4], "tempo": [90, 150], "nota": 9.2, "partidas": 3, "st": "own"},
 {"id": "296100", "tabs": ["cramer", "otoole"], "nome": "Rococo: Deluxe Edition", "ano": 2020, "bgg": 8.17, "votos": 4521, "peso": 3.06, "jog": [1, 5], "tempo": [60, 120], "nota": 9.2, "partidas": 8, "st": "own"},
@@ -120,10 +123,12 @@ const JOGOS = [
 {"id": "337627", "tabs": ["otoole"], "nome": "Voidfall", "ano": 2023, "bgg": 8.5, "votos": 7454, "peso": 4.62, "jog": [1, 4], "tempo": [90, 240], "nota": null, "partidas": 0, "st": "none"},
 {"id": "375459", "tabs": ["otoole"], "nome": "Speakeasy", "ano": 2025, "bgg": 8.42, "votos": 4600, "peso": 4.43, "jog": [1, 4], "tempo": [50, 180], "nota": null, "partidas": 0, "st": "none"},
 {"id": "265537", "tabs": ["cramer"], "nome": "Weimar: The Fight for Democracy", "ano": 2023, "bgg": 8.31, "votos": 865, "peso": 4, "jog": [4, 4], "tempo": [180, 360], "nota": null, "partidas": 0, "st": "none"},
+{"id": "365448", "tabs": ["mangone"], "nome": "Darwin's Journey: Fireland Expansion", "ano": 2023, "bgg": 8.22, "votos": 914, "peso": 4.19, "jog": [1, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none", "exp": "Darwin's Journey"},
 {"id": "184267", "tabs": ["otoole"], "nome": "On Mars", "ano": 2020, "bgg": 8.16, "votos": 15313, "peso": 4.62, "jog": [1, 4], "tempo": [90, 150], "nota": null, "partidas": 0, "st": "none"},
 {"id": "276182", "tabs": ["otoole"], "nome": "Dead Reckoning", "ano": 2022, "bgg": 8.13, "votos": 4263, "peso": 3.44, "jog": [1, 4], "tempo": [90, 150], "nota": null, "partidas": 0, "st": "none"},
 {"id": "175640", "tabs": ["otoole"], "nome": "Vinhos: Deluxe Edition", "ano": 2016, "bgg": 8.04, "votos": 8142, "peso": 3.99, "jog": [1, 4], "tempo": [90, 180], "nota": null, "partidas": 0, "st": "none"},
 {"id": "382518", "tabs": ["otoole"], "nome": "Sankore: The Pride of Mansa Musa", "ano": 2024, "bgg": 7.94, "votos": 1744, "peso": 4.26, "jog": [1, 4], "tempo": [150, 180], "nota": null, "partidas": 0, "st": "none"},
+{"id": "282391", "tabs": ["otoole"], "nome": "Stockpile: Epic Edition", "ano": 2019, "bgg": 7.93, "votos": 1123, "peso": 2.21, "jog": [2, 5], "tempo": [45, 45], "nota": null, "partidas": 0, "st": "none"},
 {"id": "347305", "tabs": ["otoole"], "nome": "Inventions: Evolution of Ideas", "ano": 2024, "bgg": 7.91, "votos": 3055, "peso": 4.6, "jog": [1, 4], "tempo": [60, 150], "nota": null, "partidas": 0, "st": "none"},
 {"id": "4098", "tabs": ["otoole"], "nome": "Age of Steam", "ano": 2002, "bgg": 7.88, "votos": 12878, "peso": 3.86, "jog": [1, 6], "tempo": [120, 120], "nota": null, "partidas": 0, "st": "none"},
 {"id": "429438", "tabs": ["otoole"], "nome": "Ayar: Children of the Sun", "ano": 2025, "bgg": 7.87, "votos": 1075, "peso": 3.25, "jog": [1, 4], "tempo": [60, 90], "nota": null, "partidas": 0, "st": "none"},
@@ -142,12 +147,12 @@ const JOGOS = [
 {"id": "214887", "tabs": ["otoole"], "nome": "CO2: Second Chance", "ano": 2018, "bgg": 7.46, "votos": 3817, "peso": 4.09, "jog": [1, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none"},
 {"id": "304510", "tabs": ["otoole"], "nome": "Pampero", "ano": 2024, "bgg": 7.44, "votos": 1437, "peso": 3.94, "jog": [1, 4], "tempo": [60, 150], "nota": null, "partidas": 0, "st": "none"},
 {"id": "161614", "tabs": ["otoole"], "nome": "Stockpile", "ano": 2015, "bgg": 7.42, "votos": 7878, "peso": 2.12, "jog": [2, 5], "tempo": [45, 45], "nota": null, "partidas": 0, "st": "none"},
+{"id": "391124", "tabs": ["cramer"], "nome": "Kraftwagen: Age of Engineering", "ano": 2024, "bgg": 7.4, "votos": 601, "peso": 2.91, "jog": [2, 4], "tempo": [75, 90], "nota": null, "partidas": 0, "st": "none"},
 {"id": "96913", "tabs": ["cramer"], "nome": "Lancaster", "ano": 2011, "bgg": 7.38, "votos": 7956, "peso": 2.99, "jog": [2, 5], "tempo": [60, 60], "nota": null, "partidas": 0, "st": "none"},
 {"id": "199383", "tabs": ["otoole"], "nome": "Calimala", "ano": 2017, "bgg": 7.32, "votos": 3292, "peso": 2.82, "jog": [2, 5], "tempo": [75, 75], "nota": null, "partidas": 0, "st": "none"},
 {"id": "352574", "tabs": ["otoole"], "nome": "Fit to Print", "ano": 2023, "bgg": 7.3, "votos": 4374, "peso": 2.12, "jog": [1, 6], "tempo": [15, 30], "nota": null, "partidas": 0, "st": "none"},
 {"id": "401216", "tabs": ["otoole"], "nome": "Cascadero", "ano": 2024, "bgg": 7.26, "votos": 2044, "peso": 2.55, "jog": [2, 4], "tempo": [45, 60], "nota": null, "partidas": 0, "st": "none"},
 {"id": "228372", "tabs": ["otoole"], "nome": "Iberian Gauge", "ano": 2017, "bgg": 7.25, "votos": 1977, "peso": 2.48, "jog": [3, 5], "tempo": [60, 90], "nota": null, "partidas": 0, "st": "none"},
-{"id": "171879", "tabs": ["cramer"], "nome": "Kraftwagen", "ano": 2015, "bgg": 7.21, "votos": 2807, "peso": 2.86, "jog": [2, 4], "tempo": [75, 75], "nota": null, "partidas": 0, "st": "none"},
 {"id": "191972", "tabs": ["cramer"], "nome": "Dynasties: Heirate & Herrsche", "ano": 2016, "bgg": 7.19, "votos": 1341, "peso": 3, "jog": [3, 5], "tempo": [60, 90], "nota": null, "partidas": 0, "st": "none"},
 {"id": "443932", "tabs": ["holek"], "nome": "Aquaria", "ano": 2025, "bgg": 7.18, "votos": 743, "peso": 3.05, "jog": [1, 4], "tempo": [45, 120], "nota": null, "partidas": 0, "st": "none"},
 {"id": "230244", "tabs": ["otoole"], "nome": "Black Angel", "ano": 2019, "bgg": 7.18, "votos": 5347, "peso": 3.87, "jog": [1, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none"},
@@ -168,6 +173,13 @@ const FAROL = {good: '\u{1F7E2}', warn: '\u{1F7E1}', bad: '\u{1F534}', own: '\u{
 
 function veredito(g) {
   if (g.st === 'own') return ['own', 'In your collection'];
+  if (g.exp) {
+    const base = JOGOS.find(b => b.nome === g.exp);
+    return base && base.st === 'own'
+      ? ['good', 'Expansion for ' + g.exp + ', which you own'
+          + (base.nota ? ' and rated ' + base.nota : '') + ' \u2014 it deepens a game night you already have']
+      : ['warn', 'Expansion \u2014 needs ' + g.exp + ', which is not in your collection'];
+  }
   if (g.peso > LINHA) {
     return g.nota >= 8.4
       ? ['warn', 'You rated it ' + g.nota + ', but ' + g.peso + ' is past your 3.35 line \u2014 expect few plays']
@@ -229,7 +241,8 @@ function linhaHTML(g) {
   const [v, txt] = veredito(g);
   const cls = g.st === 'own' ? 'tem' : '';
   return '<tr class="' + cls + '">'
-    + '<td><div class="nome">' + escapeHTML(g.nome) + '</div><div class="meta">' + g.ano
+    + '<td><div class="nome">' + escapeHTML(g.nome) + (g.exp ? ' <span class="tag">expansion</span>' : '')
+      + '</div><div class="meta">' + g.ano
       + ' \u00b7 <a href="https://boardgamegeek.com/boardgame/' + g.id + '" target="_blank" rel="noopener">BGG</a></div></td>'
     + '<td class="num">' + g.bgg.toFixed(2) + '<div class="meta">' + fmtVotos(g.votos) + ' ratings</div></td>'
     + '<td class="num">' + zonaHTML(g) + '</td>'
@@ -305,12 +318,12 @@ render();
 
 if (location.hash === '#test') {
   const check = (ok, msg) => { if (!ok) throw new Error(msg); };
-  check(JOGOS.length === 58, 'Expected 58 catalogue entries');
+  check(JOGOS.length === 61, 'Expected 61 catalogue entries');
   check(Object.keys(DESIGNERS).every(k => JOGOS.some(g => g.tabs.includes(k))), 'Every tab needs games');
-  check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 36, 'O\u2019Toole catalogue size');
+  check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 37, 'O\u2019Toole catalogue size');
   check(JOGOS.filter(g => g.tabs.includes('cramer')).length === 11, 'Cramer catalogue size');
-  check(JOGOS.filter(g => g.tabs.includes('holek')).length === 5, 'Holek catalogue size');
-  check(JOGOS.filter(g => g.tabs.includes('mangone')).length === 7, 'Mangone catalogue size');
+  check(JOGOS.filter(g => g.tabs.includes('holek')).length === 6, 'Holek catalogue size');
+  check(JOGOS.filter(g => g.tabs.includes('mangone')).length === 8, 'Mangone catalogue size');
   check(!JOGOS.some(g => /Unmatched/.test(g.nome)), 'Unmatched must stay out at your request');
   check(JOGOS.every(g => g.peso > 0 && g.peso < 5 && g.bgg > 0 && g.bgg <= 10 && g.votos > 0), 'Invalid numbers');
   check(JOGOS.every(g => Number.isInteger(g.ano) && g.ano > 1900), 'Every game needs a year');
@@ -328,14 +341,21 @@ if (location.hash === '#test') {
     'Wishlist status does not belong on this page');
   check(veredito(JOGOS.find(g => g.nome === 'Entropy'))[0] === 'own',
     'A purchase made after the export must still read as owned');
-  check(!JOGOS.some(g => /Collector's Edition|Fireland|Space Agencies/.test(g.nome))
-    && JOGOS.filter(g => /^Darwin.s Journey/.test(g.nome)).length === 1
+  check(!JOGOS.some(g => /Collector's Edition/.test(g.nome))
     && JOGOS.filter(g => /^Rococo/.test(g.nome)).length === 1
-    && JOGOS.filter(g => /^Stockpile/.test(g.nome)).length === 1
+    && JOGOS.filter(g => /^Glen More/.test(g.nome)).length === 1
     && JOGOS.filter(g => /^Kraftwagen/.test(g.nome)).length === 1
-    && JOGOS.filter(g => /^Glen More/.test(g.nome)).length === 1,
-    'One entry per game: no alternate editions or expansions alongside their base');
-  check(JOGOS.filter(g => g.st === 'own').length === 8, 'Expected 8 owned games across the catalogues');
+    && JOGOS.find(g => /^Kraftwagen/.test(g.nome)).ano === 2024,
+    'Alternate editions collapse to one entry, and Kraftwagen keeps the newer one');
+  check(JOGOS.filter(g => /^Stockpile/.test(g.nome)).length === 2, 'Both Stockpiles stay, at your request');
+  const exps = JOGOS.filter(g => g.exp);
+  check(exps.length === 2 && exps.every(g => JOGOS.some(b => b.nome === g.exp)),
+    'Every expansion must point at a base game present in the catalogue');
+  const fireland = JOGOS.find(g => g.nome === "Darwin's Journey: Fireland Expansion");
+  check(fireland.peso > LINHA && veredito(fireland)[0] === 'good',
+    'An expansion for a game you own is judged by the base, not by the weight line');
+  check(tabelaHTML([fireland]).includes('expansion'), 'Expansions must be labelled');
+  check(JOGOS.filter(g => g.st === 'own').length === 9, 'Expected 9 owned games across the catalogues');
   check(escapeHTML('<script>') === '&lt;script&gt;', 'Text must stay text');
   check(document.querySelector('a.navbtn[href="index.html"]'), 'The wishlist must stay one button away');
   st.aba = 'cramer'; st.faltando = true;

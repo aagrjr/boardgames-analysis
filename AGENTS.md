@@ -86,11 +86,16 @@ Clank!: Catacombs 5, SW Deckbuilding 5, Arnak 4. Cooperativos: Aeon's End (peso 
 
 ## Uma entrada por jogo em `designers.html`
 
-Edição alternativa e expansão **não** entram ao lado do jogo base: Darwin's Journey não convive com a
-Collector's Edition nem com a Fireland; SETI não convive com Space Agencies; Rococo: Deluxe substitui
-o Rococo base. Quando nenhuma versão é da coleção, fica a de mais votos no BGG (Stockpile sobre a Epic
-Edition, Kraftwagen sobre a Age of Engineering). Glen More II: Chronicles substitui o Glen More por ser
-reimplementação. Há autoteste cobrindo cada um desses pares.
+**Edições alternativas do mesmo jogo** não convivem: fica uma só. Darwin's Journey exclui a
+Collector's Edition; Rococo: Deluxe substitui o Rococo base; Glen More II: Chronicles substitui o
+Glen More por ser reimplementação. No Kraftwagen fica a **edição mais nova** (Age of Engineering,
+2024), a pedido. O **Stockpile é a exceção deliberada**: o base e a Epic Edition ficam os dois,
+também a pedido.
+
+**Expansões entram**, marcadas com a etiqueta `expansion` e o campo `exp` apontando o nome do jogo
+base. O veredito delas **não passa pela linha dos 3,35** — expansão não abre uma noite de jogo nova,
+aprofunda uma que já existe, então é julgada pelo base: se o base é da coleção, é 🟢; se não é,
+é 🟡 com o aviso de que o base faz falta. A Fireland (peso 4,19) é o caso de teste disso.
 
 **Status de wishlist não pertence a essa página.** Ela responde "o que falta deste catálogo", não "o
 que você decidiu sobre isso" — um jogo descartado da wishlist continua sendo uma lacuna do catálogo, e
