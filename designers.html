@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Designer Catalogues</title>
+<title>Designer &amp; Artist Catalogues</title>
 <style>
 :root{
   --bg:#0b1020; --panel:#121a2b; --panel2:#172238; --text:#eef4ff; --muted:#9fb0c8;
@@ -72,8 +72,8 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}
 </head>
 <body>
 <main>
-<div class="topo"><h1>Designer Catalogues</h1><a class="navbtn" href="index.html">&larr; Purchase wishlist<small>what to buy next, ranked</small></a></div>
-<div class="sub"><span id="sub-count"></span> Which games by the people whose work already works for you are still missing &mdash; measured against your own collection, not opinion.</div>
+<div class="topo"><h1>Designer &amp; Artist Catalogues</h1><a class="navbtn" href="index.html">&larr; Purchase wishlist<small>what to buy next, ranked</small></a></div>
+<div class="sub"><span id="sub-count"></span> Which selected games by the people whose work already works for you are still missing &mdash; measured against your own collection, not opinion.</div>
 
 <div class="intro">
 <b>The weight line is 3.35.</b> Your owned games between 3.00 and 3.35 have a median of <b>4 plays</b>; above 3.35 the median drops to <b>2</b>, with 5 of 14 stuck on 0&ndash;1 play. Verdicts below are computed from that line plus your own rating, never hand-written.
@@ -100,14 +100,20 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}
   <button class="chip" id="chip-solo">sole artist only</button>
 </div>
 <div id="saida"></div>
-<footer>BGG snapshot taken 2026-10-01 via the site&rsquo;s own API. Your ratings and plays come from the collection export of 2026-10-01. Weights and ratings drift.</footer>
+<footer>Original four catalogues: BGG snapshot checked 2026-10-01. New entries: BGG averages and weights from your 2026-10-01 collection export; rating counts and Brazilian publisher listings are shown only where verified. Personal ratings, plays and ownership come from that export. Edition notes checked 2026-10-01. BGG game statistics can pool editions; Brazilian publisher listings do not confirm a specified edition. Weights and ratings drift.</footer>
 </main>
 <script>
 const DESIGNERS = {
   cramer:  {ludo: "https://ludopedia.com.br/designer/934/Matthias%20Cramer", nome: 'Matthias Cramer',  txt: 'Catalogue sits between 2.6 and 3.1 \u2014 your best-performing band. You rated both the ones you own 9.2.'},
   holek:   {ludo: "https://ludopedia.com.br/designer/35250/Tom%C3%A1%C5%A1%20Holek", nome: 'Tom\u00e1\u0161 Holek',  txt: 'Small and very new: every title is 2024\u20132025. A bet on an early career, not a collection.'},
   mangone: {ludo: "https://ludopedia.com.br/designer/7679/Nestore%20Mangone", nome: 'Nestore Mangone',  txt: 'Co-designer of Entropy, which you just bought, and of Darwin\u2019s Journey, which you rated 9.0.'},
-  otoole:  {ludo: "https://ludopedia.com.br/artista/4782/Ian%20O'Toole", nome: 'Ian O\u2019Toole',  txt: 'Artist, not designer. You rated six of his heavy games 8.4\u20139.0 and each stopped at one play. Ten entries credit him alongside other artists \u2014 BGG pools every edition onto one page, so those are mostly later art jobs on someone else\u2019s classic. Unmatched excluded at your request.'}
+  otoole:  {ludo: "https://ludopedia.com.br/artista/4782/Ian%20O'Toole", nome: 'Ian O\u2019Toole',  txt: 'Artist, not designer. You rated six of his heavy games 8.4\u20139.0 and each stopped at one play. Edition notes identify his work on nine games. Shared contributors and announced editions are marked; BGG artist lists can combine different editions. Unmatched excluded at your request.'},
+  cathala: {"ludo": "https://ludopedia.com.br/designer/80/bruno-cathala", "nome": "Bruno Cathala", "txt": "Your 17 plays of Five Tribes and 12 of Duel for Middle-earth make his tactical, spatial games especially relevant. Includes selected games from your BGG export; the full catalogue is linked below.", "more": [["Sobek: 2 Players", "https://ludopedia.com.br/jogo/sobek-2-players"]]},
+  feld: {"ludo": "https://ludopedia.com.br/designer/316/stefan-feld", "nome": "Stefan Feld", "txt": "The Castles of Burgundy: Special Edition is yours at 9.5 over seven plays. Trajan scored 9.3 after two plays, but its weight crosses your 3.35 line. Includes selected games from your BGG export.", "more": [["Bonfire", "https://ludopedia.com.br/jogo/bonfire"], ["Carpe Diem", "https://ludopedia.com.br/jogo/carpe-diem"], ["The Castles of Tuscany", "https://ludopedia.com.br/jogo/the-castles-of-tuscany"]]},
+  luciani: {"ludo": "https://ludopedia.com.br/designer/878/Simone%20Luciani", "nome": "Simone Luciani", "txt": "Darwin’s Journey is yours at 9.0. Marco Polo scored 9.3 over three plays; Newton scored 8.9 after one. The heavier unplayed titles merit a play before buying. Includes selected games from your BGG export.", "more": [["Barrage", "https://ludopedia.com.br/jogo/barrage"], ["Grand Austria Hotel", "https://ludopedia.com.br/jogo/grand-austria-hotel"], ["Lorenzo il Magnifico", "https://ludopedia.com.br/jogo/lorenzo-il-magnifico"]]},
+  kiesling: {"ludo": "https://ludopedia.com.br/designer/1010/michael-kiesling", "nome": "Michael Kiesling", "txt": "Azul is yours at 9.0 over 17 plays. Stained Glass of Sintra scored 9.3 over eight plays before leaving the collection. Includes selected games from your BGG export.", "more": [["Azul Duel", "https://ludopedia.com.br/jogo/azul-duel"], ["Heaven & Ale", "https://ludopedia.com.br/jogo/heaven-ale"], ["Renature", "https://ludopedia.com.br/jogo/renature"]]},
+  bauza: {"ludo": "https://ludopedia.com.br/designer/31/antoine-bauza", "nome": "Antoine Bauza", "txt": "Duel for Middle-earth is yours at 9.4 over 12 plays; 7 Wonders Duel scored 9.5 over nine plays before leaving. Cooperative and family games here need a different fit judgment from the duels. Includes selected games from your BGG export.", "more": [["Oltréé", "https://ludopedia.com.br/jogo/oltree"]]},
+  dutrait: {"ludo": "https://boardgamegeek.com/boardgameartist/12130/vincent-dutrait/linkeditems/boardgameartist", "nome": "Vincent Dutrait", "txt": "Artist, not designer. You own Duel for Middle-earth, Heat, Jaipur and Unconscious Mind. Jaipur and Unconscious Mind list other artists too; credits can span contributors or editions. Includes selected games from your BGG export.", "more": [["Lewis & Clark: The Expedition", "https://ludopedia.com.br/jogo/lewis-clark-the-expedition"], ["Treasure Island", "https://ludopedia.com.br/jogo/treasure-island"], ["After Us", "https://ludopedia.com.br/jogo/after-us"], ["Luthier", "https://ludopedia.com.br/jogo/luthier"]], "source": "BGG"}
 };
 
 const JOGOS = [
@@ -117,33 +123,33 @@ const JOGOS = [
 {"id": "296100", "tabs": ["cramer", "otoole"], "nome": "Rococo: Deluxe Edition", "ano": 2020, "bgg": 8.17, "votos": 4521, "peso": 3.06, "jog": [1, 5], "tempo": [60, 120], "nota": 9.2, "partidas": 8, "st": "own", "br": "Mosaico Jogos"},
 {"id": "274364", "tabs": ["cramer"], "nome": "Watergate", "ano": 2019, "bgg": 7.7, "votos": 14665, "peso": 2.3, "jog": [2, 2], "tempo": [30, 60], "nota": 9.2, "partidas": 2, "st": "own", "br": "MeepleBR Jogos"},
 {"id": "161533", "tabs": ["otoole"], "nome": "Lisboa", "ano": 2017, "bgg": 8.16, "votos": 13141, "peso": 4.56, "jog": [1, 4], "tempo": [60, 120], "nota": 9.0, "partidas": 1, "st": "played", "br": "Mandala Jogos"},
-{"id": "322289", "tabs": ["mangone"], "nome": "Darwin's Journey", "ano": 2023, "bgg": 8.09, "votos": 12882, "peso": 3.91, "jog": [1, 4], "tempo": [60, 120], "nota": 9.0, "partidas": 2, "st": "own", "br": "Grok Games"},
+{"id": "322289", "tabs": ["mangone", "luciani"], "nome": "Darwin's Journey", "ano": 2023, "bgg": 8.09, "votos": 12882, "peso": 3.91, "jog": [1, 4], "tempo": [60, 120], "nota": 9.0, "partidas": 2, "st": "own", "br": "Grok Games"},
 {"id": "256730", "tabs": ["otoole"], "nome": "Pipeline", "ano": 2019, "bgg": 7.53, "votos": 5683, "peso": 3.91, "jog": [2, 4], "tempo": [60, 120], "nota": 9.0, "partidas": 1, "st": "played"},
-{"id": "244711", "tabs": ["mangone"], "nome": "Newton", "ano": 2018, "bgg": 7.49, "votos": 8143, "peso": 3.37, "jog": [1, 4], "tempo": [90, 90], "nota": 8.9, "partidas": 1, "st": "played", "br": "MeepleBR Jogos"},
+{"id": "244711", "tabs": ["mangone", "luciani"], "nome": "Newton", "ano": 2018, "bgg": 7.49, "votos": 8143, "peso": 3.37, "jog": [1, 4], "tempo": [90, 90], "nota": 8.9, "partidas": 1, "st": "played", "br": "MeepleBR Jogos"},
 {"id": "284378", "tabs": ["otoole"], "nome": "Kanban EV", "ano": 2020, "bgg": 8.37, "votos": 10662, "peso": 4.3, "jog": [1, 4], "tempo": [60, 180], "nota": 8.8, "partidas": 1, "st": "sold", "br": "Mosaico Jogos"},
 {"id": "408180", "tabs": ["mangone"], "nome": "Shackleton Base: A Journey to the Moon", "ano": 2024, "bgg": 8.01, "votos": 4712, "peso": 3.93, "jog": [1, 4], "tempo": [60, 120], "nota": 8.8, "partidas": 1, "st": "own", "br": "Grok Games"},
 {"id": "393333", "tabs": ["holek"], "nome": "Galileo Galilei", "ano": 2024, "bgg": 7.64, "votos": 3398, "peso": 3.03, "jog": [1, 4], "tempo": [50, 100], "nota": 8.6, "partidas": 1, "st": "own", "br": "Asmodee (Galápagos)"},
 {"id": "125153", "tabs": ["otoole"], "nome": "The Gallerist", "ano": 2015, "bgg": 8, "votos": 16775, "peso": 4.21, "jog": [1, 4], "tempo": [60, 150], "nota": 8.5, "partidas": 1, "st": "played", "br": "Mosaico Jogos e Fire on Board"},
-{"id": "62219", "tabs": ["otoole"], "nome": "Dominant Species", "ano": 2010, "bgg": 7.8, "votos": 22594, "peso": 4.04, "jog": [2, 6], "tempo": [120, 240], "nota": 8.5, "partidas": 1, "st": "played", "arts": 7},
+{"id": "62219", "tabs": ["otoole"], "nome": "Dominant Species", "ano": 2010, "bgg": 7.8, "votos": 22594, "peso": 4.04, "jog": [2, 6], "tempo": [120, 240], "nota": 8.5, "partidas": 1, "st": "played", "arts": 7, "edition": "Allplay Masterworks edition (announced)", "editionUrl": "https://www.launchoracle.com/allplay/dominant-species/QNT6K", "creditNote": "O'Toole artwork announced; your rating and play count are from the original game."},
 {"id": "310873", "tabs": ["otoole"], "nome": "Carnegie", "ano": 2022, "bgg": 7.95, "votos": 12270, "peso": 3.82, "jog": [1, 4], "tempo": [90, 120], "nota": 8.4, "partidas": 1, "st": "played", "br": "Mosaico Jogos"},
 {"id": "337627", "tabs": ["otoole"], "nome": "Voidfall", "ano": 2023, "bgg": 8.5, "votos": 7454, "peso": 4.62, "jog": [1, 4], "tempo": [90, 240], "nota": null, "partidas": 0, "st": "none", "br": "Grok Games"},
 {"id": "375459", "tabs": ["otoole"], "nome": "Speakeasy", "ano": 2025, "bgg": 8.42, "votos": 4600, "peso": 4.43, "jog": [1, 4], "tempo": [50, 180], "nota": null, "partidas": 0, "st": "none", "br": "Mosaico Jogos"},
 {"id": "265537", "tabs": ["cramer"], "nome": "Weimar: The Fight for Democracy", "ano": 2023, "bgg": 8.31, "votos": 865, "peso": 4, "jog": [4, 4], "tempo": [180, 360], "nota": null, "partidas": 0, "st": "none"},
-{"id": "365448", "tabs": ["mangone"], "nome": "Darwin's Journey: Fireland Expansion", "ano": 2023, "bgg": 8.22, "votos": 914, "peso": 4.19, "jog": [1, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none", "exp": "Darwin's Journey"},
+{"id": "365448", "tabs": ["mangone", "luciani"], "nome": "Darwin's Journey: Fireland Expansion", "ano": 2023, "bgg": 8.22, "votos": 914, "peso": 4.19, "jog": [1, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none", "exp": "Darwin's Journey"},
 {"id": "184267", "tabs": ["otoole"], "nome": "On Mars", "ano": 2020, "bgg": 8.16, "votos": 15313, "peso": 4.62, "jog": [1, 4], "tempo": [90, 150], "nota": null, "partidas": 0, "st": "none", "br": "Mosaico Jogos"},
 {"id": "276182", "tabs": ["otoole"], "nome": "Dead Reckoning", "ano": 2022, "bgg": 8.13, "votos": 4263, "peso": 3.44, "jog": [1, 4], "tempo": [90, 150], "nota": null, "partidas": 0, "st": "none"},
 {"id": "175640", "tabs": ["otoole"], "nome": "Vinhos: Deluxe Edition", "ano": 2016, "bgg": 8.04, "votos": 8142, "peso": 3.99, "jog": [1, 4], "tempo": [90, 180], "nota": null, "partidas": 0, "st": "none"},
 {"id": "382518", "tabs": ["otoole"], "nome": "Sankore: The Pride of Mansa Musa", "ano": 2024, "bgg": 7.94, "votos": 1744, "peso": 4.26, "jog": [1, 4], "tempo": [150, 180], "nota": null, "partidas": 0, "st": "none"},
-{"id": "282391", "tabs": ["otoole"], "nome": "Stockpile: Epic Edition", "ano": 2019, "bgg": 7.93, "votos": 1123, "peso": 2.21, "jog": [2, 5], "tempo": [45, 45], "nota": null, "partidas": 0, "st": "none", "arts": 2},
+{"id": "282391", "tabs": ["otoole"], "nome": "Stockpile: Epic Edition", "ano": 2019, "bgg": 7.93, "votos": 1123, "peso": 2.21, "jog": [2, 5], "tempo": [45, 45], "nota": null, "partidas": 0, "st": "none", "arts": 2, "edition": "Nauvoo Games Epic Edition (2019)", "editionUrl": "https://boardgamegeek.com/boardgame/282391/stockpile-epic-edition", "creditNote": "O'Toole: graphic design and illustration; Jacqui Davis: illustration."},
 {"id": "347305", "tabs": ["otoole"], "nome": "Inventions: Evolution of Ideas", "ano": 2024, "bgg": 7.91, "votos": 3055, "peso": 4.6, "jog": [1, 4], "tempo": [60, 150], "nota": null, "partidas": 0, "st": "none", "br": "Mosaico Jogos"},
-{"id": "4098", "tabs": ["otoole"], "nome": "Age of Steam", "ano": 2002, "bgg": 7.88, "votos": 12878, "peso": 3.86, "jog": [1, 6], "tempo": [120, 120], "nota": null, "partidas": 0, "st": "none", "arts": 4, "br": "Mosaico Jogos (Deluxe Edition)"},
+{"id": "4098", "tabs": ["otoole"], "nome": "Age of Steam", "ano": 2002, "bgg": 7.88, "votos": 12878, "peso": 3.86, "jog": [1, 6], "tempo": [120, 120], "nota": null, "partidas": 0, "st": "none", "br": "Mosaico Jogos (Deluxe Edition)", "edition": "Deluxe Edition - Eagle-Gryphon Games (2019)", "editionUrl": "https://boardgamegeek.com/boardgameversion/443194/english-first-edition", "creditNote": "O'Toole: redesigned artwork and graphics."},
 {"id": "429438", "tabs": ["otoole"], "nome": "Ayar: Children of the Sun", "ano": 2025, "bgg": 7.87, "votos": 1075, "peso": 3.25, "jog": [1, 4], "tempo": [60, 90], "nota": null, "partidas": 0, "st": "none"},
 {"id": "265188", "tabs": ["cramer"], "nome": "Glen More II: Chronicles", "ano": 2019, "bgg": 7.85, "votos": 9675, "peso": 3, "jog": [2, 4], "tempo": [90, 120], "nota": null, "partidas": 0, "st": "none"},
 {"id": "187617", "tabs": ["otoole"], "nome": "Nemo's War (Second Edition)", "ano": 2017, "bgg": 7.78, "votos": 5864, "peso": 3.29, "jog": [1, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none"},
 {"id": "448159", "tabs": ["otoole"], "nome": "Railway Boom", "ano": 2025, "bgg": 7.76, "votos": 1164, "peso": 3.17, "jog": [2, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none", "br": "Jelly Monster"},
-{"id": "462941", "tabs": ["mangone"], "nome": "Entropy", "ano": 2026, "bgg": 7.75, "votos": 650, "peso": 3.58, "jog": [1, 4], "tempo": [90, 150], "nota": null, "partidas": 0, "st": "own", "br": "Mosaico Jogos"},
-{"id": "12", "tabs": ["otoole"], "nome": "Ra", "ano": 1999, "bgg": 7.72, "votos": 33060, "peso": 2.3, "jog": [2, 5], "tempo": [45, 60], "nota": null, "partidas": 0, "st": "none", "br": "Precisamente Jogos", "arts": 8},
-{"id": "42", "tabs": ["otoole"], "nome": "Tigris & Euphrates", "ano": 1997, "bgg": 7.7, "votos": 30179, "peso": 3.47, "jog": [2, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none", "br": "Asmodee (Galápagos)", "arts": 7},
+{"id": "462941", "tabs": ["mangone", "luciani"], "nome": "Entropy", "ano": 2026, "bgg": 7.75, "votos": 650, "peso": 3.58, "jog": [1, 4], "tempo": [90, 150], "nota": null, "partidas": 0, "st": "own", "br": "Mosaico Jogos"},
+{"id": "12", "tabs": ["otoole"], "nome": "Ra", "ano": 1999, "bgg": 7.72, "votos": 33060, "peso": 2.3, "jog": [2, 5], "tempo": [45, 60], "nota": null, "partidas": 0, "st": "none", "br": "Precisamente Jogos", "edition": "25th Century Games edition (2023; retail or deluxe)", "editionUrl": "https://boardgamegeek.com/boardgameversion/507779/25th-century-games-english-retail-edition-first-pr", "creditNote": "O'Toole artwork is in the 25th Century edition; both retail and deluxe use his work."},
+{"id": "42", "tabs": ["otoole"], "nome": "Tigris & Euphrates", "ano": 1997, "bgg": 7.7, "votos": 30179, "peso": 3.47, "jog": [2, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none", "br": "Asmodee (Galápagos)", "edition": "25th Century Games English edition (2027; unreleased)", "editionUrl": "https://boardgamegeek.com/boardgameversion/779284/25th-century-english-edition", "creditNote": "O'Toole: artwork. BGG currently lists May 2027; this edition is unreleased."},
 {"id": "237179", "tabs": ["otoole"], "nome": "Weather Machine", "ano": 2022, "bgg": 7.68, "votos": 4257, "peso": 4.56, "jog": [2, 4], "tempo": [60, 150], "nota": null, "partidas": 0, "st": "none", "br": "Mosaico Jogos"},
 {"id": "422042", "tabs": ["holek"], "nome": "Tea Garden", "ano": 2024, "bgg": 7.55, "votos": 1960, "peso": 3.09, "jog": [2, 4], "tempo": [90, 120], "nota": null, "partidas": 0, "st": "none"},
 {"id": "272739", "tabs": ["otoole"], "nome": "Clinic: Deluxe Edition", "ano": 2019, "bgg": 7.55, "votos": 3210, "peso": 4.01, "jog": [1, 4], "tempo": [60, 150], "nota": null, "partidas": 0, "st": "none"},
@@ -152,26 +158,59 @@ const JOGOS = [
 {"id": "306040", "tabs": ["otoole"], "nome": "Merv: The Heart of the Silk Road", "ano": 2020, "bgg": 7.46, "votos": 4789, "peso": 3.44, "jog": [1, 4], "tempo": [90, 90], "nota": null, "partidas": 0, "st": "none"},
 {"id": "214887", "tabs": ["otoole"], "nome": "CO2: Second Chance", "ano": 2018, "bgg": 7.46, "votos": 3817, "peso": 4.09, "jog": [1, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none", "arts": 3, "br": "MeepleBR Jogos"},
 {"id": "304510", "tabs": ["otoole"], "nome": "Pampero", "ano": 2024, "bgg": 7.44, "votos": 1437, "peso": 3.94, "jog": [1, 4], "tempo": [60, 150], "nota": null, "partidas": 0, "st": "none"},
-{"id": "161614", "tabs": ["otoole"], "nome": "Stockpile", "ano": 2015, "bgg": 7.42, "votos": 7878, "peso": 2.12, "jog": [2, 5], "tempo": [45, 45], "nota": null, "partidas": 0, "st": "none", "arts": 2},
+{"id": "161614", "tabs": ["otoole"], "nome": "Stockpile", "ano": 2015, "bgg": 7.42, "votos": 7878, "peso": 2.12, "jog": [2, 5], "tempo": [45, 45], "nota": null, "partidas": 0, "st": "none", "arts": 2, "edition": "Nauvoo Games English edition (2015)", "editionUrl": "https://boardgamegeek.com/boardgameversion/244461/40920581", "creditNote": "Ian O'Toole and Jacqui Davis are both credited in this edition."},
 {"id": "391124", "tabs": ["cramer"], "nome": "Kraftwagen: Age of Engineering", "ano": 2024, "bgg": 7.4, "votos": 601, "peso": 2.91, "jog": [2, 4], "tempo": [75, 90], "nota": null, "partidas": 0, "st": "none"},
 {"id": "96913", "tabs": ["cramer"], "nome": "Lancaster", "ano": 2011, "bgg": 7.38, "votos": 7956, "peso": 2.99, "jog": [2, 5], "tempo": [60, 60], "nota": null, "partidas": 0, "st": "none", "br": "Vem pra Mesa Jogos"},
-{"id": "199383", "tabs": ["otoole"], "nome": "Calimala", "ano": 2017, "bgg": 7.32, "votos": 3292, "peso": 2.82, "jog": [2, 5], "tempo": [75, 75], "nota": null, "partidas": 0, "st": "none", "arts": 2},
+{"id": "199383", "tabs": ["otoole"], "nome": "Calimala", "ano": 2017, "bgg": 7.32, "votos": 3292, "peso": 2.82, "jog": [2, 5], "tempo": [75, 75], "nota": null, "partidas": 0, "st": "none", "edition": "Second Edition - Alley Cat Games (2025)", "editionUrl": "https://boardgamegeek.com/boardgameversion/670880/english-second-edition", "creditNote": "O'Toole: artwork and graphic design. The original 2017 edition has different artwork."},
 {"id": "352574", "tabs": ["otoole"], "nome": "Fit to Print", "ano": 2023, "bgg": 7.3, "votos": 4374, "peso": 2.12, "jog": [1, 6], "tempo": [15, 30], "nota": null, "partidas": 0, "st": "none"},
 {"id": "401216", "tabs": ["otoole"], "nome": "Cascadero", "ano": 2024, "bgg": 7.26, "votos": 2044, "peso": 2.55, "jog": [2, 4], "tempo": [45, 60], "nota": null, "partidas": 0, "st": "none"},
 {"id": "228372", "tabs": ["otoole"], "nome": "Iberian Gauge", "ano": 2017, "bgg": 7.25, "votos": 1977, "peso": 2.48, "jog": [3, 5], "tempo": [60, 90], "nota": null, "partidas": 0, "st": "none"},
 {"id": "191972", "tabs": ["cramer"], "nome": "Dynasties: Heirate & Herrsche", "ano": 2016, "bgg": 7.19, "votos": 1341, "peso": 3, "jog": [3, 5], "tempo": [60, 90], "nota": null, "partidas": 0, "st": "none"},
 {"id": "443932", "tabs": ["holek"], "nome": "Aquaria", "ano": 2025, "bgg": 7.18, "votos": 743, "peso": 3.05, "jog": [1, 4], "tempo": [45, 120], "nota": null, "partidas": 0, "st": "none", "br": "Mosaico Jogos"},
-{"id": "230244", "tabs": ["otoole"], "nome": "Black Angel", "ano": 2019, "bgg": 7.18, "votos": 5347, "peso": 3.87, "jog": [1, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none", "br": "Asmodee (Galápagos)", "arts": 4},
+{"id": "230244", "tabs": ["otoole"], "nome": "Black Angel", "ano": 2019, "bgg": 7.18, "votos": 5347, "peso": 3.87, "jog": [1, 4], "tempo": [60, 120], "nota": null, "partidas": 0, "st": "none", "br": "Asmodee (Galápagos)", "edition": "Pearl Games English edition (2019)", "editionUrl": "https://boardgamegeek.com/boardgameversion/359923/english-edition", "creditNote": "The rulebook credits O'Toole for illustration, graphic design and figurine 3D models."},
 {"id": "161882", "tabs": ["otoole"], "nome": "Irish Gauge", "ano": 2014, "bgg": 7.15, "votos": 4045, "peso": 2.33, "jog": [3, 5], "tempo": [60, 60], "nota": null, "partidas": 0, "st": "none"},
 {"id": "297486", "tabs": ["otoole"], "nome": "Ride the Rails", "ano": 2020, "bgg": 7.11, "votos": 2354, "peso": 2.28, "jog": [3, 5], "tempo": [45, 60], "nota": null, "partidas": 0, "st": "none"},
-{"id": "280453", "tabs": ["mangone"], "nome": "Masters of Renaissance", "ano": 2019, "bgg": 7.08, "votos": 2502, "peso": 2.14, "jog": [1, 4], "tempo": [30, 45], "nota": null, "partidas": 0, "st": "none"},
+{"id": "280453", "tabs": ["mangone", "luciani"], "nome": "Masters of Renaissance", "ano": 2019, "bgg": 7.08, "votos": 2502, "peso": 2.14, "jog": [1, 4], "tempo": [30, 45], "nota": null, "partidas": 0, "st": "none"},
 {"id": "435330", "tabs": ["holek"], "nome": "Pondscape", "ano": 2025, "bgg": 7.03, "votos": 1085, "peso": 2, "jog": [1, 4], "tempo": [20, 35], "nota": null, "partidas": 0, "st": "none", "br": "Bucaneiros Jogos"},
 {"id": "348554", "tabs": ["mangone"], "nome": "Autobahn", "ano": 2022, "bgg": 7.02, "votos": 2099, "peso": 3.81, "jog": [1, 4], "tempo": [90, 150], "nota": null, "partidas": 0, "st": "none"},
 {"id": "103092", "tabs": ["cramer"], "nome": "Helvetia", "ano": 2011, "bgg": 6.98, "votos": 2129, "peso": 3.05, "jog": [2, 4], "tempo": [90, 90], "nota": null, "partidas": 0, "st": "none"},
 {"id": "376223", "tabs": ["cramer"], "nome": "The Hunt", "ano": 2023, "bgg": 6.97, "votos": 847, "peso": 2.27, "jog": [2, 2], "tempo": [20, 45], "nota": null, "partidas": 0, "st": "none"},
-{"id": "204", "tabs": ["otoole"], "nome": "Stephenson's Rocket", "ano": 1999, "bgg": 6.94, "votos": 3302, "peso": 3.04, "jog": [2, 4], "tempo": [60, 90], "nota": null, "partidas": 0, "st": "none", "br": "Jogo Secco", "arts": 4},
+{"id": "204", "tabs": ["otoole"], "nome": "Stephenson's Rocket", "ano": 1999, "bgg": 6.94, "votos": 3302, "peso": 3.04, "jog": [2, 4], "tempo": [60, 90], "nota": null, "partidas": 0, "st": "none", "br": "Jogo Secco", "edition": "Second Edition - Grail Games (2018)", "editionUrl": "https://boardgamegeek.com/boardgameversion/339682/english-second-edition", "creditNote": "O'Toole: artwork for Grail's second edition."},
 {"id": "192834", "tabs": ["cramer"], "nome": "Fight for Olympus", "ano": 2016, "bgg": 6.68, "votos": 1438, "peso": 2.1, "jog": [2, 2], "tempo": [30, 30], "nota": null, "partidas": 0, "st": "none"},
-{"id": "181761", "tabs": ["cramer"], "nome": "Plums", "ano": 2015, "bgg": 6.54, "votos": 1525, "peso": 1.81, "jog": [3, 5], "tempo": [30, 40], "nota": null, "partidas": 0, "st": "none"}
+{"id": "181761", "tabs": ["cramer"], "nome": "Plums", "ano": 2015, "bgg": 6.54, "votos": 1525, "peso": 1.81, "jog": [3, 5], "tempo": [30, 40], "nota": null, "partidas": 0, "st": "none"},
+{"id": "421006", "tabs": ["cathala", "bauza", "dutrait"], "nome": "The Lord of the Rings: Duel for Middle-earth", "ano": 2024, "bgg": 8.35, "votos": null, "peso": 2.07, "jog": [2, 2], "tempo": [30, 30], "nota": 9.4, "partidas": 12, "st": "own", "br": "Asmodee (Galápagos)"},
+{"id": "173346", "tabs": ["cathala", "bauza"], "nome": "7 Wonders Duel", "ano": 2015, "bgg": 8.07, "votos": null, "peso": 2.23, "jog": [2, 2], "tempo": [30, 30], "nota": 9.5, "partidas": 9, "st": "sold", "br": "Asmodee (Galápagos)"},
+{"id": "157354", "tabs": ["cathala"], "nome": "Five Tribes: The Djinns of Naqala", "ano": 2014, "bgg": 7.76, "votos": null, "peso": 2.84, "jog": [2, 4], "tempo": [40, 80], "nota": 9.2, "partidas": 17, "st": "own", "br": "Asmodee (Galápagos)"},
+{"id": "364073", "tabs": ["cathala"], "nome": "Splendor Duel", "ano": 2022, "bgg": 7.88, "votos": null, "peso": 2.05, "jog": [2, 2], "tempo": [30, 30], "nota": 8.7, "partidas": 4, "st": "own", "br": "Asmodee (Galápagos)"},
+{"id": "367220", "tabs": ["cathala"], "nome": "Sea Salt & Paper", "ano": 2022, "bgg": 7.51, "votos": null, "peso": 1.49, "jog": [2, 4], "tempo": [30, 45], "nota": 8.8, "partidas": 8, "st": "own", "br": "Asmodee (Galápagos)"},
+{"id": "54998", "tabs": ["cathala"], "nome": "Cyclades", "ano": 2009, "bgg": 7.49, "votos": null, "peso": 2.82, "jog": [2, 5], "tempo": [60, 90], "nota": 8.4, "partidas": 1, "st": "played", "br": "Asmodee (Galápagos)"},
+{"id": "204583", "tabs": ["cathala"], "nome": "Kingdomino", "ano": 2016, "bgg": 7.29, "votos": null, "peso": 1.24, "jog": [2, 4], "tempo": [15, 25], "nota": 8.2, "partidas": 6, "st": "sold", "br": "PaperGames"},
+{"id": "155987", "tabs": ["cathala"], "nome": "Abyss", "ano": 2014, "bgg": 7.32, "votos": null, "peso": 2.32, "jog": [2, 4], "tempo": [30, 60], "nota": 8.9, "partidas": 6, "st": "sold", "br": "Asmodee (Galápagos)"},
+{"id": "28023", "tabs": ["cathala"], "nome": "Jamaica", "ano": 2007, "bgg": 7.06, "votos": null, "peso": 1.66, "jog": [2, 6], "tempo": [30, 60], "nota": 7.3, "partidas": 1, "st": "played", "brUnknown": true},
+{"id": "200147", "tabs": ["cathala"], "nome": "Kanagawa", "ano": 2016, "bgg": 7.0, "votos": null, "peso": 1.99, "jog": [2, 4], "tempo": [45, 45], "nota": 8.0, "partidas": 2, "st": "played", "br": "Buró Editora"},
+{"id": "271088", "tabs": ["cathala"], "nome": "Ishtar: Gardens of Babylon", "ano": 2019, "bgg": 6.95, "votos": null, "peso": 2.28, "jog": [2, 4], "tempo": [45, 45], "nota": null, "partidas": 0, "st": "none", "br": "Buró Editora"},
+{"id": "363622", "tabs": ["feld"], "nome": "The Castles of Burgundy: Special Edition", "ano": 2023, "bgg": 9.14, "votos": null, "peso": 2.83, "jog": [1, 4], "tempo": [70, 120], "nota": 9.5, "partidas": 7, "st": "own", "br": "MeepleBR Jogos"},
+{"id": "102680", "tabs": ["feld"], "nome": "Trajan", "ano": 2011, "bgg": 7.74, "votos": null, "peso": 3.62, "jog": [2, 4], "tempo": [60, 120], "nota": 9.3, "partidas": 2, "st": "played", "br": "Gigante Jogos"},
+{"id": "127060", "tabs": ["feld"], "nome": "Bora Bora", "ano": 2013, "bgg": 7.56, "votos": null, "peso": 3.72, "jog": [2, 4], "tempo": [60, 120], "nota": 8.1, "partidas": 1, "st": "played", "brUnknown": true},
+{"id": "400602", "tabs": ["feld"], "nome": "Civolution", "ano": 2024, "bgg": 8.17, "votos": null, "peso": 4.26, "jog": [1, 4], "tempo": [90, 180], "nota": null, "partidas": 0, "st": "none", "br": "Devir Brasil"},
+{"id": "171623", "tabs": ["luciani"], "nome": "The Voyages of Marco Polo", "ano": 2015, "bgg": 7.76, "votos": null, "peso": 3.18, "jog": [2, 4], "tempo": [40, 100], "nota": 9.3, "partidas": 3, "st": "played", "br": "Devir Brasil"},
+{"id": "396790", "tabs": ["luciani"], "nome": "Nucleum", "ano": 2023, "bgg": 8.11, "votos": null, "peso": 4.19, "jog": [1, 4], "tempo": [60, 150], "nota": null, "partidas": 0, "st": "none", "br": "Mosaico Jogos"},
+{"id": "126163", "tabs": ["luciani"], "nome": "Tzolk'in: The Mayan Calendar", "ano": 2012, "bgg": 7.84, "votos": null, "peso": 3.66, "jog": [2, 4], "tempo": [90, 90], "nota": 8.4, "partidas": 1, "st": "played", "br": "Devir Brasil"},
+{"id": "351913", "tabs": ["luciani"], "nome": "Tiletum", "ano": 2022, "bgg": 7.85, "votos": null, "peso": 3.39, "jog": [1, 4], "tempo": [60, 100], "nota": null, "partidas": 0, "st": "none", "br": "Mosaico Jogos"},
+{"id": "230802", "tabs": ["kiesling"], "nome": "Azul", "ano": 2017, "bgg": 7.71, "votos": null, "peso": 1.77, "jog": [2, 4], "tempo": [30, 45], "nota": 9.0, "partidas": 17, "st": "own", "br": "Asmodee (Galápagos)"},
+{"id": "256226", "tabs": ["kiesling"], "nome": "Azul: Stained Glass of Sintra", "ano": 2018, "bgg": 7.28, "votos": null, "peso": 2.01, "jog": [2, 4], "tempo": [30, 45], "nota": 9.3, "partidas": 8, "st": "sold", "br": "Asmodee (Galápagos)"},
+{"id": "2955", "tabs": ["kiesling"], "nome": "Mexica", "ano": 2002, "bgg": 7.24, "votos": null, "peso": 2.67, "jog": [2, 4], "tempo": [90, 90], "nota": 8.5, "partidas": 5, "st": "sold", "br": "Conclave Editora"},
+{"id": "348070", "tabs": ["kiesling"], "nome": "The Palaces of Carrara (Second Edition)", "ano": 2022, "bgg": 7.38, "votos": null, "peso": 2.69, "jog": [2, 4], "tempo": [60, 90], "nota": 7.4, "partidas": 1, "st": "sold", "br": "Grok Games"},
+{"id": "68448", "tabs": ["bauza"], "nome": "7 Wonders", "ano": 2010, "bgg": 7.66, "votos": null, "peso": 2.31, "jog": [2, 7], "tempo": [30, 30], "nota": 9.5, "partidas": 9, "st": "sold", "br": "Asmodee (Galápagos)"},
+{"id": "346703", "tabs": ["bauza"], "nome": "7 Wonders: Architects", "ano": 2021, "bgg": 7.03, "votos": null, "peso": 1.39, "jog": [2, 7], "tempo": [25, 25], "nota": 8.4, "partidas": 7, "st": "own", "br": "Asmodee (Galápagos)"},
+{"id": "98778", "tabs": ["bauza"], "nome": "Hanabi", "ano": 2010, "bgg": 7.03, "votos": null, "peso": 1.69, "jog": [2, 5], "tempo": [25, 25], "nota": 7.9, "partidas": 10, "st": "own", "br": "PaperGames"},
+{"id": "70919", "tabs": ["bauza"], "nome": "Takenoko", "ano": 2011, "bgg": 7.2, "votos": null, "peso": 1.97, "jog": [2, 4], "tempo": [45, 45], "nota": 7.2, "partidas": 5, "st": "played", "br": "Asmodee (Galápagos)"},
+{"id": "123540", "tabs": ["bauza"], "nome": "Tokaido", "ano": 2012, "bgg": 6.91, "votos": null, "peso": 1.74, "jog": [1, 5], "tempo": [45, 45], "nota": 6.5, "partidas": 1, "st": "played", "br": "Asmodee (Galápagos)"},
+{"id": "37046", "tabs": ["bauza"], "nome": "Ghost Stories", "ano": 2008, "bgg": 7.25, "votos": null, "peso": 2.9, "jog": [1, 4], "tempo": [60, 60], "nota": null, "partidas": 0, "st": "none", "brUnknown": true},
+{"id": "264055", "tabs": ["bauza"], "nome": "Draftosaurus", "ano": 2019, "bgg": 7.08, "votos": null, "peso": 1.24, "jog": [2, 5], "tempo": [15, 15], "nota": 7.8, "partidas": 3, "st": "sold", "br": "MeepleBR Jogos"},
+{"id": "366013", "tabs": ["dutrait"], "nome": "Heat: Pedal to the Metal", "ano": 2022, "bgg": 7.99, "votos": null, "peso": 2.2, "jog": [1, 6], "tempo": [30, 60], "nota": 8.7, "partidas": 2, "st": "own", "br": "Asmodee (Galápagos)"},
+{"id": "54043", "tabs": ["dutrait"], "nome": "Jaipur", "ano": 2009, "bgg": 7.48, "votos": null, "peso": 1.46, "jog": [2, 2], "tempo": [30, 30], "nota": 8.5, "partidas": 6, "st": "own", "br": "Asmodee (Galápagos)", "arts": 2},
+{"id": "329500", "tabs": ["dutrait"], "nome": "Unconscious Mind", "ano": 2024, "bgg": 7.87, "votos": null, "peso": 4.03, "jog": [1, 4], "tempo": [60, 120], "nota": 9.0, "partidas": 6, "st": "own", "br": "Mosaico Jogos", "arts": 3}
 ];
 
 const LINHA = 3.35;
@@ -261,15 +300,19 @@ function linhaHTML(g) {
   const cls = g.st === 'own' ? 'tem' : '';
   return '<tr class="' + cls + '">'
     + '<td><div class="nome">' + escapeHTML(g.nome) + (g.exp ? ' <span class="tag">expansion</span>' : '')
-      + (g.arts ? ' <span class="tag" title="BGG pools the credits of every edition onto one entry">1 of '
-          + g.arts + ' artists</span>' : '')
-      + '</div><div class="meta">' + g.ano
-      + ' \u00b7 <a href="https://boardgamegeek.com/boardgame/' + g.id + '" target="_blank" rel="noopener">BGG</a>'
+      + (g.arts ? ' <span class="tag" title="BGG credits may span editions or contributors; read the edition note">BGG: '
+          + g.arts + ' artist credits</span>' : '')
+      + '</div>' + (g.edition ? '<div class="meta">Edition: <a href="' + escapeHTML(g.editionUrl)
+          + '" target="_blank" rel="noopener">' + escapeHTML(g.edition) + '</a></div>'
+          + '<div class="meta">' + escapeHTML(g.creditNote) + '</div>' : '')
+      + '<div class="meta">' + (g.edition ? 'Base game: ' : '') + g.ano
+      + ' \u00b7 <a href="https://boardgamegeek.com/boardgame/' + g.id + '" target="_blank" rel="noopener">'
+          + (g.edition ? 'BGG game data' : 'BGG') + '</a>'
       + ' \u00b7 <a href="' + ludoURL(g) + '" target="_blank" rel="noopener">Ludopedia</a></div></td>'
-    + '<td class="num">' + g.bgg.toFixed(2) + '<div class="meta">' + fmtVotos(g.votos) + ' ratings</div></td>'
+    + '<td class="num">' + g.bgg.toFixed(2) + '<div class="meta">' + (g.votos == null ? 'rating count unavailable' : fmtVotos(g.votos) + ' ratings') + '</div></td>'
     + '<td class="num">' + zonaHTML(g) + '</td>'
     + '<td>' + (g.br ? '<span class="br sim" title="Brazilian publisher listed on Ludopedia">' + escapeHTML(g.br) + '</span>'
-        : '<span class="br">no BR edition</span>') + '</td>'
+        : g.brUnknown ? '<span class="br">BR publisher unchecked</span>' : '<span class="br">no BR edition</span>') + '</td>'
     + '<td class="num">' + (g.jog[0] ? g.jog[0] + '\u2013' + g.jog[1] : '\u2014') + '</td>'
     + '<td class="num">' + (g.tempo[0] ? (g.tempo[0] === g.tempo[1] ? g.tempo[0] : g.tempo[0] + '\u2013' + g.tempo[1]) + 'm' : '\u2014') + '</td>'
     + '<td class="num">' + suaHTML(g) + '</td>'
@@ -291,10 +334,10 @@ function statsHTML(l) {
   const faltam = l.filter(g => g.st !== 'own');
   const cabem = faltam.filter(g => g.peso <= LINHA);
   const med = l.filter(g => g.nota).map(g => g.nota);
-  return '<div>catalogue<b>' + l.length + '</b></div>'
+  return '<div>listed games<b>' + l.length + '</b></div>'
     + '<div>you own<b>' + l.filter(g => g.st === 'own').length + '</b></div>'
     + '<div>missing<b>' + faltam.length + '</b></div>'
-    + '<div>missing, under 3.35 and sold here<b>' + cabem.filter(g => g.br).length + '</b></div>';
+    + '<div>missing, under 3.35 and BR publisher listed<b>' + cabem.filter(g => g.br).length + '</b></div>';
 }
 
 function abasHTML() {
@@ -315,10 +358,16 @@ function render() {
   document.getElementById('abas').innerHTML = abasHTML();
   const todos = JOGOS.filter(g => g.tabs.includes(st.aba));
   document.getElementById('stats').innerHTML = statsHTML(todos);
+  const d = DESIGNERS[st.aba];
+  const source = d.source || 'Ludopedia';
+  const further = d.more ? '<div class="meta">Other credited works to explore: '
+    + d.more.map(([name, url]) => '<a href="' + escapeHTML(url) + '" target="_blank" rel="noopener">'
+        + escapeHTML(name) + '</a>').join(' · ') + '</div>' : '';
   document.getElementById('saida').innerHTML =
-    '<div class="intro">' + escapeHTML(DESIGNERS[st.aba].txt)
-    + '<div><a href="' + escapeHTML(DESIGNERS[st.aba].ludo) + '" target="_blank" rel="noopener" aria-label="'
-    + escapeHTML(DESIGNERS[st.aba].nome) + ' on Ludopedia">View catalogue on Ludopedia</a></div></div>' + tabelaHTML(filtrados());
+    '<div class="intro">' + escapeHTML(d.txt)
+    + '<div><a href="' + escapeHTML(d.ludo) + '" target="_blank" rel="noopener" aria-label="'
+    + escapeHTML(d.nome) + ' on ' + source + '">View catalogue on ' + source + '</a></div>'
+    + further + '</div>' + tabelaHTML(filtrados());
   document.getElementById('dir').textContent = st.dir === -1 ? '\u2193' : '\u2191';
 }
 
@@ -346,14 +395,20 @@ render();
 
 if (location.hash === '#test') {
   const check = (ok, msg) => { if (!ok) throw new Error(msg); };
-  check(JOGOS.length === 61, 'Expected 61 catalogue entries');
+  check(JOGOS.length === 94, 'Expected 94 distinct listed games');
   check(Object.keys(DESIGNERS).every(k => JOGOS.some(g => g.tabs.includes(k))), 'Every tab needs games');
+  check(new Set(JOGOS.map(g => g.id)).size === JOGOS.length, 'One entry per BGG game ID');
+  check(['cathala', 'bauza', 'dutrait'].every(k => JOGOS.find(g => g.id === '421006').tabs.includes(k)), 'Shared creator credits need one linked game');
+  check(JOGOS.find(g => g.id === '157354').partidas === 17 && JOGOS.find(g => g.id === '230802').partidas === 17, 'Export play counts must carry into new tabs');
+  check(JOGOS.find(g => g.id === '256226').st === 'sold' && JOGOS.find(g => g.id === '102680').st === 'played', 'Past ownership must differ from never owned');
+  check(tabelaHTML([JOGOS.find(g => g.id === '400602')]).includes('rating count unavailable') && tabelaHTML([JOGOS.find(g => g.id === '37046')]).includes('BR publisher unchecked'), 'Unknown source fields must be explicit');
+  check(DESIGNERS.dutrait.source === 'BGG' && DESIGNERS.kiesling.more.some(([name]) => name === 'Azul Duel'), 'New creator links must lead to credited works');
   check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 37, 'O\u2019Toole catalogue size');
   check(JOGOS.filter(g => g.tabs.includes('cramer')).length === 11, 'Cramer catalogue size');
   check(JOGOS.filter(g => g.tabs.includes('holek')).length === 6, 'Holek catalogue size');
   check(JOGOS.filter(g => g.tabs.includes('mangone')).length === 8, 'Mangone catalogue size');
   check(!JOGOS.some(g => /Unmatched/.test(g.nome)), 'Unmatched must stay out at your request');
-  check(JOGOS.every(g => g.peso > 0 && g.peso < 5 && g.bgg > 0 && g.bgg <= 10 && g.votos > 0), 'Invalid numbers');
+  check(JOGOS.every(g => g.peso > 0 && g.peso < 5 && g.bgg > 0 && g.bgg <= 10 && (g.votos == null || g.votos > 0)), 'Invalid numbers');
   check(JOGOS.every(g => Number.isInteger(g.ano) && g.ano > 1900), 'Every game needs a year');
   check(JOGOS.every(g => g.nota == null || (g.nota > 0 && g.nota <= 10)), 'Invalid personal rating');
   const rococo = JOGOS.find(g => g.nome === 'Rococo: Deluxe Edition');
@@ -383,14 +438,21 @@ if (location.hash === '#test') {
   check(fireland.peso > LINHA && veredito(fireland)[0] === 'good',
     'An expansion for a game you own is judged by the base, not by the weight line');
   check(tabelaHTML([fireland]).includes('expansion'), 'Expansions must be labelled');
-  check(JOGOS.filter(g => g.st === 'own').length === 9, 'Expected 9 owned games across the catalogues');
+  check(JOGOS.filter(g => g.st === 'own').length === 20, 'Expected 20 owned games across the listed games');
   check(escapeHTML('<script>') === '&lt;script&gt;', 'Text must stay text');
-  check(JOGOS.filter(g => g.br).length === 31, 'Expected 31 games with a Brazilian edition');
-  check(JOGOS.filter(g => g.arts).length === 10, 'Expected 10 shared-artist credits');
-  check(JOGOS.find(g => g.nome === 'Age of Steam').arts === 4
-    && JOGOS.find(g => g.nome === 'Ra').arts === 8
-    && !JOGOS.find(g => g.nome === 'Lisboa').arts, 'Shared credits must be marked, sole credits must not');
-  check(tabelaHTML([JOGOS.find(g => g.nome === 'Age of Steam')]).includes('1 of 4 artists'), 'Shared credit must show');
+  check(JOGOS.filter(g => g.br).length === 61, 'Expected 61 games with a confirmed Brazilian publisher');
+  check(JOGOS.filter(g => g.arts).length === 6, 'Shared or unresolved artist credits should be marked');
+  const editions = JOGOS.filter(g => g.edition);
+  check(editions.length === 9 && editions.every(g => g.creditNote && /^https:\/\//.test(g.editionUrl)),
+    'All nine requested games need a sourced edition and credit note');
+  check(JOGOS.find(g => g.nome === 'Stockpile').arts === 2
+    && !JOGOS.find(g => g.nome === 'Ra').arts
+    && !JOGOS.find(g => g.nome === 'Black Angel').arts, 'Verified edition credits must replace pooled artist lists');
+  check(editions.every(g => tabelaHTML([g]).includes(escapeHTML(g.editionUrl))
+    && tabelaHTML([g]).includes(escapeHTML(g.creditNote))), 'Edition source and contribution must render');
+  check(tabelaHTML([JOGOS.find(g => g.nome === 'Dominant Species')]).includes('original game')
+    && tabelaHTML([JOGOS.find(g => g.nome === 'Tigris & Euphrates')]).includes('unreleased'),
+    'Upcoming editions must stay distinct from original-game evidence');
   check(ludoSlug("Darwin's Journey") === 'darwin-s-journey' && ludoSlug('Tigris & Euphrates') === 'tigris-euphrates'
     && ludoSlug("Nemo's War (Second Edition)") === 'nemo-s-war-second-edition'
     && ludoSlug('Sankore: The Pride of Mansa Musa') === 'sankore-the-pride-of-mansa-musa',
@@ -423,7 +485,7 @@ if (location.hash === '#test') {
     }
   }
   st.ordem = 'fit'; st.dir = -1; render();
-  check(document.querySelectorAll('.aba').length === 4, 'Four tabs must render');
+  check(document.querySelectorAll('.aba').length === 10, 'All ten creator tabs must render');
   check(document.querySelectorAll('thead th').length === 8, 'Header must match the column list');
   check(document.querySelector('#sub-count').textContent === subCount(), 'Subtitle must come from the data');
   console.log('Designer-catalogue checks passed');
