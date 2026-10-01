@@ -8,7 +8,8 @@ ficaram de fora, com peso, duração, sobreposição com a coleção e veredito.
 **Sem dependências e sem build.** Publicado em GitHub Pages:
 
 - <https://aagrjr.github.io/boardgames-analysis/> — wishlist de compra
-- <https://aagrjr.github.io/boardgames-analysis/designers.html> — catálogos por designer/artista
+- <https://aagrjr.github.io/boardgames-analysis/designers.html> — catálogos por designer/artista,
+  com edição brasileira por jogo e filtros de peso e disponibilidade nacional
 
 Ou abra os `.html` direto no navegador.
 

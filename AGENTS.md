@@ -97,6 +97,18 @@ base. O veredito delas **não passa pela linha dos 3,35** — expansão não abr
 aprofunda uma que já existe, então é julgada pelo base: se o base é da coleção, é 🟢; se não é,
 é 🟡 com o aviso de que o base faz falta. A Fireland (peso 4,19) é o caso de teste disso.
 
+**Edição brasileira** fica no campo `br` com o nome da editora nacional, ou ausente quando não há.
+Levantado na Ludopedia em 01/10/2026: a busca do site não devolve resultado por `fetch`, mas o slug de
+`/jogo/<slug>` é previsível a partir do nome em inglês (minúsculas, sem acento, não-alfanumérico vira
+hífen) e acertou 58 dos 61. A editora sai dos links `a[href*="/editora/"]` da página, com a brasileira
+em primeiro. Título em português (Rá, Entropia, SETI: Agências Espaciais) confirma.
+
+Editoras brasileiras que apareceram: Devir Brasil, Mosaico Jogos, MeepleBR Jogos, Grok Games,
+Asmodee (Galápagos), Jelly Monster, Mandala Jogos, Fire on Board, Precisamente Jogos,
+Vem pra Mesa Jogos, Bucaneiros Jogos e Jogo Secco. **A Ludopedia não distingue lançado de anunciado**,
+então o campo afirma só que existe editora nacional listada — diferente do `brasil.s` do `index.html`,
+que separa `released` de `announced` porque ali a checagem foi jogo a jogo.
+
 **Status de wishlist não pertence a essa página.** Ela responde "o que falta deste catálogo", não "o
 que você decidiu sobre isso" — um jogo descartado da wishlist continua sendo uma lacuna do catálogo, e
 misturar as duas coisas já produziu uma linha errada.
