@@ -253,8 +253,13 @@ lugar da base, Palaces of Carrara Second Edition (vendida) no lugar da primeira,
 (jogado) no lugar da Legendary, e AquaSphere 2014 (7.679 votos) no lugar da reimpressão de 2019
 (193 votos). Stockpile continua com as duas e Kraftwagen com a mais nova, como você pediu antes.
 
-Lacunas reais que apareceram: faltava **The Castles of Burgundy** base (rank 17) no Feld, **The Quest
-for El Dorado** (120) e **Robinson Crusoe** (121) no Dutrait, e **Marco Polo II** (209) no Luciani.
+Lacunas reais que apareceram: faltava **The Quest for El Dorado** (rank 120) e **Robinson Crusoe**
+(121) no Dutrait, e **Marco Polo II** (209) no Luciani.
+
+O Castles of Burgundy base (rank 17) apareceu no levantamento mas **não é lacuna**: você tem a
+Special Edition, e pela regra de uma linha por jogo a base é colapsada nela. Vale como lembrete de
+que rank alto no catálogo de um criador não quer dizer que falta alguma coisa — é preciso olhar o
+que já está na estante primeiro.
 
 Disponibilidade nacional: 112 jogos com editora brasileira confirmada, 37 confirmados como só
 importado, 21 ainda não verificados — a Ludopedia passou a responder 429 e a varredura foi
