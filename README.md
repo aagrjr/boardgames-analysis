@@ -267,3 +267,14 @@ interrompida de propósito em vez de tratar o erro como ausência de edição.
 
 **Super Cats** saiu: não aparece nos créditos de designer do Bauza no BGG. Se a atribuição vier de
 outra fonte, vale reconferir antes de recolocar.
+
+## Papel de cada criador nas abas — 01/10/2026
+
+As abas agora dizem se a pessoa entra como **designer** ou como **artista**, com etiqueta no card e
+os dois grupos separados (designers primeiro, artistas depois). A distinção importa pra leitura da
+tabela: crédito de artista pode valer só pra uma edição específica, o que não acontece com designer.
+Ian O'Toole e Vincent Dutrait são os dois artistas; os outros oito são designers.
+
+O link do Dutrait passou a apontar pro catálogo dele na Ludopedia
+(`/artista/1091/Vincent Dutrait`) em vez do BGG, igual aos demais. O autoteste agora exige que todo
+card aponte pra uma página de criador da Ludopedia.

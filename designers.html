@@ -20,6 +20,11 @@ a{color:var(--accent)}
   color:var(--text);font-size:14px;cursor:pointer;font-family:inherit}
 .aba.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;font-weight:700}
 .aba small{display:block;color:var(--muted);font-size:11px;font-weight:400;margin-top:2px}
+.aba .papel{display:inline-block;border-radius:5px;padding:0 5px;margin-right:5px;font-size:10px;
+  letter-spacing:.04em;text-transform:uppercase;background:var(--chip);color:var(--accent)}
+.aba.art .papel{color:var(--warn)}
+.grupo{flex-basis:100%;color:var(--muted);font-size:11px;letter-spacing:.06em;
+  text-transform:uppercase;margin:4px 0 -2px}
 #stats{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:12px;margin-bottom:16px}
 #stats div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;
   color:var(--muted);font-size:12px}
@@ -107,13 +112,13 @@ const DESIGNERS = {
   cramer:  {ludo: "https://ludopedia.com.br/designer/934/Matthias%20Cramer", nome: 'Matthias Cramer',  txt: 'Catalogue sits between 2.6 and 3.1 \u2014 your best-performing band. You rated both the ones you own 9.2.'},
   holek:   {ludo: "https://ludopedia.com.br/designer/35250/Tom%C3%A1%C5%A1%20Holek", nome: 'Tom\u00e1\u0161 Holek',  txt: 'Small and very new: every title is 2024\u20132025. A bet on an early career, not a collection.'},
   mangone: {ludo: "https://ludopedia.com.br/designer/7679/Nestore%20Mangone", nome: 'Nestore Mangone',  txt: 'Co-designer of Entropy, which you just bought, and of Darwin\u2019s Journey, which you rated 9.0.'},
-  otoole:  {ludo: "https://ludopedia.com.br/artista/4782/Ian%20O'Toole", nome: 'Ian O\u2019Toole',  txt: 'Artist, not designer. You rated six of his heavy games 8.4\u20139.0 and each stopped at one play. Edition notes identify his work on nine games. Shared contributors and announced editions are marked; BGG artist lists can combine different editions. Unmatched excluded at your request.'},
+  otoole:  {papel: 'Artist', ludo: "https://ludopedia.com.br/artista/4782/Ian%20O'Toole", nome: 'Ian O\u2019Toole',  txt: 'You rated six of his heavy games 8.4\u20139.0 and each stopped at one play. Edition notes identify his work on nine games. Shared contributors and announced editions are marked; BGG artist lists can combine different editions. Unmatched excluded at your request.'},
   cathala: {"ludo": "https://ludopedia.com.br/designer/80/bruno-cathala", "nome": "Bruno Cathala", "txt": "Your 17 plays of Five Tribes and 12 of Duel for Middle-earth make his tactical, spatial games especially relevant."},
   feld: {"ludo": "https://ludopedia.com.br/designer/316/stefan-feld", "nome": "Stefan Feld", "txt": "The Castles of Burgundy: Special Edition is yours at 9.5 over seven plays. Trajan scored 9.3 after two plays, but its weight crosses your 3.35 line."},
   luciani: {"ludo": "https://ludopedia.com.br/designer/878/Simone%20Luciani", "nome": "Simone Luciani", "txt": "Darwin’s Journey is yours at 9.0. Marco Polo scored 9.3 over three plays; Newton scored 8.9 after one. The heavier unplayed titles merit a play before buying."},
   kiesling: {"ludo": "https://ludopedia.com.br/designer/1010/michael-kiesling", "nome": "Michael Kiesling", "txt": "Azul is yours at 9.0 over 17 plays. Stained Glass of Sintra scored 9.3 over eight plays before leaving the collection."},
   bauza: {"ludo": "https://ludopedia.com.br/designer/31/antoine-bauza", "nome": "Antoine Bauza", "txt": "Duel for Middle-earth is yours at 9.4 over 12 plays; 7 Wonders Duel scored 9.5 over nine plays before leaving. Cooperative and family games here need a different fit judgment from the duels."},
-  dutrait: {"ludo": "https://boardgamegeek.com/boardgameartist/12130/vincent-dutrait/linkeditems/boardgameartist", "nome": "Vincent Dutrait", "txt": "Artist, not designer. You own Duel for Middle-earth, Heat, Jaipur and Unconscious Mind. Jaipur and Unconscious Mind list other artists too; credits can span contributors or editions.", "source": "BGG"}
+  dutrait: {"papel": "Artist", "ludo": "https://ludopedia.com.br/artista/1091/Vincent%20Dutrait", "nome": "Vincent Dutrait", "txt": "You own Duel for Middle-earth, Heat, Jaipur and Unconscious Mind. Jaipur and Unconscious Mind list other artists too; credits can span contributors or editions."}
 };
 
 const JOGOS = [
@@ -449,13 +454,22 @@ function statsHTML(l) {
     + '<div>missing, under 3.35 and BR publisher listed<b>' + cabem.filter(g => g.br).length + '</b></div>';
 }
 
+const papelDe = d => d.papel || 'Designer';
+
 function abasHTML() {
-  return Object.entries(DESIGNERS).map(([k, d]) => {
+  const botao = ([k, d]) => {
     const l = JOGOS.filter(g => g.tabs.includes(k));
     const tem = l.filter(g => g.st === 'own').length;
-    return '<button class="aba' + (k === st.aba ? ' on' : '') + '" data-aba="' + k + '">' + escapeHTML(d.nome)
-      + '<small>' + l.length + ' games \u00b7 you own ' + tem + '</small></button>';
-  }).join('');
+    const art = papelDe(d) === 'Artist';
+    return '<button class="aba' + (art ? ' art' : '') + (k === st.aba ? ' on' : '') + '" data-aba="' + k + '">'
+      + escapeHTML(d.nome) + '<small><span class="papel">' + escapeHTML(papelDe(d)) + '</span>'
+      + l.length + ' games \u00b7 you own ' + tem + '</small></button>';
+  };
+  const grupo = (titulo, art) => {
+    const ns = Object.entries(DESIGNERS).filter(([, d]) => (papelDe(d) === 'Artist') === art);
+    return ns.length ? '<div class="grupo">' + titulo + '</div>' + ns.map(botao).join('') : '';
+  };
+  return grupo('Designers', false) + grupo('Artists', true);
 }
 
 function subCount() {
@@ -515,7 +529,9 @@ if (location.hash === '#test') {
     'Every listed game must carry a BGG measurement and a collection status');
   check(tabelaHTML([{...JOGOS[0], bgg: null, votos: null, peso: null, brUnknown: true, br: null}])
     .includes('BR publisher unchecked'), 'A row without a Brazilian publisher must say so, not guess');
-  check(DESIGNERS.dutrait.source === 'BGG' && JOGOS.some(g => g.nome === 'Azul Duel' && g.tabs.includes('kiesling')), 'New creator links must lead to credited works');
+  check(Object.values(DESIGNERS).every(d => /^https:\/\/ludopedia\.com\.br\/(designer|artista)\//.test(d.ludo))
+    && JOGOS.some(g => g.nome === 'Azul Duel' && g.tabs.includes('kiesling')),
+    'Every creator card links to their own Ludopedia catalogue');
   check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 37, 'O\u2019Toole catalogue size');
   check(JOGOS.filter(g => g.tabs.includes('cramer')).length === 11, 'Cramer catalogue size');
   check(JOGOS.filter(g => g.tabs.includes('holek')).length === 6, 'Holek catalogue size');
@@ -618,6 +634,19 @@ if (location.hash === '#test') {
   }
   st.ordem = 'fit'; st.dir = -1; render();
   check(document.querySelectorAll('.aba').length === 10, 'All ten creator tabs must render');
+  const papeis = Object.entries(DESIGNERS).map(([k, d]) => [k, papelDe(d)]);
+  check(papeis.every(([, p]) => p === 'Designer' || p === 'Artist')
+    && papeis.filter(([, p]) => p === 'Artist').map(([k]) => k).join() === 'otoole,dutrait',
+    'Every creator is either a designer or an artist, and only O\u2019Toole and Dutrait are artists');
+  const strip = abasHTML();
+  check(strip.indexOf('>Designers<') < strip.indexOf('>Artists<')
+    && strip.indexOf('>Artists<') < strip.indexOf('data-aba="otoole"')
+    && strip.indexOf('data-aba="cramer"') < strip.indexOf('>Artists<'),
+    'Artists are grouped after designers');
+  check([...document.querySelectorAll('.aba')].every(b => b.querySelector('.papel'))
+    && document.querySelector('[data-aba="otoole"]').classList.contains('art')
+    && !document.querySelector('[data-aba="cramer"]').classList.contains('art'),
+    'Each tab must carry its role on the card');
   check(document.querySelectorAll('thead th').length === 8, 'Header must match the column list');
   check(document.querySelector('#sub-count').textContent === subCount(), 'Subtitle must come from the data');
   console.log('Designer-catalogue checks passed');
