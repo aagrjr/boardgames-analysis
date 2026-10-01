@@ -101,7 +101,7 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}
 <h1>Board Game Wishlist</h1>
 <div class="sub"><span id="sub-count"></span> You mostly play <b>at 2</b>,
 so the priorities are: personal taste fit &rsaquo; quality at 2 &rsaquo; collection redundancy
-&rsaquo; mechanical uniqueness &rsaquo; game-night role &rsaquo; weight &rsaquo; playtime.<br><b>Purchase order does not use numerical ratings.</b> Qualitative preferences, 2-player fit and collection value set the order.</div>
+&rsaquo; mechanical uniqueness &rsaquo; game-night role &rsaquo; weight &rsaquo; playtime.<br><b>Purchase order does not use numerical ratings.</b> Qualitative preferences, 2-player fit and collection value set the order. <a href="designers.html" style="color:var(--accent)">Designer catalogues &rarr;</a></div>
 
 <div class="legend">
   <span class="chip">&#128994; Buy / strong fit</span>
@@ -598,6 +598,7 @@ if (location.hash === '#test') {
   check(!nz && EXCLUIDOS.some(([name]) => name === 'Great Western Trail: New Zealand'), 'New Zealand must stay excluded');
   check(JOGOS.every(g => g.bggVotos == null || Number.isInteger(g.bggVotos) && g.bggVotos > 0), 'BGG vote counts must be positive integers where recorded');
   check(subCount() === 'Updated 2026-09-30 \u00b7 8 candidates, 1 committed purchase, 48 out of the running.' && document.querySelector('#sub-count').textContent === subCount(), 'Subtitle counts must be derived from the data, not hardcoded');
+  check(document.querySelector('a[href="designers.html"]'), 'The designer catalogues must stay one click away');
   check(median([1, 4, 2, 3]) === 2.5 && median([]) === null, 'Median calculation');
   check(escapeHTML('</textarea><script>') === '&lt;/textarea&gt;&lt;script&gt;', 'Notes must remain text');
   check(!COLS.some(c => c[0] === 'personalScore') && !CHAVE.personalScore && !document.querySelector('#ordem option[value="personalScore"]'), 'Personal rating column must stay removed');

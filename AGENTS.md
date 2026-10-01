@@ -9,6 +9,10 @@ Duas páginas de uma só peça, sem dependências e sem build, para decisões de
 - **`designers.html`** — catálogos por designer/artista em abas: o que ainda falta das pessoas cujo
   trabalho já funciona na coleção.
 
+Publicadas em GitHub Pages a partir de `main` na raiz: <https://aagrjr.github.io/boardgames-analysis/>.
+Um push na `main` republica; o build leva menos de um minuto. As duas páginas se linkam entre si e há
+autoteste exigindo que o link exista.
+
 A **página é em inglês**; `README.md` e este arquivo ficam em pt-BR.
 
 ## Fonte de verdade dos dados pessoais

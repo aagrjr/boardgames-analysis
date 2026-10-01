@@ -5,7 +5,12 @@ ficaram de fora, com peso, duração, sobreposição com a coleção e veredito.
 
 **A página é toda em inglês** (o relatório-fonte é em inglês). Este README fica em pt-BR.
 
-**Um arquivo, sem dependências e sem build.** Abra o `index.html` no navegador.
+**Sem dependências e sem build.** Publicado em GitHub Pages:
+
+- <https://aagrjr.github.io/boardgames-analysis/> — wishlist de compra
+- <https://aagrjr.github.io/boardgames-analysis/designers.html> — catálogos por designer/artista
+
+Ou abra os `.html` direto no navegador.
 
 Atualizada em 30/09/2026: 8 opções candidatas + Magical Athlete como compra comprometida com rank #9, 48 fora da rodada.
 Os números do subtítulo da página são calculados a partir dos dados desde 30/09/2026 — não existe mais contagem escrita à mão pra envelhecer.
