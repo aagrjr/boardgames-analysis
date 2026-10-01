@@ -104,10 +104,10 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}
 </main>
 <script>
 const DESIGNERS = {
-  cramer:  {nome: 'Matthias Cramer',  txt: 'Catalogue sits between 2.6 and 3.1 \u2014 your best-performing band. You rated both the ones you own 9.2.'},
-  holek:   {nome: 'Tom\u00e1\u0161 Holek',  txt: 'Small and very new: every title is 2024\u20132025. A bet on an early career, not a collection.'},
-  mangone: {nome: 'Nestore Mangone',  txt: 'Co-designer of Entropy, which you just bought, and of Darwin\u2019s Journey, which you rated 9.0.'},
-  otoole:  {nome: 'Ian O\u2019Toole',  txt: 'Artist, not designer. You rated six of his heavy games 8.4\u20139.0 and each stopped at one play. Ten entries credit him alongside other artists \u2014 BGG pools every edition onto one page, so those are mostly later art jobs on someone else\u2019s classic. Unmatched excluded at your request.'}
+  cramer:  {ludo: "https://ludopedia.com.br/designer/934/Matthias%20Cramer", nome: 'Matthias Cramer',  txt: 'Catalogue sits between 2.6 and 3.1 \u2014 your best-performing band. You rated both the ones you own 9.2.'},
+  holek:   {ludo: "https://ludopedia.com.br/designer/35250/Tom%C3%A1%C5%A1%20Holek", nome: 'Tom\u00e1\u0161 Holek',  txt: 'Small and very new: every title is 2024\u20132025. A bet on an early career, not a collection.'},
+  mangone: {ludo: "https://ludopedia.com.br/designer/7679/Nestore%20Mangone", nome: 'Nestore Mangone',  txt: 'Co-designer of Entropy, which you just bought, and of Darwin\u2019s Journey, which you rated 9.0.'},
+  otoole:  {ludo: "https://ludopedia.com.br/artista/4782/Ian%20O'Toole", nome: 'Ian O\u2019Toole',  txt: 'Artist, not designer. You rated six of his heavy games 8.4\u20139.0 and each stopped at one play. Ten entries credit him alongside other artists \u2014 BGG pools every edition onto one page, so those are mostly later art jobs on someone else\u2019s classic. Unmatched excluded at your request.'}
 };
 
 const JOGOS = [
@@ -175,6 +175,17 @@ const JOGOS = [
 ];
 
 const LINHA = 3.35;
+
+// A Ludopedia deriva o slug do nome em inglês; três fogem da regra e ficam aqui.
+const LUDO_FIXO = {
+  'CO2: Second Chance': 'co-second-chance',
+  'Age of Steam': 'age-of-steam-deluxe-edition',
+  'Masters of Renaissance': 'masters-of-renaissance-lorenzo-il-magnifico-the-card-game'
+};
+const ludoSlug = nome => LUDO_FIXO[nome]
+  || nome.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+         .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const ludoURL = g => 'https://ludopedia.com.br/jogo/' + ludoSlug(g.nome);
 const FAROL = {good: '\u{1F7E2}', warn: '\u{1F7E1}', bad: '\u{1F534}', own: '\u{1F6D2}'};
 
 function veredito(g) {
@@ -253,7 +264,8 @@ function linhaHTML(g) {
       + (g.arts ? ' <span class="tag" title="BGG pools the credits of every edition onto one entry">1 of '
           + g.arts + ' artists</span>' : '')
       + '</div><div class="meta">' + g.ano
-      + ' \u00b7 <a href="https://boardgamegeek.com/boardgame/' + g.id + '" target="_blank" rel="noopener">BGG</a></div></td>'
+      + ' \u00b7 <a href="https://boardgamegeek.com/boardgame/' + g.id + '" target="_blank" rel="noopener">BGG</a>'
+      + ' \u00b7 <a href="' + ludoURL(g) + '" target="_blank" rel="noopener">Ludopedia</a></div></td>'
     + '<td class="num">' + g.bgg.toFixed(2) + '<div class="meta">' + fmtVotos(g.votos) + ' ratings</div></td>'
     + '<td class="num">' + zonaHTML(g) + '</td>'
     + '<td>' + (g.br ? '<span class="br sim" title="Brazilian publisher listed on Ludopedia">' + escapeHTML(g.br) + '</span>'
@@ -304,7 +316,9 @@ function render() {
   const todos = JOGOS.filter(g => g.tabs.includes(st.aba));
   document.getElementById('stats').innerHTML = statsHTML(todos);
   document.getElementById('saida').innerHTML =
-    '<div class="intro">' + escapeHTML(DESIGNERS[st.aba].txt) + '</div>' + tabelaHTML(filtrados());
+    '<div class="intro">' + escapeHTML(DESIGNERS[st.aba].txt)
+    + '<div><a href="' + escapeHTML(DESIGNERS[st.aba].ludo) + '" target="_blank" rel="noopener" aria-label="'
+    + escapeHTML(DESIGNERS[st.aba].nome) + ' on Ludopedia">View catalogue on Ludopedia</a></div></div>' + tabelaHTML(filtrados());
   document.getElementById('dir').textContent = st.dir === -1 ? '\u2193' : '\u2191';
 }
 
@@ -377,6 +391,15 @@ if (location.hash === '#test') {
     && JOGOS.find(g => g.nome === 'Ra').arts === 8
     && !JOGOS.find(g => g.nome === 'Lisboa').arts, 'Shared credits must be marked, sole credits must not');
   check(tabelaHTML([JOGOS.find(g => g.nome === 'Age of Steam')]).includes('1 of 4 artists'), 'Shared credit must show');
+  check(ludoSlug("Darwin's Journey") === 'darwin-s-journey' && ludoSlug('Tigris & Euphrates') === 'tigris-euphrates'
+    && ludoSlug("Nemo's War (Second Edition)") === 'nemo-s-war-second-edition'
+    && ludoSlug('Sankore: The Pride of Mansa Musa') === 'sankore-the-pride-of-mansa-musa',
+    'Ludopedia slugs must follow the derivation rule');
+  check(ludoSlug('CO2: Second Chance') === 'co-second-chance' && ludoSlug('Age of Steam') === 'age-of-steam-deluxe-edition',
+    'The three slugs that break the rule must stay overridden');
+  check(JOGOS.every(g => /^https:\/\/ludopedia\.com\.br\/jogo\/[a-z0-9-]+$/.test(ludoURL(g))), 'Every Ludopedia link must be well formed');
+  check(tabelaHTML([JOGOS[0]]).includes('>Ludopedia</a>') && tabelaHTML([JOGOS[0]]).includes('>BGG</a>'),
+    'Both source links must render');
   st.aba = 'otoole'; st.solo = true;
   check(filtrados().every(g => !g.arts), 'Sole-artist filter must drop shared credits');
   st.solo = false; st.aba = 'cramer';

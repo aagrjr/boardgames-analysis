@@ -103,7 +103,11 @@ Levantado na Ludopedia em 01/10/2026: a busca do site não devolve resultado por
 hífen) e acertou 58 dos 61. **Os três erros do slug não eram ausência de página**: `CO₂: Second Chance`
 mora em `/jogo/co-second-chance` (o `₂` subscrito some em vez de virar `2`), `Masters of Renaissance`
 precisa do subtítulo inteiro, e o `Age of Steam` base não tem página — quem tem é a
-`age-of-steam-deluxe-edition`. Slug que falha pede variação antes de concluir que não há edição nacional. A editora sai dos links `a[href*="/editora/"]` da página, com a brasileira
+`age-of-steam-deluxe-edition`. Slug que falha pede variação antes de concluir que não há edição nacional.
+
+Os **61 slugs foram revalidados** um a um: todos resolvem. A página não guarda a URL — `ludoSlug()`
+deriva do nome, e `LUDO_FIXO` carrega só as três exceções. Há autoteste cobrindo a regra de derivação,
+as três exceções e o formato da URL. A editora sai dos links `a[href*="/editora/"]` da página, com a brasileira
 em primeiro. Título em português (Rá, Entropia, SETI: Agências Espaciais) confirma.
 
 Editoras brasileiras que apareceram: Devir Brasil, Mosaico Jogos, MeepleBR Jogos, Grok Games,
