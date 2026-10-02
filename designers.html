@@ -107,7 +107,7 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}
   <button class="chip" id="chip-solo">sole artist only</button>
 </div>
 <div id="saida"></div>
-<footer>BGG snapshot checked 2026-10-01. Catalogue membership comes from BGG designer and artist credits; ratings, weights, player counts and playtimes from the BGG item API. Personal ratings, plays and ownership come from your collection export of 2026-10-01. Brazilian publishers are listed only where they were checked on Ludopedia; the rest say so rather than guess. Edition notes checked 2026-10-01. BGG game statistics can pool editions; a Brazilian listing does not confirm a specific edition. Weights and ratings drift.</footer>
+<footer>BGG snapshot checked 2026-10-01 (Calimala checked 2026-10-02). Catalogue membership comes from BGG designer and artist credits; ratings, weights, player counts and playtimes from BGG. Personal ratings, plays and ownership come from your collection export of 2026-10-01. Brazilian publishers are listed only where they were checked on Ludopedia; the rest say so rather than guess. Edition notes checked 2026-10-01 (Calimala checked 2026-10-02). BGG game statistics can pool editions; a Brazilian listing does not confirm a specific edition. Weights and ratings drift.</footer>
 </main>
 <script>
 const DESIGNERS = {
@@ -222,7 +222,8 @@ const JOGOS = [
 {"id": "169426", "tabs": ["dutrait"], "nome": "Roll Player", "ano": 2016, "bgg": 7.41, "votos": 22801, "peso": 2.42, "jog": [1, 4], "tempo": [60, 90], "nota": null, "partidas": 0, "st": "none", "br": "Grok Games", "arts": 3},
 {"id": "391124", "tabs": ["cramer"], "nome": "Kraftwagen: Age of Engineering", "ano": 2024, "bgg": 7.4, "votos": 601, "peso": 2.91, "jog": [2, 4], "tempo": [75, 90], "nota": null, "partidas": 0, "st": "none"},
 {"id": "55670", "tabs": ["feld"], "nome": "Macao", "ano": 2009, "bgg": 7.4, "votos": 7701, "peso": 3.13, "jog": [2, 4], "tempo": [50, 100], "nota": null, "partidas": 0, "st": "none", "brUnknown": true},
-{"id": "441850", "tabs": ["luciani"], "nome": "Echoes of Time", "ano": 2025, "bgg": 7.18, "votos": 1495, "peso": 2.47, "jog": [2, 4], "tempo": [30, 60], "nota": null, "partidas": 0, "st": "own", "br": "Ludofun"}
+{"id": "441850", "tabs": ["luciani"], "nome": "Echoes of Time", "ano": 2025, "bgg": 7.18, "votos": 1495, "peso": 2.47, "jog": [2, 4], "tempo": [30, 60], "nota": null, "partidas": 0, "st": "own", "br": "Ludofun"},
+{"id": "199383", "tabs": ["otoole"], "nome": "Calimala", "ano": 2017, "bgg": 7.32, "votos": 3293, "peso": 2.8, "jog": [2, 5], "tempo": [75, 75], "nota": null, "partidas": 0, "st": "none", "brUnknown": true, "ludoUrl": "https://ludopedia.com.br/jogo/calimala-alley-cat-games-edition", "requested": true, "edition": "Alley Cat Games second edition", "editionUrl": "https://www.alleycatgames.com/calimala", "creditNote": "Ian O'Toole created the art and graphic design for this edition; the original used Harald Lieske. Added at your request below the usual 7.4 BGG cutoff."}
 ];
 
 const LINHA = 3.35;
@@ -423,7 +424,7 @@ render();
 
 if (location.hash === '#test') {
   const check = (ok, msg) => { if (!ok) throw new Error(msg); };
-  check(JOGOS.length === 101, 'Expected 101 distinct listed games');
+  check(JOGOS.length === 102, 'Expected 102 distinct listed games');
   check(Object.keys(DESIGNERS).every(k => JOGOS.some(g => g.tabs.includes(k))), 'Every tab needs games');
   check(new Set(JOGOS.map(g => g.id)).size === JOGOS.length, 'Every listed game needs one unique ID');
   check(['cathala', 'dutrait'].every(k => JOGOS.find(g => g.id === '421006').tabs.includes(k)), 'Shared creator credits need one linked game');
@@ -440,7 +441,7 @@ if (location.hash === '#test') {
     'Every creator card links to their own Ludopedia catalogue');
   check(Object.keys(DESIGNERS).every(k => JOGOS.some(g => g.tabs.includes(k) && g.st !== 'own')),
     'Every catalogue must reach past your shelf, or it has nothing to recommend');
-  check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 30, 'O\u2019Toole catalogue size');
+  check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 31, 'O\u2019Toole catalogue size');
   check(JOGOS.filter(g => g.tabs.includes('cramer')).length === 5, 'Cramer catalogue size');
   check(JOGOS.filter(g => g.tabs.includes('holek')).length === 5, 'Holek catalogue size');
   check(JOGOS.filter(g => g.tabs.includes('mangone')).length === 7, 'Mangone catalogue size');
@@ -452,8 +453,8 @@ if (location.hash === '#test') {
     'No catalogue may be emptied out by the cut');
   check(JOGOS.every(g => g.tabs.length && g.tabs.every(k => k in DESIGNERS)),
     'Every row belongs to at least one creator who still has a tab');
-  check(JOGOS.every(g => g.bgg >= 7.4 || g.st === 'own' || g.exp || g.wantBack),
-    'Every tab stops at 7.4 on BGG; only a game on your shelf, an expansion for one, or one you flagged to rebuy is exempt');
+  check(JOGOS.every(g => g.bgg >= 7.4 || g.st === 'own' || g.exp || g.wantBack || g.requested),
+    'Every tab stops at 7.4 on BGG; only a game on your shelf, an expansion for one, one you flagged to rebuy, or an explicit request is exempt');
   check(JOGOS.filter(g => g.exp).every(g => {
     const base = JOGOS.find(b => b.nome === g.exp);
     return base && base.st === 'own';
@@ -464,6 +465,9 @@ if (location.hash === '#test') {
     'An average needs enough ratings to mean anything \u2014 below 1000 it is not a measurement');
   check(JOGOS.filter(g => g.bgg < 7.4 && (g.st === 'sold' || g.st === 'played')).every(g => g.wantBack),
     'A game you let go of only stays below the line when you flagged it to rebuy');
+  check(JOGOS.filter(g => g.requested).map(g => g.id).join() === '199383'
+    && tabelaHTML(JOGOS.filter(g => g.requested)).includes('Added at your request'),
+    'Calimala is the only explicit below-cutoff request, and its reason appears on screen');
   check(JOGOS.filter(g => g.wantBack).every(g => g.st !== 'own' && tabelaHTML([g]).includes('want it back')),
     'The rebuy flag only applies to a game you no longer own, and it must say so on screen');
   check(!JOGOS.some(g => /^ludo:/.test(g.id)), 'Every row must resolve to a real BGG id');
@@ -520,11 +524,11 @@ if (location.hash === '#test') {
   check(JOGOS.filter(g => g.st === 'own').length === 22, 'Expected 22 owned games across the listed games');
   check(escapeHTML('<script>') === '&lt;script&gt;', 'Text must stay text');
   check(JOGOS.filter(g => g.br).length === 61, 'Expected 61 games with a confirmed Brazilian publisher');
-  check(JOGOS.filter(g => g.brUnknown).length === 23 && JOGOS.every(g => !(g.br && g.brUnknown)),
+  check(JOGOS.filter(g => g.brUnknown).length === 24 && JOGOS.every(g => !(g.br && g.brUnknown)),
     'Brazilian availability is either a named publisher, a checked absence, or an explicit unchecked \u2014 never two at once');
   check(JOGOS.filter(g => g.arts).length === 11, 'Shared artist credits should be marked');
   const editions = JOGOS.filter(g => g.edition);
-  check(editions.length === 5 && editions.every(g => g.creditNote && /^https:\/\//.test(g.editionUrl)),
+  check(editions.length === 6 && editions.every(g => g.creditNote && /^https:\/\//.test(g.editionUrl)),
     'Every surviving edition-researched game keeps its source and credit note');
   check(JOGOS.find(g => g.nome === 'Stockpile: Epic Edition').arts === 2
     && !JOGOS.find(g => g.nome === 'Ra').arts, 'Verified edition credits must replace pooled artist lists');
