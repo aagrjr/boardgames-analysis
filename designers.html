@@ -73,6 +73,14 @@ tr.filha td:first-child::before{content:"\21B3";position:absolute;left:12px;colo
 .vazio{color:var(--muted);padding:30px;text-align:center}
 footer{margin-top:18px;color:var(--muted);font-size:12px}
 @media(max-width:800px){ main{padding:14px} h1{font-size:21px} #stats{grid-template-columns:repeat(2,1fr)} }
+/* content-sized tabs wrap into a ragged column on a phone; make them an even grid */
+@media(max-width:700px){
+  .abas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}
+  .grupo{grid-column:1/-1}
+  .aba{padding:9px 10px;text-align:center}
+  .aba small{margin-top:3px}
+  .aba .papel{display:block;margin:0 auto 2px;width:fit-content}
+}
 </style>
 </head>
 <body>
