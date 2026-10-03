@@ -34,8 +34,11 @@ As checked on 2026-10-01, `api.geekdo.com` responded to `curl`, while name searc
 ## Ludopedia
 
 - `/jogo/<slug>` pages did not respond to `curl` when checked; they were accessible through an open `ludopedia.com.br` browser tab.
+- **Search works, at `/search?search=<name>`** — server-rendered, so a `fetch` from an open Ludopedia tab returns the results. (`/busca?...` is a 404; that wrong path is why search was previously recorded as unusable.) Each result anchor gives the title with its year and the `/jogo/<slug>` link.
+- **A game can have a separate entry for its Brazilian edition, and the derived slug finds the foreign one.** `/jogo/jamaica` lists only foreign publishers; the Galápagos release lives at `/jogo/jamaica-revised`, titled "Jamaica (Edição Revisada)". Deriving the slug from the English name and reading one page is therefore not enough to conclude a game has no Brazilian edition — **search the name and check every entry whose title starts with it.**
 - The site rate-limited after roughly 90 requests, returning HTTP 429 with a short body. **Check response status before parsing.** Mark a Brazilian edition as unverified after a 429; do not interpret it as absent. Avoid large scans.
 - The HTML marks a Brazilian publisher with `<img class="ludo-fh-br" title="Editora nacional">` inside `.ludo-fh-cred`, immediately before the first Brazilian publisher.
+- The publishers popup is grouped by country, and its content is already in the fetched HTML. A Brazilian publisher is reliably marked by `img.ludo-fh-br` inside the publishers `.ludo-fh-cred`, and it is the first publisher anchor there.
 - **The page shows only the first two publishers and hides the rest behind a `.ludo-fh-mais` (`+N`) button.** Reading only the visible group produces false negatives: that is how Jamaica, published here by Galápagos, was recorded as having no Brazilian edition. **No flag in the visible portion does not mean no Brazilian edition.** Read every publisher before concluding absence; when in doubt set `brUnknown`.
 - General rule for this page: given a choice between asserting something unverified and saying "unchecked", say unchecked. A false "no Brazilian edition" can make the user import a game that is on sale locally.
 
