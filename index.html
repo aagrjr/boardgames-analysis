@@ -517,7 +517,7 @@ function tabelaHTML(l) {
   }).join('')}</tbody></table></div>`;
 }
 
-const ATUALIZADO = '2026-10-03';
+const ATUALIZADO = '2026-10-04';
 function subCount() {
   const cand = JOGOS.filter(g => g.v !== 'buying').length, comp = JOGOS.length - cand;
   return `Updated ${ATUALIZADO} \u00b7 ${cand} candidate${cand === 1 ? '' : 's'}, `
@@ -615,7 +615,7 @@ if (location.hash === '#test') {
   const nz = JOGOS.find(g => g.nome === 'Great Western Trail: New Zealand');
   check(!nz && EXCLUIDOS.some(([name]) => name === 'Great Western Trail: New Zealand'), 'New Zealand must stay excluded');
   check(JOGOS.every(g => g.bggVotos == null || Number.isInteger(g.bggVotos) && g.bggVotos > 0), 'BGG vote counts must be positive integers where recorded');
-  check(subCount() === 'Updated 2026-10-03 \u00b7 8 candidates, 1 committed purchase, 49 out of the running.' && document.querySelector('#sub-count').textContent === subCount(), 'Subtitle counts must be derived from the data, not hardcoded');
+  check(subCount() === 'Updated 2026-10-04 \u00b7 7 candidates, 1 committed purchase, 50 out of the running.' && document.querySelector('#sub-count').textContent === subCount(), 'Subtitle counts must be derived from the data, not hardcoded');
   check(document.querySelector('a.navbtn[href="designers.html"]'), 'The designer catalogues must stay one button away');
   check(median([1, 4, 2, 3]) === 2.5 && median([]) === null, 'Median calculation');
   check(escapeHTML('</textarea><script>') === '&lt;/textarea&gt;&lt;script&gt;', 'Notes must remain text');
