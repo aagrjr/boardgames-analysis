@@ -117,7 +117,6 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}
 </main>
 <script>
 const DESIGNERS = {
-  cramer:   {ludo: "https://ludopedia.com.br/designer/934/Matthias%20Cramer", nome: 'Matthias Cramer'},
   mangone:  {ludo: "https://ludopedia.com.br/designer/7679/Nestore%20Mangone", nome: 'Nestore Mangone'},
   otoole:   {papel: 'Artist', ludo: "https://ludopedia.com.br/artista/4782/Ian%20O'Toole", nome: 'Ian O\u2019Toole'},
   feld:     {ludo: "https://ludopedia.com.br/designer/316/stefan-feld", nome: 'Stefan Feld'},
@@ -129,8 +128,7 @@ const JOGOS = [
 {"id": "171623", "tabs": ["luciani"], "nome": "The Voyages of Marco Polo", "ano": 2015, "bgg": 7.76, "votos": 26483, "peso": 3.18, "jog": [2, 4], "tempo": [40, 100], "melhor": "4", "dois": "good at 2", "nota": 9.3, "partidas": 3, "st": "played", "br": "Devir Brasil"},
 {"id": "102680", "tabs": ["feld"], "nome": "Trajan", "ano": 2011, "bgg": 7.74, "votos": 19057, "peso": 3.62, "jog": [2, 4], "tempo": [60, 120], "melhor": "4", "dois": "good at 2", "nota": 9.3, "partidas": 2, "st": "played", "br": "Gigante Jogos"},
 {"id": "391137", "tabs": ["otoole"], "nome": "Galactic Cruise", "ano": 2025, "bgg": 8.28, "votos": 8125, "peso": 3.98, "jog": [1, 4], "tempo": [90, 150], "melhor": "3", "dois": "good at 2", "nota": 9.2, "partidas": 3, "st": "own", "br": "Jelly Monster"},
-{"id": "296100", "tabs": ["cramer", "otoole"], "nome": "Rococo: Deluxe Edition", "ano": 2020, "bgg": 8.17, "votos": 4521, "peso": 3.06, "jog": [1, 5], "tempo": [60, 120], "melhor": "3", "dois": "good at 2", "nota": 9.2, "partidas": 8, "st": "own", "br": "Mosaico Jogos"},
-{"id": "274364", "tabs": ["cramer"], "nome": "Watergate", "ano": 2019, "bgg": 7.7, "votos": 14665, "peso": 2.3, "jog": [2, 2], "tempo": [30, 60], "melhor": "2", "dois": "excellent at 2", "nota": 9.2, "partidas": 2, "st": "own", "br": "MeepleBR Jogos"},
+{"id": "296100", "tabs": ["otoole"], "nome": "Rococo: Deluxe Edition", "ano": 2020, "bgg": 8.17, "votos": 4521, "peso": 3.06, "jog": [1, 5], "tempo": [60, 120], "melhor": "3", "dois": "good at 2", "nota": 9.2, "partidas": 8, "st": "own", "br": "Mosaico Jogos"},
 {"id": "414976", "tabs": ["otoole"], "nome": "Galactic Cruise: Accommodations", "ano": 2025, "bgg": 8.42, "votos": 396, "peso": 4.17, "jog": [1, 4], "tempo": [90, 150], "melhor": "3", "dois": "good at 2", "nota": 9.0, "partidas": 0, "st": "own", "exp": "Galactic Cruise", "br": "Jelly Monster"},
 {"id": "414974", "tabs": ["otoole"], "nome": "Galactic Cruise: Advancements", "ano": 2025, "bgg": 8.28, "votos": 371, "peso": 3.91, "jog": [1, 4], "tempo": [90, 150], "melhor": "3", "dois": "good at 2", "nota": 9.0, "partidas": 0, "st": "own", "exp": "Galactic Cruise", "br": "Jelly Monster"},
 {"id": "161533", "tabs": ["otoole"], "nome": "Lisboa", "ano": 2017, "bgg": 8.16, "votos": 13141, "peso": 4.56, "jog": [1, 4], "tempo": [60, 120], "melhor": "3", "dois": "good at 2", "nota": 9.0, "partidas": 1, "st": "played", "br": "Mandala Jogos"},
@@ -146,7 +144,6 @@ const JOGOS = [
 {"id": "127060", "tabs": ["feld"], "nome": "Bora Bora", "ano": 2013, "bgg": 7.56, "votos": 10777, "peso": 3.72, "jog": [2, 4], "tempo": [60, 120], "melhor": "4", "dois": "good at 2", "nota": 8.1, "partidas": 1, "st": "played"},
 {"id": "337627", "tabs": ["otoole"], "nome": "Voidfall", "ano": 2023, "bgg": 8.5, "votos": 7454, "peso": 4.62, "jog": [1, 4], "tempo": [90, 240], "melhor": "1, 3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none", "br": "Grok Games"},
 {"id": "375459", "tabs": ["otoole"], "nome": "Speakeasy", "ano": 2025, "bgg": 8.42, "votos": 4600, "peso": 4.43, "jog": [1, 4], "tempo": [50, 180], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none", "br": "Mosaico Jogos"},
-{"id": "265537", "tabs": ["cramer"], "nome": "Weimar: The Fight for Democracy", "ano": 2023, "bgg": 8.31, "votos": 865, "peso": 4, "jog": [4, 4], "tempo": [180, 360], "melhor": "4", "nota": null, "partidas": 0, "st": "none"},
 {"id": "365448", "tabs": ["mangone", "luciani"], "nome": "Darwin's Journey: Fireland Expansion", "ano": 2023, "bgg": 8.22, "votos": 914, "peso": 4.19, "jog": [1, 4], "tempo": [60, 120], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none", "exp": "Darwin's Journey"},
 {"id": "341945", "tabs": ["feld"], "nome": "La Granja: Deluxe Master Set", "ano": 2023, "bgg": 8.19, "votos": 2625, "peso": 3.5, "jog": [1, 4], "tempo": [90, 120], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none", "br": "Asmodee (Galápagos)"},
 {"id": "400602", "tabs": ["feld"], "nome": "Civolution", "ano": 2024, "bgg": 8.17, "votos": 6688, "peso": 4.26, "jog": [1, 4], "tempo": [90, 180], "melhor": "2–3", "dois": "excellent at 2", "nota": null, "partidas": 0, "st": "none", "br": "Devir Brasil"},
@@ -164,7 +161,6 @@ const JOGOS = [
 {"id": "283948", "tabs": ["luciani"], "nome": "Marco Polo II: In the Service of the Khan", "ano": 2019, "bgg": 7.91, "votos": 8491, "peso": 3.38, "jog": [2, 4], "tempo": [60, 120], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none", "br": "Devir Brasil"},
 {"id": "4098", "tabs": ["otoole"], "nome": "Age of Steam", "ano": 2002, "bgg": 7.88, "votos": 12878, "peso": 3.86, "jog": [1, 6], "tempo": [120, 120], "melhor": "4–5", "dois": "poor at 2", "nota": null, "partidas": 0, "st": "none", "br": "Mosaico Jogos (Deluxe Edition)", "edition": "Deluxe Edition - Eagle-Gryphon Games (2019)", "editionUrl": "https://boardgamegeek.com/boardgameversion/443194/english-first-edition", "creditNote": "O'Toole: redesigned artwork and graphics."},
 {"id": "429438", "tabs": ["otoole"], "nome": "Ayar: Children of the Sun", "ano": 2025, "bgg": 7.87, "votos": 1075, "peso": 3.25, "jog": [1, 4], "tempo": [60, 90], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none"},
-{"id": "265188", "tabs": ["cramer"], "nome": "Glen More II: Chronicles", "ano": 2019, "bgg": 7.85, "votos": 9675, "peso": 3, "jog": [2, 4], "tempo": [90, 120], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none"},
 {"id": "351913", "tabs": ["luciani"], "nome": "Tiletum", "ano": 2022, "bgg": 7.85, "votos": 7189, "peso": 3.39, "jog": [1, 4], "tempo": [60, 100], "melhor": "2–3", "dois": "excellent at 2", "nota": null, "partidas": 0, "st": "none", "br": "Mosaico Jogos"},
 {"id": "203993", "tabs": ["luciani"], "nome": "Lorenzo il Magnifico", "ano": 2016, "bgg": 7.82, "votos": 15702, "peso": 3.3, "jog": [2, 4], "tempo": [60, 120], "melhor": "3–4", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none", "br": "MeepleBR Jogos"},
 {"id": "440007", "tabs": ["feld"], "nome": "The Druids of Edora", "ano": 2025, "bgg": 7.81, "votos": 2368, "peso": 3.14, "jog": [2, 4], "tempo": [60, 90], "melhor": "3–4", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none"},
@@ -189,7 +185,6 @@ const JOGOS = [
 {"id": "304510", "tabs": ["otoole"], "nome": "Pampero", "ano": 2024, "bgg": 7.44, "votos": 1437, "peso": 3.94, "jog": [1, 4], "tempo": [60, 150], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none"},
 {"id": "137408", "tabs": ["feld"], "nome": "Amerigo", "ano": 2013, "bgg": 7.43, "votos": 6498, "peso": 2.97, "jog": [2, 4], "tempo": [90, 90], "melhor": "4", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none"},
 {"id": "136888", "tabs": ["feld"], "nome": "Bruges", "ano": 2013, "bgg": 7.42, "votos": 12355, "peso": 2.75, "jog": [2, 4], "tempo": [60, 60], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none"},
-{"id": "391124", "tabs": ["cramer"], "nome": "Kraftwagen: Age of Engineering", "ano": 2024, "bgg": 7.4, "votos": 601, "peso": 2.91, "jog": [2, 4], "tempo": [75, 90], "melhor": "4", "dois": "poor at 2", "nota": null, "partidas": 0, "st": "none"},
 {"id": "55670", "tabs": ["feld"], "nome": "Macao", "ano": 2009, "bgg": 7.4, "votos": 7701, "peso": 3.13, "jog": [2, 4], "tempo": [50, 100], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none"},
 {"id": "441850", "tabs": ["luciani"], "nome": "Echoes of Time", "ano": 2025, "bgg": 7.18, "votos": 1495, "peso": 2.47, "jog": [2, 4], "tempo": [30, 60], "melhor": "2", "dois": "excellent at 2", "nota": null, "partidas": 0, "st": "own", "br": "Ludofun"},
 {"id": "199383", "tabs": ["otoole"], "nome": "Calimala", "ano": 2017, "bgg": 7.32, "votos": 3293, "peso": 2.8, "jog": [2, 5], "tempo": [75, 75], "melhor": "4", "dois": "poor at 2", "nota": null, "partidas": 0, "st": "none", "requested": true, "edition": "Alley Cat Games second edition", "editionUrl": "https://www.alleycatgames.com/calimala", "creditNote": "Ian O'Toole created the art and graphic design for this edition; the original used Harald Lieske. Added at your request below the usual 7.4 BGG cutoff.", "ludoUrl": "https://ludopedia.com.br/jogo/calimala-alley-cat-games-edition"}
@@ -254,7 +249,7 @@ const CHAVE = {
   melhor: g => ({'excellent at 2': 3, 'good at 2': 2, 'poor at 2': 1})[g.dois] || 0
 };
 
-const st = {aba: 'cramer', ordem: 'fit', dir: -1, faltando: false, leves: false, br: false, solo: false, dois: false};
+const st = {aba: 'mangone', ordem: 'fit', dir: -1, faltando: false, leves: false, br: false, solo: false, dois: false};
 
 function filtrados() {
   let l = JOGOS.filter(g => g.tabs.includes(st.aba));
@@ -402,10 +397,10 @@ render();
 
 if (location.hash === '#test') {
   const check = (ok, msg) => { if (!ok) throw new Error(msg); };
-  check(JOGOS.length === 68, 'Expected 68 distinct listed games');
+  check(JOGOS.length === 64, 'Expected 64 distinct listed games');
   check(Object.keys(DESIGNERS).every(k => JOGOS.some(g => g.tabs.includes(k))), 'Every tab needs games');
   check(new Set(JOGOS.map(g => g.id)).size === JOGOS.length, 'Every listed game needs one unique ID');
-  check(['cramer', 'otoole'].every(k => JOGOS.find(g => g.id === '296100').tabs.includes(k)), 'Shared creator credits need one linked game');
+  check(['otoole', 'luciani'].every(k => JOGOS.find(g => g.id === '448159').tabs.includes(k)), 'Shared creator credits need one linked game');
   check(JOGOS.find(g => g.id === '296100').partidas === 8 && JOGOS.find(g => g.id === '296100').nota === 9.2,
     'Plays and ratings must carry over from the collection export');
   check(JOGOS.some(g => g.st === 'sold') && JOGOS.some(g => g.st === 'played')
@@ -421,12 +416,11 @@ if (location.hash === '#test') {
   check(Object.keys(DESIGNERS).every(k => JOGOS.some(g => g.tabs.includes(k) && g.st !== 'own')),
     'Every catalogue must reach past your shelf, or it has nothing to recommend');
   check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 31, 'O\u2019Toole catalogue size');
-  check(JOGOS.filter(g => g.tabs.includes('cramer')).length === 5, 'Cramer catalogue size');
   check(JOGOS.filter(g => g.tabs.includes('mangone')).length === 7, 'Mangone catalogue size');
   check(!JOGOS.some(g => /Unmatched/.test(g.nome)), 'Unmatched must stay out at your request');
   check(JOGOS.every(g => (g.peso == null || (g.peso > 0 && g.peso < 5))
     && (g.bgg == null || (g.bgg > 0 && g.bgg <= 10)) && (g.votos == null || g.votos > 0)), 'Invalid numbers');
-  const CURADAS = ['otoole', 'cramer', 'mangone'];
+  const CURADAS = ['otoole', 'mangone'];
   check(Object.keys(DESIGNERS).every(k => JOGOS.filter(g => g.tabs.includes(k)).length >= 5),
     'No catalogue may be emptied out by the cut');
   check(JOGOS.every(g => g.tabs.length && g.tabs.every(k => k in DESIGNERS)),
@@ -451,8 +445,9 @@ if (location.hash === '#test') {
   check(!JOGOS.some(g => /^ludo:/.test(g.id)), 'Every row must resolve to a real BGG id');
   check(JOGOS.every(g => Number.isInteger(g.ano) && g.ano > 1900), 'Every game needs a year');
   check(JOGOS.every(g => g.nota == null || (g.nota > 0 && g.nota <= 10)), 'Invalid personal rating');
+  const compartilhado = JOGOS.find(g => g.id === '448159');
+  check(compartilhado.tabs.includes('otoole') && compartilhado.tabs.includes('luciani'), 'Shared games must appear under both');
   const rococo = JOGOS.find(g => g.nome === 'Rococo: Deluxe Edition');
-  check(rococo.tabs.includes('cramer') && rococo.tabs.includes('otoole'), 'Shared games must appear under both');
   check(rococo.st === 'own' && veredito(rococo)[0] === 'own', 'Owned games must be flagged');
   const lisboa = JOGOS.find(g => g.nome === 'Lisboa');
   check(lisboa.nota === 9 && lisboa.peso > LINHA && veredito(lisboa)[0] === 'warn',
@@ -465,14 +460,10 @@ if (location.hash === '#test') {
   check(veredito(JOGOS.find(g => g.nome === 'Entropy'))[0] === 'own',
     'A purchase made after the export must still read as owned');
   check(!JOGOS.some(g => /Collector's Edition/.test(g.nome))
-    && JOGOS.filter(g => /^Rococo/.test(g.nome)).length === 1
-    && JOGOS.filter(g => /^Glen More/.test(g.nome)).length === 1
-    && JOGOS.filter(g => /^Kraftwagen/.test(g.nome)).length === 1
-    && JOGOS.find(g => /^Kraftwagen/.test(g.nome)).ano === 2024
-    && [/^7 Wonders$|^7 Wonders \(/, /^AquaSphere/, /^Cyclades/,
+    && [/^Rococo/, /^Glen More/, /^Kraftwagen/, /^7 Wonders$|^7 Wonders \(/, /^AquaSphere/, /^Cyclades/,
         /^The Castles of Burgundy($| \(|: Special)/, /^The Palaces of Carrara/]
          .every(re => JOGOS.filter(g => re.test(g.nome)).length <= 1),
-    'Alternate editions collapse to one entry, and Kraftwagen keeps the newer one');
+    'Alternate editions collapse to at most one entry');
   check(JOGOS.find(g => /^The Castles of Burgundy: Special/.test(g.nome)).st === 'own',
     'When two editions collide, the one carrying your own record is the one that survives');
   check(JOGOS.filter(g => /^Stockpile/.test(g.nome)).length === 1
@@ -499,9 +490,9 @@ if (location.hash === '#test') {
   const ordenada = aninhar(JOGOS.filter(g => g.tabs.includes('luciani')));
   check(ordenada.length === JOGOS.filter(g => g.tabs.includes('luciani')).length,
     'Nesting preserves the row count');
-  check(JOGOS.filter(g => g.st === 'own').length === 10, 'Expected 10 owned games across the listed games');
+  check(JOGOS.filter(g => g.st === 'own').length === 9, 'Expected 9 owned games across the listed games');
   check(escapeHTML('<script>') === '&lt;script&gt;', 'Text must stay text');
-  check(JOGOS.filter(g => g.br).length === 42, 'Expected 42 games with a confirmed Brazilian publisher');
+  check(JOGOS.filter(g => g.br).length === 41, 'Expected 41 games with a confirmed Brazilian publisher');
   check(JOGOS.filter(g => g.brUnknown).length === 0 && JOGOS.every(g => !(g.br && g.brUnknown)),
     'Brazilian availability is either a named publisher, a checked absence, or an explicit unchecked \u2014 never two at once');
   check(JOGOS.filter(g => g.arts).length === 3, 'Shared artist credits should be marked');
@@ -528,14 +519,14 @@ if (location.hash === '#test') {
     'Both source links must render');
   st.aba = 'otoole'; st.solo = true;
   check(filtrados().every(g => !g.arts), 'Sole-artist filter must drop shared credits');
-  st.solo = false; st.aba = 'cramer';
+  st.solo = false; st.aba = 'mangone';
   check(JOGOS.find(g => g.nome === 'Entropy').br === 'Mosaico Jogos'
     && JOGOS.find(g => g.nome === 'Ra').br === 'Precisamente Jogos'
-    && !JOGOS.find(g => g.nome === 'Glen More II: Chronicles').br, 'Brazilian publishers must be recorded per game');
+    && !JOGOS.find(g => g.nome === 'Macao').br, 'Brazilian publishers must be recorded per game');
   check(tabelaHTML(JOGOS.slice(0, 2)).includes('no BR edition') || JOGOS.slice(0, 2).every(g => g.br), 'Missing BR editions must say so');
   st.br = true; check(filtrados().every(g => g.br), 'BR filter must drop imports'); st.br = false;
   check(document.querySelector('a.navbtn[href="index.html"]'), 'The wishlist must stay one button away');
-  st.aba = 'cramer'; st.faltando = true;
+  st.aba = 'mangone'; st.faltando = true;
   check(filtrados().every(g => g.st !== 'own' && !g.fora), 'Missing-only filter must drop owned games');
   st.leves = true;
   check(filtrados().every(g => g.peso <= LINHA), 'Weight filter must respect the 3.35 line');
@@ -549,7 +540,7 @@ if (location.hash === '#test') {
     }
   }
   st.ordem = 'fit'; st.dir = -1; render();
-  check(document.querySelectorAll('.aba').length === 5, 'All five creator tabs must render');
+  check(document.querySelectorAll('.aba').length === 4, 'All four creator tabs must render');
   const papeis = Object.entries(DESIGNERS).map(([k, d]) => [k, papelDe(d)]);
   check(papeis.every(([, p]) => p === 'Designer' || p === 'Artist')
     && papeis.filter(([, p]) => p === 'Artist').map(([k]) => k).join() === 'otoole',
@@ -557,19 +548,19 @@ if (location.hash === '#test') {
   const strip = abasHTML();
   check(strip.indexOf('>Designers<') < strip.indexOf('>Artists<')
     && strip.indexOf('>Artists<') < strip.indexOf('data-aba="otoole"')
-    && strip.indexOf('data-aba="cramer"') < strip.indexOf('>Artists<'),
+    && strip.indexOf('data-aba="mangone"') < strip.indexOf('>Artists<'),
     'Artists are grouped after designers');
   check([...document.querySelectorAll('.aba')].every(b => b.querySelector('.papel'))
     && document.querySelector('[data-aba="otoole"]').classList.contains('art')
-    && !document.querySelector('[data-aba="cramer"]').classList.contains('art'),
+    && !document.querySelector('[data-aba="mangone"]').classList.contains('art'),
     'Each tab must carry its role on the card');
   check(document.querySelectorAll('thead th').length === 8, 'Header must match the column list');
   const dois = JOGOS.filter(g => g.dois);
-  check(dois.length === 67 && dois.every(g => ['excellent at 2', 'good at 2', 'poor at 2'].includes(g.dois)),
+  check(dois.length === 64 && dois.every(g => ['excellent at 2', 'good at 2', 'poor at 2'].includes(g.dois)),
     'Every game that seats two carries a two-player verdict in the wishlist vocabulary');
-  check(JOGOS.filter(g => g.dois === 'excellent at 2').length === 10
-    && JOGOS.filter(g => g.dois === 'poor at 2').length === 7,
-    'Ten games are best at two and seven are poor at two');
+  check(JOGOS.filter(g => g.dois === 'excellent at 2').length === 9
+    && JOGOS.filter(g => g.dois === 'poor at 2').length === 6,
+    'Nine games are best at two and six are poor at two');
   check(JOGOS.filter(g => !g.dois).every(g => !(g.jog[0] <= 2 && 2 <= g.jog[1])),
     'Only a game that cannot seat two may lack the verdict');
   check(JOGOS.every(g => !g.melhor || /^[0-9\u2013, ]+$/.test(g.melhor)), 'Best count must be a player-count range');
