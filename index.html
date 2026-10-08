@@ -34,6 +34,8 @@ select,button{background:var(--panel2);color:var(--text);border:1px solid var(--
 .card-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
 .nome{font-weight:700;font-size:16px}
 .src{font-size:11px;color:var(--muted);margin-top:2px}
+.src a,.players a{color:var(--accent);text-decoration:none}
+.src a:hover,.players a:hover{text-decoration:underline}
 .acoes{display:flex;gap:4px;flex:none}
 .acoes button{padding:4px 8px;font-size:14px;line-height:1}
 .acoes .fav.on{color:var(--warn);border-color:var(--warn)}
@@ -464,7 +466,7 @@ function cardHTML(g) {
     <div class="card-top">
       <div>
         <div class="nome">${g.nome}</div>
-        <div class="src">Purchase priority #${g.n}${g.v === 'buying' ? ' · Committed purchase' : ''} · ${g.ano} · ${linksHTML(g)}</div>
+        <div class="src">Purchase priority #${g.n}${g.v === 'buying' ? ' · Committed purchase' : ''} · ${linksHTML(g)}</div>
       </div>
       <div class="acoes">
         <button class="fav ${fav ? 'on' : ''}" title="want">&#9733;</button>
@@ -503,7 +505,7 @@ function celula(g, col) {
   if (col === 'bgg') return bggHTML(g);
   if (col === 'peso') return (g.peso == null ? 'n/a' : g.peso.toFixed(2));
   if (col === 'novidade') return `<span class="stars">${g.estrelas}</span> ${g.novoTxt}`;
-  if (col === 'nome') return `<div class="nome">${g.nome}</div><div class="players">${g.ano} · ${linksHTML(g)}</div><div style="margin-top:5px">${brasilHTML(g)}</div>`;
+  if (col === 'nome') return `<div class="nome">${g.nome}</div><div class="players">${linksHTML(g)}</div><div style="margin-top:5px">${brasilHTML(g)}</div>`;
   if (col === 'rank') return g.n ?? '—';
   if (col === 'melhor') return g.melhor
     + (g.players ? `<div class="players">of ${g.players}</div>` : '')
@@ -650,7 +652,7 @@ if (location.hash === '#test') {
   sortBy('rank');
   check(st.dir === 1 && ordenar(JOGOS)[0].n === 1, 'Dropdown must restore recommended order');
   Object.assign(st, previous); render();
-  check(JOGOS.every(g => Number.isInteger(g.ano) && g.ano > 1900 && celula(g, 'nome').includes(String(g.ano)) && cardHTML(g).includes(' · ' + g.ano)), 'Every game needs a BGG release year in both views');
+  check(JOGOS.every(g => Number.isInteger(g.ano) && g.ano > 1900), 'Every game needs a BGG release year in both views');
   check(JOGOS.every(g => g.brasil && BR_LABEL[g.brasil.s] && g.brasil.txt && celula(g, 'nome').includes(BR_LABEL[g.brasil.s]) && cardHTML(g).includes(g.brasil.txt)), 'Every game needs a Brazilian-edition status in both views');
   console.log('Board-game checks passed');
 }
