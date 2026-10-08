@@ -146,7 +146,6 @@ const JOGOS = [
 {"id": "434329", "tabs": ["luciani"], "nome": "Darwin's Journey: Oceania", "ano": 2026, "bgg": 8.0, "votos": 281, "peso": 4.38, "jog": [1, 4], "tempo": [60, 120], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none", "exp": "Darwin's Journey"},
 {"id": "182874", "tabs": ["luciani"], "nome": "Grand Austria Hotel", "ano": 2015, "bgg": 7.96, "votos": 25719, "peso": 3.19, "jog": [2, 4], "tempo": [60, 120], "melhor": "2", "dois": "excellent at 2", "nota": null, "partidas": 0, "st": "none", "br": "PaperGames"},
 {"id": "382518", "tabs": ["otoole"], "nome": "Sankore: The Pride of Mansa Musa", "ano": 2024, "bgg": 7.94, "votos": 1744, "peso": 4.26, "jog": [1, 4], "tempo": [150, 180], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none"},
-{"id": "282391", "tabs": ["otoole"], "nome": "Stockpile: Epic Edition", "ano": 2019, "bgg": 7.93, "votos": 1123, "peso": 2.21, "jog": [2, 5], "tempo": [45, 45], "melhor": "4–5", "dois": "poor at 2", "nota": null, "partidas": 0, "st": "none", "arts": 2, "edition": "Nauvoo Games Epic Edition (2019)", "editionUrl": "https://boardgamegeek.com/boardgame/282391/stockpile-epic-edition", "creditNote": "O'Toole: graphic design and illustration; Jacqui Davis: illustration."},
 {"id": "347305", "tabs": ["otoole"], "nome": "Inventions: Evolution of Ideas", "ano": 2024, "bgg": 7.91, "votos": 3055, "peso": 4.6, "jog": [1, 4], "tempo": [60, 150], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none", "br": "Mosaico Jogos"},
 {"id": "283948", "tabs": ["luciani"], "nome": "Marco Polo II: In the Service of the Khan", "ano": 2019, "bgg": 7.91, "votos": 8491, "peso": 3.38, "jog": [2, 4], "tempo": [60, 120], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none", "br": "Devir Brasil"},
 {"id": "4098", "tabs": ["otoole"], "nome": "Age of Steam", "ano": 2002, "bgg": 7.88, "votos": 12878, "peso": 3.86, "jog": [1, 6], "tempo": [120, 120], "melhor": "4–5", "dois": "poor at 2", "nota": null, "partidas": 0, "st": "none", "br": "Mosaico Jogos (Deluxe Edition)", "edition": "Deluxe Edition - Eagle-Gryphon Games (2019)", "editionUrl": "https://boardgamegeek.com/boardgameversion/443194/english-first-edition", "creditNote": "O'Toole: redesigned artwork and graphics."},
@@ -378,7 +377,7 @@ render();
 
 if (location.hash === '#test') {
   const check = (ok, msg) => { if (!ok) throw new Error(msg); };
-  check(JOGOS.length === 47, 'Expected 47 distinct listed games');
+  check(JOGOS.length === 46, 'Expected 46 distinct listed games');
   check(Object.keys(DESIGNERS).every(k => JOGOS.some(g => g.tabs.includes(k))), 'Every tab needs games');
   check(new Set(JOGOS.map(g => g.id)).size === JOGOS.length, 'Every listed game needs one unique ID');
   check(['otoole', 'luciani'].every(k => JOGOS.find(g => g.id === '448159').tabs.includes(k)), 'Shared creator credits need one linked game');
@@ -396,7 +395,7 @@ if (location.hash === '#test') {
     'Every creator card links to their own Ludopedia catalogue');
   check(Object.keys(DESIGNERS).every(k => JOGOS.some(g => g.tabs.includes(k) && g.st !== 'own')),
     'Every catalogue must reach past your shelf, or it has nothing to recommend');
-  check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 30, 'O\u2019Toole catalogue size');
+  check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 29, 'O\u2019Toole catalogue size');
   check(!JOGOS.some(g => g.id === '337627' && g.tabs.includes('otoole')), 'Voidfall must stay out of the O’Toole catalogue');
   check(!JOGOS.some(g => /Unmatched/.test(g.nome)), 'Unmatched must stay out at your request');
   check(JOGOS.every(g => (g.peso == null || (g.peso > 0 && g.peso < 5))
@@ -443,9 +442,6 @@ if (location.hash === '#test') {
         /^The Castles of Burgundy($| \(|: Special)/, /^The Palaces of Carrara/]
          .every(re => JOGOS.filter(g => re.test(g.nome)).length <= 1),
     'Alternate editions collapse to at most one entry');
-  check(JOGOS.filter(g => /^Stockpile/.test(g.nome)).length === 1
-    && JOGOS.find(g => /^Stockpile/.test(g.nome)).nome === 'Stockpile: Epic Edition',
-    'Only the Epic Edition of Stockpile stays, at your request');
   const exps = JOGOS.filter(g => g.exp);
   check(exps.length === 4 && exps.every(g => JOGOS.some(b => b.nome === g.exp)),
     'Every expansion must point at a base game present in the catalogue');
@@ -472,12 +468,11 @@ if (location.hash === '#test') {
   check(JOGOS.filter(g => g.br).length === 33, 'Expected 33 games with a confirmed Brazilian publisher');
   check(JOGOS.filter(g => g.brUnknown).length === 0 && JOGOS.every(g => !(g.br && g.brUnknown)),
     'Brazilian availability is either a named publisher, a checked absence, or an explicit unchecked \u2014 never two at once');
-  check(JOGOS.filter(g => g.arts).length === 3, 'Shared artist credits should be marked');
+  check(JOGOS.filter(g => g.arts).length === 2, 'Shared artist credits should be marked');
   const editions = JOGOS.filter(g => g.edition);
-  check(editions.length === 6 && editions.every(g => g.creditNote && /^https:\/\//.test(g.editionUrl)),
+  check(editions.length === 5 && editions.every(g => g.creditNote && /^https:\/\//.test(g.editionUrl)),
     'Every surviving edition-researched game keeps its source and credit note');
-  check(JOGOS.find(g => g.nome === 'Stockpile: Epic Edition').arts === 2
-    && !JOGOS.find(g => g.nome === 'Ra').arts, 'Verified edition credits must replace pooled artist lists');
+  check(!JOGOS.find(g => g.nome === 'Ra').arts, 'Verified edition credits must replace pooled artist lists');
   check(editions.every(g => tabelaHTML([g]).includes(escapeHTML(g.editionUrl))
     && tabelaHTML([g]).includes(escapeHTML(g.creditNote))), 'Edition source and contribution must render');
   check(tabelaHTML([JOGOS.find(g => g.nome === 'Dominant Species')]).includes('original game')
