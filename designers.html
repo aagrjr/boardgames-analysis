@@ -257,6 +257,7 @@ function linhaHTML(g) {
   return '<tr class="' + (g.st === 'own' ? 'tem' : '') + '">'
     + '<td><div class="nome">' + escapeHTML(g.nome)
       + (g.wantBack ? ' <span class="tag" title="You sold this one and said you want it back">want it back</span>' : '')
+      + (g.requested ? ' <span class="tag" title="You asked for this one despite the 7.4 BGG cutoff">Added at your request</span>' : '')
       + (g.arts ? ' <span class="tag" title="Artist credits may span editions or contributors; read edition notes where provided">Artists: '
           + g.arts + ' artist credits</span>' : '')
       + '</div>' + (g.edition ? '<div class="meta">Edition: <a href="' + escapeHTML(g.editionUrl)
