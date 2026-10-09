@@ -13,12 +13,7 @@
 body{margin:0;background:linear-gradient(180deg,#0b1020 0%,#0f1628 100%);color:var(--text);
   font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
 main{max-width:1600px;margin:auto;padding:28px}
-h1{font-size:28px;margin:0 0 8px} .sub{color:var(--muted);margin-bottom:16px}
-.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
-#stats{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:12px;margin-bottom:18px}
-#stats div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;
-  color:var(--muted);font-size:12px}
-#stats b{display:block;font-size:22px;color:var(--text)}
+h1{font-size:28px;margin:0 0 8px}
 .barra{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
 .chip{padding:6px 11px;border-radius:999px;background:var(--chip);border:1px solid var(--line);
   color:var(--text);font-size:12px}
@@ -89,7 +84,6 @@ tr:hover td{background:rgba(255,255,255,.025)}
 footer{margin-top:18px;color:var(--muted);font-size:12px}
 @media(max-width:800px){
   main{padding:14px} h1{font-size:21px}
-  #stats{grid-template-columns:repeat(2,1fr)}
   .grid{grid-template-columns:1fr}
 }
 .shopping{min-width:220px;max-width:320px;font-size:12px;white-space:normal}
@@ -111,20 +105,6 @@ a.navbtn:hover small{color:var(--accent)}
 <body>
 <main>
 <div class="topo"><h1>Board Game Wishlist</h1><a class="navbtn" href="designers.html">Designer catalogues &rarr;<small>Designers and artists whose work fits you</small></a></div>
-<div class="sub"><span id="sub-count"></span> You mostly play <b>at 2</b>,
-so the priorities are: personal taste fit &rsaquo; quality at 2 &rsaquo; collection redundancy
-&rsaquo; mechanical uniqueness &rsaquo; game-night role &rsaquo; weight &rsaquo; playtime.<br><b>Purchase order does not use numerical ratings.</b> Qualitative preferences, 2-player fit and collection value set the order.</div>
-
-<div class="legend">
-  <span class="chip">&#128994; Buy / strong fit</span>
-  <span class="chip">&#128993; Try first / conditional</span>
-  <span class="chip">&#128308; Skip</span>
-  <span class="chip">&#128722; Already decided</span>
-  <span class="chip">Purchase priority considers collection value, not ratings</span>
-</div>
-
-<div id="stats"></div>
-
 <div class="barra">
   <button class="chip" id="chip-fav">&#9733; want</button>
   <button class="chip" id="chip-desc">dismissed</button>
@@ -452,20 +432,6 @@ function sortBy(key, toggle = false) {
   st.ordem = key;
   render();
 }
-const median = values => {
-  const v = values.slice().sort((a, b) => a - b), i = Math.floor(v.length / 2);
-  return v.length ? (v.length % 2 ? v[i] : (v[i - 1] + v[i]) / 2) : null;
-};
-function stats() {
-  const vis = filtrar(), candidates = vis.filter(g => g.v !== 'buying');
-  const weight = median(candidates.map(g => g.peso).filter(v => v != null));
-  document.getElementById('stats').innerHTML = `
-    <div>candidates shown<b>${candidates.length}</b></div>
-    <div>committed shown<b>${vis.length - candidates.length}</b></div>
-    <div>median candidate weight<b>${weight == null ? '—' : weight.toFixed(2)}</b></div>
-    <div>wanted candidates shown<b>${candidates.filter(g => load('fav:' + g.id, false)).length}</b></div>`;
-}
-
 const brl = value => value.toLocaleString('pt-BR', {style:'currency',currency:'BRL'});
 function shoppingHTML(g) {
   if (!g.shopping.length) return '<div class="shopping">Stores and prices not checked for this addition.</div>';
@@ -543,15 +509,7 @@ function tabelaHTML(l) {
   }).join('')}</tbody></table></div>`;
 }
 
-const ATUALIZADO = '2026-10-09';
-function subCount() {
-  const cand = JOGOS.filter(g => g.v !== 'buying').length, comp = JOGOS.length - cand;
-  return `Updated ${ATUALIZADO} \u00b7 ${cand} candidate${cand === 1 ? '' : 's'}, `
-    + (comp ? `${comp} committed purchase${comp === 1 ? '' : 's'}, ` : '') + `${EXCLUIDOS.length} out of the running.`;
-}
-
 function render() {
-  document.getElementById('sub-count').textContent = subCount();
   document.getElementById('ordem').value = st.ordem;
   document.getElementById('rank-filter').value = st.rank;
   document.getElementById('dir').innerHTML = st.dir > 0 ? '&uarr; ascending' : '&darr; descending';
@@ -561,7 +519,6 @@ function render() {
   document.getElementById('lista').innerHTML = !l.length
     ? '<div class="vazio">No games match these filters.</div>'
     : st.tabela ? tabelaHTML(l) : '<div class="grid">' + l.map(cardHTML).join('') + '</div>';
-  stats();
 }
 
 document.addEventListener('click', e => {
@@ -644,9 +601,8 @@ if (location.hash === '#test') {
   const nz = JOGOS.find(g => g.nome === 'Great Western Trail: New Zealand');
   check(!nz && EXCLUIDOS.some(([name]) => name === 'Great Western Trail: New Zealand'), 'New Zealand must stay excluded');
   check(JOGOS.every(g => g.bggVotos == null || Number.isInteger(g.bggVotos) && g.bggVotos > 0), 'BGG vote counts must be positive integers where recorded');
-  check(subCount() === 'Updated 2026-10-09 \u00b7 9 candidates, 52 out of the running.' && document.querySelector('#sub-count').textContent === subCount(), 'Subtitle counts must be derived from the data, not hardcoded');
+  check(!document.querySelector('.sub,.legend,#stats'), 'Removed header summary, legend, and counters');
   check(document.querySelector('a.navbtn[href="designers.html"]'), 'The designer catalogues must stay one button away');
-  check(median([1, 4, 2, 3]) === 2.5 && median([]) === null, 'Median calculation');
   check(escapeHTML('</textarea><script>') === '&lt;/textarea&gt;&lt;script&gt;', 'Notes must remain text');
   check(!COLS.some(c => c[0] === 'personalScore') && !CHAVE.personalScore && !document.querySelector('#ordem option[value="personalScore"]'), 'Personal rating column must stay removed');
   check(JOGOS.every(g => g.bggRank == null || (Number.isInteger(g.bggRank) && g.bggRank > 0)), 'BGG overall ranks must be positive integers');
