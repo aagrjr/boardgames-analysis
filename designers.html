@@ -164,7 +164,6 @@ const JOGOS = [
 {"id": "298383", "rank": 748, "tabs": ["luciani"], "nome": "Golem", "ano": 2021, "bgg": 7.5, "votos": 4913, "peso": 4.01, "jog": [1, 4], "tempo": [90, 120], "melhor": "2–3", "dois": "excellent at 2", "nota": null, "partidas": 0, "st": "none", "br": "Asmodee (Galápagos)"},
 {"id": "142379", "rank": 639, "tabs": ["otoole"], "nome": "Escape Plan", "ano": 2019, "bgg": 7.48, "votos": 5994, "peso": 3.69, "jog": [1, 5], "tempo": [60, 120], "melhor": "4", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none", "br": "Mosaico Jogos"},
 {"id": "306040", "rank": 783, "tabs": ["otoole"], "nome": "Merv: The Heart of the Silk Road", "ano": 2020, "bgg": 7.46, "votos": 4789, "peso": 3.44, "jog": [1, 4], "tempo": [90, 90], "melhor": "4", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none"},
-{"id": "214887", "rank": 966, "tabs": ["otoole"], "nome": "CO2: Second Chance", "ano": 2018, "bgg": 7.46, "votos": 3817, "peso": 4.09, "jog": [1, 4], "tempo": [60, 120], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none", "br": "MeepleBR Jogos", "arts": 3},
 {"id": "387780", "rank": 918, "tabs": ["luciani"], "nome": "Rats of Wistar", "ano": 2023, "bgg": 7.45, "votos": 4077, "peso": 3.41, "jog": [1, 4], "tempo": [90, 90], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none", "br": "Grok Games"},
 {"id": "304510", "rank": 2268, "tabs": ["otoole"], "nome": "Pampero", "ano": 2024, "bgg": 7.44, "votos": 1437, "peso": 3.94, "jog": [1, 4], "tempo": [60, 150], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none"},
 {"id": "441850", "rank": 2591, "tabs": ["luciani"], "nome": "Echoes of Time", "ano": 2025, "bgg": 7.18, "votos": 1495, "peso": 2.47, "jog": [2, 4], "tempo": [30, 60], "melhor": "2", "dois": "excellent at 2", "nota": null, "partidas": 0, "st": "own", "br": "Ludofun"},
@@ -173,9 +172,8 @@ const JOGOS = [
 
 const LINHA = 3.35;
 
-// A Ludopedia deriva o slug do nome em inglês; três fogem da regra e ficam aqui.
+// A Ludopedia deriva o slug do nome em inglês; exceptions remain here.
 const LUDO_FIXO = {
-  'CO2: Second Chance': 'co-second-chance',
   'Age of Steam': 'age-of-steam-deluxe-edition',
   'Masters of Renaissance': 'masters-of-renaissance-lorenzo-il-magnifico-the-card-game'
 };
@@ -365,8 +363,8 @@ render();
 
 if (location.hash === '#test') {
   const check = (ok, msg) => { if (!ok) throw new Error(msg); };
-  check(JOGOS.length === 38, 'Expected 38 distinct listed games');
-  check(JOGOS.filter(g => g.rank != null).length === 37, 'Expected 37 ranked games');
+  check(JOGOS.length === 37, 'Expected 37 distinct listed games');
+  check(JOGOS.filter(g => g.rank != null).length === 36, 'Expected 36 ranked games');
   check(Object.keys(DESIGNERS).every(k => JOGOS.some(g => g.tabs.includes(k))), 'Every tab needs games');
   check(new Set(JOGOS.map(g => g.id)).size === JOGOS.length, 'Every listed game needs one unique ID');
   check(['otoole', 'luciani'].every(k => JOGOS.find(g => g.id === '448159').tabs.includes(k)), 'Shared creator credits need one linked game');
@@ -384,7 +382,7 @@ if (location.hash === '#test') {
     'Every creator card links to their own Ludopedia catalogue');
   check(Object.keys(DESIGNERS).every(k => JOGOS.some(g => g.tabs.includes(k) && g.st !== 'own')),
     'Every catalogue must reach past your shelf, or it has nothing to recommend');
-  check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 23, 'O\u2019Toole catalogue size');
+  check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 22, 'O\u2019Toole catalogue size');
   check(JOGOS.filter(g => g.tabs.includes('otoole') && g.dois === 'poor at 2').map(g => g.id).join() === '199383',
     'Calimala is the only poor-at-2 game retained under O\u2019Toole at your request');
   check(!JOGOS.some(g => g.id === '337627' && g.tabs.includes('otoole')), 'Voidfall must stay out of the O’Toole catalogue');
@@ -432,7 +430,7 @@ if (location.hash === '#test') {
     'Creator catalogues contain standalone games only');
   check(JOGOS.filter(g => g.st === 'own').length === 5, 'Expected 5 owned games across the listed games');
   check(escapeHTML('<script>') === '&lt;script&gt;', 'Text must stay text');
-  check(JOGOS.filter(g => g.br).length === 28, 'Expected 28 games with a confirmed Brazilian publisher');
+  check(JOGOS.filter(g => g.br).length === 27, 'Expected 27 games with a confirmed Brazilian publisher');
   check(JOGOS.filter(g => g.brUnknown).length === 0 && JOGOS.every(g => !(g.br && g.brUnknown)),
     'Brazilian availability is either a named publisher, a checked absence, or an explicit unchecked \u2014 never two at once');
   check(JOGOS.filter(g => g.arts).length === 1, 'Shared artist credits should be marked');
@@ -447,8 +445,8 @@ if (location.hash === '#test') {
     && ludoSlug("Nemo's War (Second Edition)") === 'nemo-s-war-second-edition'
     && ludoSlug('Sankore: The Pride of Mansa Musa') === 'sankore-the-pride-of-mansa-musa',
     'Ludopedia slugs must follow the derivation rule');
-  check(ludoSlug('CO2: Second Chance') === 'co-second-chance' && ludoSlug('Age of Steam') === 'age-of-steam-deluxe-edition',
-    'The three slugs that break the rule must stay overridden');
+  check(ludoSlug('Age of Steam') === 'age-of-steam-deluxe-edition',
+    'The slugs that break the rule must stay overridden');
   check(JOGOS.filter(g => g.ludoUrl).every(g => ludoURL(g) === g.ludoUrl),
     'A row that carries a verified Ludopedia URL must use it, never a derived slug');
   check(JOGOS.every(g => /^https:\/\/ludopedia\.com\.br\/jogo\/[a-z0-9-]+$/.test(ludoURL(g))), 'Every Ludopedia link must be well formed');

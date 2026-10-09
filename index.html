@@ -168,6 +168,10 @@ const JOGOS = [
 
 const EXCLUIDOS = [
   [
+    "CO2: Second Chance",
+    "removed from the wishlist and O’Toole catalogue at your request on 2026-10-09; cooperative games are not a fit for this wishlist"
+  ],
+  [
     "The Lord of the Rings: Fate of the Fellowship",
     "removed at your request on 2026-10-09: you do not want a cooperative game for now"
   ],
@@ -568,7 +572,8 @@ if (location.hash === '#test') {
   check(!JOGOS.some(g => g.nome === 'Vantage') && EXCLUIDOS.some(([name]) => name === 'Vantage'), 'Vantage stays off the wishlist');
   check(!JOGOS.some(g => g.nome.startsWith('Arcs') || g.nome.startsWith('The Blighted Reach')) && ['Arcs (base game)', 'The Blighted Reach (Arcs expansion)'].every(nome => EXCLUIDOS.some(([n]) => n === nome)), 'Arcs and its campaign must stay excluded as purchases');
   check(JOGOS.length === 10 && !JOGOS.some(g => g.v === 'buying'), 'Expected 10 candidate options and no commitment');
-  check(EXCLUIDOS.length === 52 && EXCLUIDOS.some(([name]) => name === 'Star Wars: Rebellion') && !JOGOS.some(g => g.nome === 'Star Wars: Rebellion'), 'Rebellion must stay excluded');
+  check(EXCLUIDOS.length === 53 && EXCLUIDOS.some(([name]) => name === 'Star Wars: Rebellion') && !JOGOS.some(g => g.nome === 'Star Wars: Rebellion'), 'Rebellion must stay excluded');
+  check(EXCLUIDOS.some(([name]) => name === 'CO2: Second Chance') && !JOGOS.some(g => g.nome === 'CO2: Second Chance'), 'CO2: Second Chance must stay off the wishlist');
   check(JOGOS.map(g => g.nome).join(' | ') === 'Clank! Legacy: Acquisitions Incorporated | Concordia: Special Edition | Wondrous Creatures | Agent Avenue | Jisogi: Anime Studio Tycoon | Stupor Mundi | Saint Seiya: Deckbuilding | The Game Makers | Pan Am | Railway Boom', 'Expected purchase order excluding historical ratings');
   check(new Set(JOGOS.map(g => g.id)).size === JOGOS.length, 'Duplicate ids');
   check(JOGOS.find(g => g.nome === 'Railway Boom')?.veredito === 'TRY FIRST', 'Railway Boom must remain a try-first wishlist entry');
