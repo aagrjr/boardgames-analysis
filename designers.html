@@ -122,7 +122,7 @@ footer{margin-top:18px;color:var(--muted);font-size:12px}
   </select></label>
 </div>
 <div id="saida"></div>
-<footer>BGG ratings and other statistics checked 2026-10-01 (Calimala checked 2026-10-02); ranks checked 2026-10-08. Catalogue membership comes from BGG designer and artist credits; ratings, weights, player counts and playtimes from BGG. Personal ratings, plays and ownership come from your collection export of 2026-10-01. Brazilian publishers are listed only where they were checked on Ludopedia; the rest say so rather than guess. Edition notes checked 2026-10-01 (Calimala checked 2026-10-02). BGG game statistics can pool editions; a Brazilian listing does not confirm a specific edition. Weights and ratings drift.</footer>
+<footer>BGG ratings and other statistics checked 2026-10-01; ranks checked 2026-10-08. Catalogue membership comes from BGG designer and artist credits; ratings, weights, player counts and playtimes from BGG. Personal ratings, plays and ownership come from your collection export of 2026-10-01. Brazilian publishers are listed only where they were checked on Ludopedia; the rest say so rather than guess. Edition notes checked 2026-10-01. BGG game statistics can pool editions; a Brazilian listing does not confirm a specific edition. Weights and ratings drift.</footer>
 </main>
 <script>
 const DESIGNERS = {
@@ -167,7 +167,6 @@ const JOGOS = [
 {"id": "387780", "rank": 918, "tabs": ["luciani"], "nome": "Rats of Wistar", "ano": 2023, "bgg": 7.45, "votos": 4077, "peso": 3.41, "jog": [1, 4], "tempo": [90, 90], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none", "br": "Grok Games"},
 {"id": "304510", "rank": 2268, "tabs": ["otoole"], "nome": "Pampero", "ano": 2024, "bgg": 7.44, "votos": 1437, "peso": 3.94, "jog": [1, 4], "tempo": [60, 150], "melhor": "3", "dois": "good at 2", "nota": null, "partidas": 0, "st": "none"},
 {"id": "441850", "rank": 2591, "tabs": ["luciani"], "nome": "Echoes of Time", "ano": 2025, "bgg": 7.18, "votos": 1495, "peso": 2.47, "jog": [2, 4], "tempo": [30, 60], "melhor": "2", "dois": "excellent at 2", "nota": null, "partidas": 0, "st": "own", "br": "Ludofun"},
-{"id": "199383", "rank": 1227, "tabs": ["otoole"], "nome": "Calimala", "ano": 2017, "bgg": 7.32, "votos": 3293, "peso": 2.8, "jog": [2, 5], "tempo": [75, 75], "melhor": "4", "dois": "poor at 2", "nota": null, "partidas": 0, "st": "none", "requested": true, "edition": "Alley Cat Games second edition", "editionUrl": "https://www.alleycatgames.com/calimala", "creditNote": "Ian O'Toole created the art and graphic design for this edition; the original used Harald Lieske. Kept at your request because you love the artwork, despite its poor fit at 2 and the usual 7.4 BGG cutoff.", "ludoUrl": "https://ludopedia.com.br/jogo/calimala-alley-cat-games-edition"}
 ];
 
 const LINHA = 3.35;
@@ -363,8 +362,8 @@ render();
 
 if (location.hash === '#test') {
   const check = (ok, msg) => { if (!ok) throw new Error(msg); };
-  check(JOGOS.length === 37, 'Expected 37 distinct listed games');
-  check(JOGOS.filter(g => g.rank != null).length === 36, 'Expected 36 ranked games');
+  check(JOGOS.length === 36, 'Expected 36 distinct listed games');
+  check(JOGOS.filter(g => g.rank != null).length === 35, 'Expected 35 ranked games');
   check(Object.keys(DESIGNERS).every(k => JOGOS.some(g => g.tabs.includes(k))), 'Every tab needs games');
   check(new Set(JOGOS.map(g => g.id)).size === JOGOS.length, 'Every listed game needs one unique ID');
   check(['otoole', 'luciani'].every(k => JOGOS.find(g => g.id === '448159').tabs.includes(k)), 'Shared creator credits need one linked game');
@@ -382,9 +381,9 @@ if (location.hash === '#test') {
     'Every creator card links to their own Ludopedia catalogue');
   check(Object.keys(DESIGNERS).every(k => JOGOS.some(g => g.tabs.includes(k) && g.st !== 'own')),
     'Every catalogue must reach past your shelf, or it has nothing to recommend');
-  check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 22, 'O\u2019Toole catalogue size');
-  check(JOGOS.filter(g => g.tabs.includes('otoole') && g.dois === 'poor at 2').map(g => g.id).join() === '199383',
-    'Calimala is the only poor-at-2 game retained under O\u2019Toole at your request');
+  check(JOGOS.filter(g => g.tabs.includes('otoole')).length === 21, 'O\u2019Toole catalogue size');
+  check(!JOGOS.some(g => g.tabs.includes('otoole') && g.dois === 'poor at 2'),
+    'No poor-at-2 game is retained under O\u2019Toole');
   check(!JOGOS.some(g => g.id === '337627' && g.tabs.includes('otoole')), 'Voidfall must stay out of the O’Toole catalogue');
   check(!JOGOS.some(g => /Unmatched/.test(g.nome)), 'Unmatched must stay out at your request');
   check(JOGOS.every(g => (g.rank == null || (Number.isInteger(g.rank) && g.rank > 0))
@@ -401,9 +400,7 @@ if (location.hash === '#test') {
     'An average needs enough ratings to mean anything \u2014 below 1000 it is not a measurement');
   check(JOGOS.filter(g => g.bgg < 7.4 && (g.st === 'sold' || g.st === 'played')).every(g => g.wantBack),
     'A game you let go of only stays below the line when you flagged it to rebuy');
-  check(JOGOS.filter(g => g.requested).map(g => g.id).join() === '199383'
-    && tabelaHTML(JOGOS.filter(g => g.requested)).includes('Added at your request'),
-    'Calimala is the only explicit below-cutoff request, and its reason appears on screen');
+  check(!JOGOS.some(g => g.requested), 'No below-cutoff requested entries remain');
   check(JOGOS.filter(g => g.wantBack).every(g => g.st !== 'own' && tabelaHTML([g]).includes('want it back')),
     'The rebuy flag only applies to a game you no longer own, and it must say so on screen');
   check(!JOGOS.some(g => /^ludo:/.test(g.id)), 'Every row must resolve to a real BGG id');
@@ -494,11 +491,11 @@ if (location.hash === '#test') {
     'Each tab must carry its role on the card');
   check(document.querySelectorAll('thead th').length === 9, 'Header must match the column list');
   const dois = JOGOS.filter(g => g.dois);
-  check(dois.length === 38 && dois.every(g => ['excellent at 2', 'good at 2', 'poor at 2'].includes(g.dois)),
+  check(dois.length === 37 && dois.every(g => ['excellent at 2', 'good at 2', 'poor at 2'].includes(g.dois)),
     'Every game that seats two carries a two-player verdict in the wishlist vocabulary');
   check(JOGOS.filter(g => g.dois === 'excellent at 2').length === 6
-    && JOGOS.filter(g => g.dois === 'poor at 2').length === 1,
-    'Six games are best at two; Calimala is the only poor-at-2 game retained by request');
+    && JOGOS.filter(g => g.dois === 'poor at 2').length === 0,
+    'Six games are best at two; none are marked poor at two');
   check(JOGOS.filter(g => !g.dois).every(g => !(g.jog[0] <= 2 && 2 <= g.jog[1])),
     'Only a game that cannot seat two may lack the verdict');
   check(JOGOS.every(g => !g.melhor || /^[0-9\u2013, ]+$/.test(g.melhor)), 'Best count must be a player-count range');
