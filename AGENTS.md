@@ -2,14 +2,13 @@
 
 ## Purpose
 
-Two self-contained pages, with no dependencies or build step, for board-game purchase decisions:
+One self-contained page, with no dependencies or build step, for board-game purchase decisions:
 
 - **`index.html`** — a ranked wishlist with weight, playtime, overlap with the collection, and verdicts. Games outside the current shortlist appear at the end.
-- **`designers.html`** — tabbed designer and artist catalogues showing relevant games from creators whose work has performed well in the collection.
 
-GitHub Pages publishes the files from the root of `main`: <https://aagrjr.github.io/boardgames-analysis/>. A push to `main` republishes the site, usually in under a minute. The pages link to each other, and a self-test checks those links.
+GitHub Pages publishes the files from the root of `main`: <https://aagrjr.github.io/boardgames-analysis/>. A push to `main` republishes the site, usually in under a minute.
 
-The pages, `README.md`, and this file are in English. Keep the public README brief and free of personal decision history.
+The page, `README.md`, and this file are in English. Keep the public README brief and free of personal decision history.
 
 ## Source of truth for collection data
 
@@ -19,7 +18,7 @@ Useful fields: `rating`, `numplays`, `avgweight`, `average`, `usersrated`, `rank
 
 - `own=0` and `prevowned=0` with recorded plays means the game was played but never bought. Do not confuse this with a game that was bought and sold.
 - The export contains duplicate rows for some `objectid` values, sometimes with different ratings. Deduplicate by `objectid` before adding play counts.
-- Purchases can be newer than the export. `EXCLUIDOS` in `index.html` records later purchases with reasons beginning `owned` or `already bought`; `designers.html` uses these as an ownership fallback. Entropy was one such case.
+- Purchases can be newer than the export. `EXCLUIDOS` in `index.html` records later purchases with reasons beginning `owned` or `already bought`. Entropy was one such case.
 
 ## BGG data
 
@@ -42,22 +41,9 @@ As checked on 2026-10-01, `api.geekdo.com` responded to `curl`, while name searc
 - **The page shows only the first two publishers and hides the rest behind a `.ludo-fh-mais` (`+N`) button.** Reading only the visible group produces false negatives: that is how Jamaica, published here by Galápagos, was recorded as having no Brazilian edition. **No flag in the visible portion does not mean no Brazilian edition.** Read every publisher before concluding absence; when in doubt set `brUnknown`.
 - General rule for this page: given a choice between asserting something unverified and saying "unchecked", say unchecked. A false "no Brazilian edition" can make the user import a game that is on sale locally.
 
-## Catalogue rules (`designers.html`)
-
-- For the six expanded catalogues, select the top 20 BGG-ranked games that also have a rating of at least 7.4 and at least 1,000 ratings, plus any game the user owned or played. Rank uses a Bayesian average; it is not the same as the raw rating. If the cutoff changes, scan the full creator catalogue, not only its top 20.
-- The 1,000-rating floor filters out unreliable tiny samples. Previously observed catalogue sizes were 227 Cathala credits and 234 Dutrait credits; an exhaustive display would be less useful for purchase decisions.
-- The 7.4 rating floor applies to every tab. Games the user still owns are exempt, as are the explicit `wantBack` and `requested` exceptions below. A game that was sold or merely played does not survive on a rating below the line just because the user rated it highly — T.I.M.E Stories (BGG 7.34, user 9.5) was removed under this rule. The rank and rating-count cutoffs apply only to the expanded tabs.
-- `requested: true` marks a specific game the user explicitly asked to add despite the rating floor. Keep the reason visible in `creditNote`. Calimala is the sole current case; its Ian O'Toole art belongs to the Alley Cat second edition.
-- `wantBack: true` is a deliberate per-row exception for a game the user sold and wants to buy again. It exempts the row from the 7.4 floor and the rating-count floor, and renders a "want it back" tag so the reason is visible rather than looking like a data error. Abyss carries it. Set it only when the user says so, never to rescue a row from a rule.
-- `linkeditems` entries with `rank` 0 are usually expansions or promos. Creator catalogues list standalone games only; exclude expansions and promos.
-- Each row carries `melhor` (the BGG best-player-count range) and `dois` (`excellent at 2` / `good at 2` / `poor at 2`), the same vocabulary and chip styling as the wishlist. `dois` is derived from the poll at `/api/dynamicinfo`: 2 inside the best range, inside the recommended range, or neither. A game that cannot seat two carries no `dois`.
-- The self-test enforces the standalone-games-only catalogue rule.
-- When two editions represent the same game, keep the one carrying the strongest personal record (`own` > `sold` > `played` > none); break ties by rating count. This retains 7 Wonders (2010) over its Second Edition and The Castles of Burgundy: Special Edition over the base game. Stockpile and Kraftwagen are explicit user choices: keep only Stockpile: Epic Edition, and only the newer Kraftwagen.
-- Every row needs BGG measurements and a real collection status. Do not add rows with invented IDs, missing weight, or guessed ownership. The self-test enforces this.
-
 ## Collection benchmarks
 
-These figures were calculated from the export and underpin the pages' verdicts. Recalculate before changing them.
+These figures were calculated from the export and underpin the page's verdicts. Recalculate before changing them.
 
 | Weight | Owned standalone games | Mean plays |
 |---|---:|---:|
@@ -67,7 +53,7 @@ These figures were calculated from the export and underpin the pages' verdicts. 
 | 3.0–3.5 | 10 | 4.40 |
 | 3.5+ | 13 | 2.54 |
 
-**The 3.35 weight line:** games from 3.00 to 3.35 have a median of four plays; above 3.35, the median is two, with five of fourteen at zero or one play. `designers.html` uses this line.
+**The 3.35 weight line:** games from 3.00 to 3.35 have a median of four plays; above 3.35, the median is two, with five of fourteen at zero or one play.
 
 **Cooperative games have a different pattern.** The seven active cooperative games all have weight at most 2.66. Every purchased cooperative game above 2.5 had only one or two plays, apart from Pandemic Legacy: Season 1, a campaign meant to be completed.
 
@@ -75,28 +61,17 @@ These figures were calculated from the export and underpin the pages' verdicts. 
 
 **Competitive deckbuilders have seen more play than cooperative ones.** Competitive examples include Clank!, Dune: Imperium, Clank!: Catacombs, Star Wars: The Deckbuilding Game, and Lost Ruins of Arnak. Aeon's End and Marvel Champions were played once each and were not purchased.
 
-## One entry per game in `designers.html`
-
-Collapse alternative editions of the same game. Rococo: Deluxe Edition replaces base Rococo; Glen More II: Chronicles replaces Glen More. Keep the newer Kraftwagen: Age of Engineering, and retain both Stockpile editions as requested.
-
-
-The `br` field names a Brazilian publisher when one is confirmed. A missing `br` value must not be interpreted as absence when verification failed. Ludopedia game slugs usually derive from the English title: lowercase, remove accents, and replace nonalphanumeric runs with hyphens. `CO₂: Second Chance`, `Masters of Renaissance`, and `Age of Steam` are known exceptions in `LUDO_FIXO`. Check alternatives before concluding that a page or Brazilian edition is absent.
-
-The original 61 links were revalidated on 2026-10-01. The original rows derive their Ludopedia URLs with `ludoSlug()`; `LUDO_FIXO` contains the exceptions. The self-test checks the URL shape. Ludopedia's Brazilian-publisher marker does not distinguish a released edition from an announced one. `index.html` distinguishes `released` and `announced` in `brasil.s` because those entries were checked individually.
-
-Wishlist decisions do not belong in the creator catalogue. A game removed from the wishlist can still be missing from the collection.
-
 ## Editing data
 
-In `index.html`, `JOGOS` holds one game per line; `EXCLUIDOS` holds games outside the shortlist as `["name", "reason"]`. In `designers.html`, `JOGOS` also holds one record per line, and `tabs` identifies every creator credited on that game.
+In `index.html`, `JOGOS` holds one game per line; `EXCLUIDOS` holds games outside the shortlist as `["name", "reason"]`.
 
 For scripted replacements, assert that the old text occurs exactly once before replacing it. Take care to read a complete game record: a previous edit cut off part of one by assuming it occupied only one line.
 
-Do not hard-code counts in subtitles. Both pages compute them from their data, and the self-tests compare rendered text to the calculation.
+Do not hard-code counts in subtitles. The page computes them from its data, and the self-test compares rendered text to the calculation.
 
 ## Self-tests
 
-Open either page with `#test` appended to the URL and check the console for `Board-game checks passed` or `Designer-catalogue checks passed`. Run these checks after manual data edits. Existing tests have caught stale expected purchase order and BGG rank values.
+Open the page with `#test` appended to the URL and check the console for `Board-game checks passed`. Run this check after manual data edits. Existing tests have caught stale expected purchase order and BGG rank values.
 
 For a local preview, serve the directory with `python3 -m http.server 8731` and open `http://127.0.0.1:8731/index.html#test`. Add `?v=N` before `#test` when reopening after an edit to avoid a cached copy.
 
