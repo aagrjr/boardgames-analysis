@@ -18,6 +18,8 @@ Useful fields: `rating`, `numplays`, `avgweight`, `average`, `usersrated`, `rank
 
 - `own=0` and `prevowned=0` with recorded plays means the game was played but never bought. Do not confuse this with a game that was bought and sold.
 - The export contains duplicate rows for some `objectid` values, sometimes with different ratings. Deduplicate by `objectid` before adding play counts.
+- **Personal ratings are stale first impressions, not maintained judgements.** The user does not revisit them, so a rating records how a game felt on the day it was logged and drifts from what he thinks now: he re-played Vantage on 2026-11-14 and said 8.5 against the 8.0 in the export. Treat `rating` as weak, noisy evidence. **`numplays` is the behavioural signal and carries the argument**; use a rating only as a tiebreaker or colour, never as the basis of a verdict, and never read a gap of a few tenths between two games as meaningful.
+- For scale when a rating is used anyway: across 145 games with exactly one play the median rating is 8.0 and the mean 7.81, and only 12% reach 9.0. The "9+ after one play is his baseline" claim is false in general — it holds only for the heavy-Euro slice, where 38% of 29 such games reached 9.0.
 - Purchases can be newer than the export. `EXCLUIDOS` in `index.html` records later purchases with reasons beginning `owned` or `already bought`. Entropy was one such case.
 
 ## BGG data
@@ -77,4 +79,4 @@ For a local preview, serve the directory with `python3 -m http.server 8731` and 
 
 ## Recommendation guidance
 
-Support recommendations with collection data rather than a poll of options. Check direct evidence about a specific game before applying category averages. Distinguish liking a game from repeatedly playing it: high ratings after one play are common. When the user decides against a recommendation, record that in the game's evidence and move on without reopening the decision.
+Support recommendations with collection data rather than a poll of options. Check direct evidence about a specific game before applying category averages. Distinguish liking a game from repeatedly playing it, and lead with play counts rather than ratings (see the ratings caveat above). When the user decides against a recommendation, record that in the game's evidence and move on without reopening the decision.
