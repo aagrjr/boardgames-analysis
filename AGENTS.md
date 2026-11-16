@@ -56,6 +56,12 @@ These figures were calculated from the export and underpin the page's verdicts. 
 | 3.0–3.5 | 10 | 4.40 |
 | 3.5+ | 13 | 2.54 |
 
+**Solo play is a large share of the plays, and it gates by setup cost, not by weight.** The user told us (2026-11-16) that two of Sanctuary's ten plays and two of Vantage's three were solo, and that he deliberately did not set up the heavy games to play alone. That is the mechanism behind the 3.35 line: a heavy game is not harder to enjoy, it is gated on a group night, and group nights are scarcer than solo nights. Across the 52 owned solo-capable standalone games the median plays by weight band are <2.5 → 3, 2.5–3.35 → **4**, >3.35 → 2, so the sweet spot holds even after restricting to games he *could* play alone.
+
+**The export cannot tell solo from multiplayer** — `numplays` is a single number. Never assert a solo/group split from it; ask the user.
+
+**Consequence for the wishlist: solo support is a real value multiplier, and a game above 3.35 that only plays with a group needs a much stronger case.** When comparing two candidates of similar weight, the one that plays at one is the better buy for this collection.
+
 **The 3.35 weight line:** games from 3.00 to 3.35 have a median of four plays; above 3.35, the median is two, with five of fourteen at zero or one play.
 
 **The "long cooperative games fail" rule was wrong about the mechanism — treat it as a weak prior, never a veto.** The record it was built on: six long coops tried, none past three plays, four of six sold (Mansions of Madness 180min, Robinson Crusoe 120min, Spirit Island 120min, Chronicles of Crime 90min sold; Deep Regrets 150min, Sherlock Holmes Consulting Detective 120min owned). Short coops thrive by contrast — Hanabi 10 plays, Pandemic Legacy: Season 1 9, Sherlock 13 7, Pandemic 6, Just One 5. **But Vantage breaks it.** At 180 minutes it is the longest of the lot, and the user played it three times in the first days of owning it (2026-11-09, -14 and -16; the export still shows 1, see the lag rule). So duration is not what killed the others, and the failures do not share a weight either (Spirit Island 4.0 and Chronicles of Crime 2.1 both died). What the six do share is a scripted campaign or scenario book that has to be resumed; Vantage resets to a fresh planet every session. Until that is measured, say "long coops have a bad record here, with one clear exception" and let play counts decide — do not argue a purchase down on length alone.
