@@ -56,6 +56,14 @@ These figures were calculated from the export and underpin the page's verdicts. 
 | 3.0–3.5 | 10 | 4.40 |
 | 3.5+ | 13 | 2.54 |
 
+**The player-count poll has a full breakdown, and it is NOT in the API.** `dynamicinfo` returns only the summary (`polls.userplayers.best` / `.recommended`). The per-count table — Best / Recommended / Not Recommended with vote counts — lives on the BGG game page behind the player-count "Results" link. In November 2026 I told the user no such data existed because the API was silent; he sent screenshots of it. **API silence is not evidence of absence — say "I could not retrieve it", never "it does not exist".**
+
+**Read that breakdown before recommending anything as a solo game.** A game can carry the "Solo / Solitaire Game" mechanic and the "Games with Solitaire Rules" family and still have its worst approval at one player. Measured 2026-11-19: Dune: Imperium is 98.0% positive at three players and **61.7% at one**, with 437 of 1,141 voters marking it not recommended solo; Inferno is 97.3% at three and 67.4% at one. Both were designed for 3–4 and had solo added. Compare the solo column against the game's own other counts, not against other games.
+
+**Thin polls need an interval, not a percentage.** Inferno's one-player column rests on 46 votes (95% CI 53–79%) against Dune's 1,141 (59–64%). Those overlap, so the nominal 67.4% vs 61.7% gap means nothing. Never rank two games on poll percentages without checking the vote counts.
+
+**BGG mechanic and family tags lag reality.** Inferno carries no solo tag at all yet has a full solo mode in its rulebook ("A Journey into Infamy", a beat-your-own-score ladder with three challenge levels). Check the rulebook before concluding a game has no solo support.
+
 **Solo play is a large share of the plays, and it gates by setup cost, not by weight.** The user told us (2026-11-16) that two of Sanctuary's ten plays and two of Vantage's three were solo, and that he deliberately did not set up the heavy games to play alone. That is the mechanism behind the 3.35 line: a heavy game is not harder to enjoy, it is gated on a group night, and group nights are scarcer than solo nights. Across the 52 owned solo-capable standalone games the median plays by weight band are <2.5 → 3, 2.5–3.35 → **4**, >3.35 → 2, so the sweet spot holds even after restricting to games he *could* play alone.
 
 **The export cannot tell solo from multiplayer** — `numplays` is a single number. Never assert a solo/group split from it; ask the user.
